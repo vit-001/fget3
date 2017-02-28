@@ -59,13 +59,15 @@ class URL:
 
         if url.endswith('*'):
             self.no_slash = True
-            self.url = url.rstrip('*')
+            url = url.rstrip('*')
         else:
             self.no_slash=False
 
         for suffix in URL.SUFFIXES:
-            if self.url.lower().endswith(suffix):
+            if url.lower().endswith(suffix):
                 self.no_slash=True
+
+        self.url=url
 
 
     def get(self):

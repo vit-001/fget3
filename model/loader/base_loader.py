@@ -14,13 +14,12 @@ class FLData:
         self.overwrite = overwrite
         self.text=''
 
-    def get_url(self):
+    @property
+    def url(self):
         return self._url
 
-    def set_url(self, url:URL):
-        self._url=url
-
-    def get_filename(self):
+    @property
+    def filename(self):
         return self._filename
 
 class LoaderError(RuntimeError):
@@ -43,20 +42,20 @@ class BaseLoadProcedure:
         :return same object, but if file.get_filendme() is '' or None file don't write and
                 in file.text will returned decoded neteork object:
         """
-        if file.overwrite or (not os.path.exists(file.get_filename())):
-            result = self.open(file.get_url())
+        if file.overwrite or (not os.path.exists(file.filename)):
+            result = self.open(file.url)
 
-            if file.get_filename() is None or file.get_filename() is '':
+            if file.filename is None or file.filename is '':
                 file.text = result.decode()
                 return file
 
-            path = os.path.dirname(file.get_filename())
+            path = os.path.dirname(file.filename)
 
             if not os.path.exists(path):
                 os.makedirs(path)
 
             buf = io.BytesIO(result)
-            with open(file.get_filename(), 'wb') as fd:
+            with open(file.filename, 'wb') as fd:
                 chunk = buf.read(256)
                 while len(chunk) > 0:
                     fd.write(chunk)

@@ -81,7 +81,7 @@ class DataServer:
 
         try:
             with open(config_filename, 'w') as config:
-                # print('Writing DataServer config to ' + config_filename)
+                print('Writing DataServer config to ' + config_filename)
 
                 data = dict()
                 data['free_http_proxy'] = self.data['free_http_proxy']
@@ -169,7 +169,7 @@ class AZloaderMP(BaseLoadProcedure):
         return 'none'
 
 
-class FLEvent():
+class LoadProcessEvent():
     def __init__(self, type: str, data=None):
         self.type = type
         self.data = data
@@ -187,17 +187,17 @@ class LoadServer(Process):
         Process.__init__(self)
 
     def run(self):
-        self.events.put(FLEvent('start'))
+        self.events.put(LoadProcessEvent('start'))
         loader = AZloaderMP(self.data, self.lock)
 
         for filedata in self.filelist:
             try:
                 result=loader.load_to_file(filedata)
-                self.events.put(FLEvent('load', result))
+                self.events.put(LoadProcessEvent('load', result))
             except (ValueError, LoaderError) as Error:
-                self.events.put(FLEvent('error', filedata))
+                self.events.put(LoadProcessEvent('error', filedata))
                 print(filedata.get_url().get() + ' not loaded: ', Error)
-        self.events.put(FLEvent('done'))
+        self.events.put(LoadProcessEvent('done'))
 
 
 class LoadProcess(BaseLoadProcess):
@@ -266,6 +266,7 @@ class MultiprocessAZloader(BaseLoader):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
+        print('Start load:', filedata.url)
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 
@@ -279,15 +280,15 @@ class MultiprocessAZloader(BaseLoader):
 
 if __name__ == "__main__":
     import time
+    l=MultiprocessAZloader()
+    # ds = DataServer()
+    time.sleep(2)
 
-    print()
+    # for item in ds.data['proxy_domains']:
+    #     print(item)
 
-    ds = DataServer()
-    time.sleep(5)
+    # time.sleep(1)
 
-    for item in ds.data['proxy_domains']:
-        print(item)
+    l.on_exit()
 
-    time.sleep(5)
-
-    ds.stop()
+    # ds.stop()

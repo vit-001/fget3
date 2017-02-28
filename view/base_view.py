@@ -2,9 +2,11 @@
 __author__ = 'Nikitin'
 
 from common.url import URL
+from common.exception import AbstractMethodError
 
 class AbstractThumbViewFromModelInterface:
-    pass
+    def add_thumb(self,thumb_url:URL, href:URL, popup:str='',labels=list):
+        print('Add thumb:', thumb_url,href,popup,labels)
 
 class AbstractVideoViewFromModelInterface:
     pass
@@ -14,16 +16,20 @@ class AbstractPictureViewFromModelInterface:
 
 class AbstractViewFromModelInterface:
     def prepare_thumb_view(self, new=False)->AbstractThumbViewFromModelInterface:
-        pass
+        raise(AbstractMethodError)
 
     def prepare_video_view(self, new=False)->AbstractVideoViewFromModelInterface:
-        pass
+        raise (AbstractMethodError)
 
     def prepare_picture_view(self, new=False)->AbstractPictureViewFromModelInterface:
-        pass
+        raise (AbstractMethodError)
 
     def add_start_button(self, name:str, picture_filename:str, url:URL):
-        pass
+        print('Add start button:', name)
+
+
+class AbsractViewFromControllerInterface:
+    pass
 
 if __name__ == "__main__":
     pass
