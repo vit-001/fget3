@@ -3,7 +3,7 @@ __author__ = 'Nikitin'
 
 from common.url import URL
 
-class AbstractModelFromPresenterInterface:
+class AbstractModelFromControllerInterface:
     def goto_url(self, url:URL):
         pass
 
