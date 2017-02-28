@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
+from abc import abstractmethod, ABCMeta
+
 __author__ = 'Vit'
 
 from bs4 import BeautifulSoup
 
 from common.url import URL
 from model.loader.base_loader import FLData
-from model.base_model import AbstractModelFromSiteInterface
-from view.base_view import AbstractViewFromModelInterface, AbstractThumbViewFromModelInterface
+from model.base_model import ModelFromSiteInterface
+from view.base_view import ViewFromModelInterface, ThumbViewFromModelInterface
 
-class AbstractSite:
+class SiteInterface:
 
     @staticmethod
-    def create_start_button(view:AbstractViewFromModelInterface):
+    def create_start_button(view:ViewFromModelInterface):
         pass
 
     @staticmethod
@@ -21,9 +23,35 @@ class AbstractSite:
     def goto_url(self, url:URL, **options):
         pass
 
+class ParseResult:
+    def __init__(self):
+        self._result_type= 'none'
+        self.thumbs=[]
 
-class BaseSite(AbstractSite):
-    def __init__(self, model:AbstractModelFromSiteInterface):
+    def add_thumb(self,thumb_url:URL, href:URL, popup:str='', labels:list=list()):
+        self._result_type= 'thumbs'
+        print('Add thumb:', thumb_url, href, popup, labels)
+
+    @property
+    def is_video(self)->bool:
+        return self._result_type == 'video'
+
+    @property
+    def is_pictures(self)->bool:
+        return self._result_type == 'pictures'
+
+    @property
+    def is_thumbs(self)->bool:
+        return self._result_type == 'thumbs'
+
+    @property
+    def is_no_result(self) -> bool:
+        return self._result_type == 'none'
+
+
+class BaseSite(SiteInterface, ParseResult):
+    def __init__(self, model:ModelFromSiteInterface):
+        ParseResult.__init__(self)
         self.model=model
 
     def goto_url(self, url: URL, **options):
@@ -36,59 +64,65 @@ class BaseSite(AbstractSite):
     def on_load_url(self, filedata:FLData):
         print(filedata.url, 'loaded')
         soup=BeautifulSoup(filedata.text,'html.parser')
-        if not self.parse_soup(soup, filedata.url):
+        self.parse_soup(soup, filedata.url)
+        if self.is_no_result:
             print('Parsing has no result')
 
-    def parse_soup(self, soup:BeautifulSoup, url:URL)->bool:
-        if self.parse_video(soup, url):
+    def parse_soup(self, soup: BeautifulSoup, url: URL) -> bool:
+        return False
+
+    def prepare_thumb_view(self)->ThumbViewFromModelInterface:
+        self.view=self.model.view.prepare_thumb_view()
+        return self.view
+
+class BaseSiteParser(BaseSite):
+    def parse_soup(self, soup:BeautifulSoup, url:URL):
+        self.parse_video(soup, url)
+        if self.is_video:
             self.parse_video_tags(soup, url)
-            return True
-        if self.parse_pictures(soup, url):
+            return
+        self.parse_pictures(soup, url)
+        if self.is_pictures:
             self.parse_pictures_tags(soup, url)
-            return True
-        if self.parse_thumbs(soup, url) or self.parse_others(soup, url):
+            return
+        self.parse_thumbs(soup, url)
+        if self.is_no_result:
+            self.parse_others(soup, url)
+        if self.is_thumbs:
             self.parse_thumbs_tags(soup, url)
             self.parse_pagination(soup, url)
-            return True
-        return False
 
-    def parse_thumbs(self, soup: BeautifulSoup, url: URL)->bool:
-        return False
+    def parse_thumbs(self, soup:BeautifulSoup, url:URL):
+        pass
 
-    def parse_others(self, soup: BeautifulSoup, url: URL)->bool:
-        return False
+    def parse_video(self, soup:BeautifulSoup, url:URL):
+        pass
 
-    def parse_video(self, soup: BeautifulSoup, url: URL)->bool:
-        return False
+    def parse_pictures(self, soup:BeautifulSoup, url:URL):
+        pass
 
-    def parse_pictures(self, soup: BeautifulSoup, url: URL)->bool:
-        return False
+    def parse_others(self, soup:BeautifulSoup, url:URL):
+        pass
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         container = self.get_pagination_container(soup)
         if container is not None:
             for page in container.find_all('a', {'href': True}):
-                # psp(page.prettify())
                 if page.string is not None and page.string.isdigit():
                     # result.add_page(ControlInfo(page.string, URL(page.attrs['href'], base_url=base_url)))
                     print('Add page',page.string, URL(page.attrs['href'], base_url=url))
 
-    def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
+    def get_pagination_container(self, soup:BeautifulSoup)->BeautifulSoup:
         return None
 
-    def parse_thumbs_tags(self, soup: BeautifulSoup, base_url: URL):
-        return
+    def parse_thumbs_tags(self, soup:BeautifulSoup, url:URL):
+        pass
 
-    def parse_video_tags(self, soup: BeautifulSoup, base_url: URL):
-        return
+    def parse_video_tags(self, soup:BeautifulSoup, url:URL):
+        pass
 
-    def parse_pictures_tags(self, soup: BeautifulSoup, base_url: URL):
-        return
-
-    def prepare_thumb_view(self)->AbstractThumbViewFromModelInterface:
-        self.view=self.model.view.prepare_thumb_view()
-        return self.view
-
+    def parse_pictures_tags(self, soup:BeautifulSoup, url:URL):
+        pass
 
 if __name__ == "__main__":
     pass

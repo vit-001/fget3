@@ -3,10 +3,10 @@ __author__ = 'Nikitin'
 
 from common.url import URL
 from common.exception import AbstractMethodError
-from view.base_view import AbstractViewFromModelInterface
+from view.base_view import ViewFromModelInterface
 from model.loader.base_loader import BaseLoader
 
-class AbstractModelFromControllerInterface:
+class ModelFromControllerInterface:
     def goto_url(self, url:URL):
         pass
 
@@ -16,9 +16,9 @@ class AbstractModelFromControllerInterface:
     def on_exit(self):
         pass
 
-class AbstractModelFromSiteInterface:
+class ModelFromSiteInterface:
     @property
-    def view(self)->AbstractViewFromModelInterface:
+    def view(self)->ViewFromModelInterface:
         raise(AbstractMethodError)
 
     @property

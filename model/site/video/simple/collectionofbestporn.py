@@ -2,24 +2,22 @@
 __author__ = 'Vit'
 from common.url import URL
 
-from model.site.base_site import BaseSite,AbstractViewFromModelInterface, BeautifulSoup
+from model.site.base_site import BaseSiteParser,ViewFromModelInterface, BeautifulSoup
 
-class CollectionofbestpornSite(BaseSite):
+class CollectionofbestpornSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
         return url.contain('collectionofbestporn.com/')
 
     @staticmethod
-    def create_start_button(view:AbstractViewFromModelInterface):
+    def create_start_button(view:ViewFromModelInterface):
         view.add_start_button(name='Collectionofbestporn',
                               picture_filename='',
                               url=URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))
 
-
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         thumbs=soup.find_all('div', {'class': 'video-thumb'})
         if thumbs:
-            view=self.prepare_thumb_view()
             for thumbnail in thumbs:
                 href = URL(thumbnail.a.attrs['href'], base_url=url)
                 description = thumbnail.a.img.attrs['alt']
@@ -31,7 +29,7 @@ class CollectionofbestpornSite(BaseSite):
                 quality = thumbnail.find('span', {'class': "quality"})
                 qual = '' if quality is None else str(quality.string)
 
-                view.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                                            labels=[{'text': dur_time, 'align': 'top right'},
                                                    {'text': description, 'align': 'bottom center'},
                                                    {'text': qual, 'align': 'top left', 'bold': True}])
