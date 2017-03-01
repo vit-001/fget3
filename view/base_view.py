@@ -7,7 +7,7 @@ from controller.base_controller import ControllerFromViewInterface
 
 class ThumbViewFromModelInterface:
     def add_thumb(self,thumb_url:URL, href:URL, popup:str='',labels=list):
-        pass
+        print('Thumb', thumb_url, 'added')
 
 class VideoViewFromModelInterface:
     pass

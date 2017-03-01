@@ -27,10 +27,16 @@ class ParseResult:
     def __init__(self):
         self._result_type= 'none'
         self.thumbs=[]
+        self.video = None
+        self.controls_top = []
+        self.controls_bottom = []
+        self.controls_mid = []
 
     def add_thumb(self,thumb_url:URL, href:URL, popup:str='', labels:list=list()):
         self._result_type= 'thumbs'
         print('Add thumb:', thumb_url, href, popup, labels)
+        thumb={'url':thumb_url,'href':href,'popup':popup,'labels':labels}
+        self.thumbs.append(thumb)
 
     @property
     def is_video(self)->bool:
@@ -71,9 +77,14 @@ class BaseSite(SiteInterface, ParseResult):
     def parse_soup(self, soup: BeautifulSoup, url: URL) -> bool:
         return False
 
-    def prepare_thumb_view(self)->ThumbViewFromModelInterface:
-        self.view=self.model.view.prepare_thumb_view()
-        return self.view
+    def generate_thumb_view(self):
+
+        # todo Переделать на загрузку картинок Loader'ом
+
+        view=self.model.view.prepare_thumb_view()
+        for thumb in self.thumbs:
+            view.add_thumb(thumb['url'],thumb['href'],thumb['popup'],thumb['labels'])
+
 
 class BaseSiteParser(BaseSite):
     def parse_soup(self, soup:BeautifulSoup, url:URL):
@@ -91,6 +102,8 @@ class BaseSiteParser(BaseSite):
         if self.is_thumbs:
             self.parse_thumbs_tags(soup, url)
             self.parse_pagination(soup, url)
+            self.generate_thumb_view()
+
 
     def parse_thumbs(self, soup:BeautifulSoup, url:URL):
         pass
