@@ -10,7 +10,7 @@ class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
     def __init__(self, view:ViewFromControllerInterface,model:ModelFromControllerInterface):
         self.view=view
         self.model=model
-        self.view.register_controller(self)
+        self.view.create_main_window(self)
 
     def on_cycle_handler(self):
         self.model.on_cycle_handler()

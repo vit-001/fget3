@@ -75,12 +75,12 @@ class URL:
             return self.url.rstrip('/')
         return self.url.rstrip('/') + '/'
 
-    # def get_short_path(self, base=''):
-    #     p = up.urlparse(self.get())
-    #     return base.rstrip('/') + '/' + p[1] + '/' + p[2].strip(' /').replace('/', '..')
+    def get_short_filename(self, base=''):
+        p = urlparse(self.get())
+        return base.rstrip('/') + '/' + p[1] + '/' + p[2].strip(' /').replace('/', '..')
 
     # def get_path(self, base=''):
-    #     p = up.urlparse(self.get())
+    #     p = urlparse(self.get())
     #     p2 = p[2]
     #     if p2.endswith('.html') or p2.endswith('.jpg'):
     #         p2 = p2.rpartition('/')[0] + '/'

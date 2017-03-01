@@ -12,10 +12,8 @@ from controller.base_controller import ControllerFromViewInterface
 
 
 class ViewManager(ViewFromControllerInterface, ViewFromModelInterface):
-    def __init__(self):
-        pass
 
-    def register_controller(self, controller:ControllerFromViewInterface):
+    def create_main_window(self, controller:ControllerFromViewInterface):
         self.controller=controller
 
         self.main=MainWindow(controller=controller)

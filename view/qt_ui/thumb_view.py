@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '../view/qt_design/thumb_view.ui'
 #
-# Created: Mon Feb 27 17:59:12 2017
+# Created: Thu Mar  2 01:04:49 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

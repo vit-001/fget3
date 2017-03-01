@@ -33,7 +33,7 @@ class ViewFromModelInterface:
 
 
 class ViewFromControllerInterface:
-    def register_controller(self, controller: ControllerFromViewInterface):
+    def create_main_window(self, controller: ControllerFromViewInterface):
         pass
 
     def on_exit(self):

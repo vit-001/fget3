@@ -6,6 +6,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from common.url import URL
+from common.setting import Setting
 from model.loader.base_loader import FLData
 from model.base_model import ModelFromSiteInterface
 from view.base_view import ViewFromModelInterface, ThumbViewFromModelInterface
@@ -18,7 +19,6 @@ class ThumbData(FLData):
         self.labels=labels
 
 class SiteInterface:
-
     @staticmethod
     def create_start_button(view:ViewFromModelInterface):
         pass
@@ -41,7 +41,9 @@ class ParseResult:
 
     def add_thumb(self,thumb_url:URL, href:URL, popup:str='', labels:list=list()):
         self._result_type= 'thumbs'
-        print('Add thumb:', thumb_url, href, popup, labels)
+        # print('Add thumb:', thumb_url, href, popup, labels)
+        # print(thumb_url.get_path())
+        # print(thumb_url.get_short_filename())
         thumb={'url':thumb_url,'href':href,'popup':popup,'labels':labels}
         self.thumbs.append(thumb)
 
@@ -85,17 +87,13 @@ class BaseSite(SiteInterface, ParseResult):
         return False
 
     def generate_thumb_view(self):
-
-        # todo сделать автоматическую генерацию имен файлов и путей
-
         view=self.model.view.prepare_thumb_view()
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
         thumb_list=list()
-
         for thumb in self.thumbs:
-            filename='xutil/out/1.jpg'
+            filename=thumb['url'].get_short_filename(base=Setting.cache_path)
             thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
         loader.load_list(thumb_list)
 
@@ -117,7 +115,6 @@ class BaseSiteParser(BaseSite):
             self.parse_thumbs_tags(soup, url)
             self.parse_pagination(soup, url)
             self.generate_thumb_view()
-
 
     def parse_thumbs(self, soup:BeautifulSoup, url:URL):
         pass

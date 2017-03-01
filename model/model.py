@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 from common.url import URL
+from common.setting import Setting
 from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
 from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
 from view.base_view import ViewFromModelInterface
