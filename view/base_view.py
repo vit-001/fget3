@@ -6,8 +6,11 @@ from common.exception import AbstractMethodError
 from controller.base_controller import ControllerFromViewInterface
 
 class ThumbViewFromModelInterface:
-    def add_thumb(self,thumb_url:URL, href:URL, popup:str='',labels=list):
-        print('Thumb', thumb_url, 'added')
+    def add_thumb(self,picture_filename:str, href:URL, popup:str='',labels=list):
+        print('Thumb filename:', picture_filename, 'added')
+        print('           url:', href)
+        print('         popup:', popup)
+        print('        labels:', labels)
 
 class VideoViewFromModelInterface:
     pass
@@ -32,6 +35,10 @@ class ViewFromModelInterface:
 class ViewFromControllerInterface:
     def register_controller(self, controller: ControllerFromViewInterface):
         pass
+
+    def on_exit(self):
+        pass
+
 
 if __name__ == "__main__":
     pass

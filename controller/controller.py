@@ -15,5 +15,9 @@ class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
     def on_cycle_handler(self):
         self.model.on_cycle_handler()
 
+    def on_exit(self):
+        self.model.on_exit()
+        self.view.on_exit()
+
 if __name__ == "__main__":
     pass

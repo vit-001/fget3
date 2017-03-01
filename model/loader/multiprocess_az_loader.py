@@ -38,6 +38,7 @@ class DataServer:
 
     def read_proxy_pac(self, pac_url):
         if self.last_load_proxy_pack:
+            print(datetime.datetime.now() - self.last_load_proxy_pack)
             if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(hours=2):
                 return
         try:
@@ -66,6 +67,8 @@ class DataServer:
                 self.data['free_http_proxy'] = data.get('free_http_proxy', None)
                 self.data['proxy_domains'] = data.get('proxy_domains', list())
                 self.last_load_proxy_pack = datetime.datetime.fromtimestamp(data.get('last_loaded'), None)
+
+                print('Load DataServer config')
 
         except EnvironmentError as err:
             print('Read ' + config_filename + ' error: ', err)
@@ -196,7 +199,7 @@ class LoadServer(Process):
                 self.events.put(LoadProcessEvent('load', result))
             except (ValueError, LoaderError) as Error:
                 self.events.put(LoadProcessEvent('error', filedata))
-                print(filedata.get_url().get() + ' not loaded: ', Error)
+                print(filedata.url.get() + ' not loaded: ', Error)
         self.events.put(LoadProcessEvent('done'))
 
 

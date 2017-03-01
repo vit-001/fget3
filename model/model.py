@@ -6,6 +6,7 @@ from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
 from view.base_view import ViewFromModelInterface
 
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
+from model.site.video.simple.veronicca_com import VeroniccaComSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -13,7 +14,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view:ViewFromModelInterface):
         self._view=view
         self._loader=MultiprocessAZloader()
-        self._site_models=[CollectionofbestpornSite,
+        self._site_models=[CollectionofbestpornSite,VeroniccaComSite,
                            ]
 
         for site_class in self._site_models:

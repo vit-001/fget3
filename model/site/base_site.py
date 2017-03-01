@@ -10,6 +10,13 @@ from model.loader.base_loader import FLData
 from model.base_model import ModelFromSiteInterface
 from view.base_view import ViewFromModelInterface, ThumbViewFromModelInterface
 
+class ThumbData(FLData):
+    def __init__(self, thumb_url: URL, thumb_filename: str, href:URL, popup:str='', labels:list=list()):
+        super().__init__(thumb_url, filename=thumb_filename, overwrite=False)
+        self.href=href
+        self.popup=popup
+        self.labels=labels
+
 class SiteInterface:
 
     @staticmethod
@@ -79,11 +86,18 @@ class BaseSite(SiteInterface, ParseResult):
 
     def generate_thumb_view(self):
 
-        # todo Переделать на загрузку картинок Loader'ом
+        # todo сделать автоматическую генерацию имен файлов и путей
 
         view=self.model.view.prepare_thumb_view()
+        loader=self.model.loader.get_new_load_process(
+            on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
+
+        thumb_list=list()
+
         for thumb in self.thumbs:
-            view.add_thumb(thumb['url'],thumb['href'],thumb['popup'],thumb['labels'])
+            filename='xutil/out/1.jpg'
+            thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
+        loader.load_list(thumb_list)
 
 
 class BaseSiteParser(BaseSite):
