@@ -33,6 +33,7 @@ class SiteInterface:
 class ParseResult:
     def __init__(self):
         self._result_type= 'none'
+        self.title='Title'
         self.thumbs=[]
         self.video = None
         self.controls_top = []
@@ -87,7 +88,7 @@ class BaseSite(SiteInterface, ParseResult):
         return False
 
     def generate_thumb_view(self):
-        view=self.model.view.prepare_thumb_view()
+        view=self.model.view.prepare_thumb_view(self.title)
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
@@ -114,6 +115,7 @@ class BaseSiteParser(BaseSite):
         if self.is_thumbs:
             self.parse_thumbs_tags(soup, url)
             self.parse_pagination(soup, url)
+            self.title=self.parse_thumb_title(soup,url)
             self.generate_thumb_view()
 
     def parse_thumbs(self, soup:BeautifulSoup, url:URL):
@@ -147,6 +149,9 @@ class BaseSiteParser(BaseSite):
 
     def parse_pictures_tags(self, soup:BeautifulSoup, url:URL):
         pass
+
+    def parse_thumb_title(self, soup:BeautifulSoup, url:URL)->str:
+        return 'Title'
 
 if __name__ == "__main__":
     pass

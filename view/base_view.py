@@ -19,7 +19,7 @@ class PictureViewFromModelInterface:
     pass
 
 class ViewFromModelInterface:
-    def prepare_thumb_view(self, new=False)->ThumbViewFromModelInterface:
+    def prepare_thumb_view(self, name:str, new=False)->ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
     def prepare_video_view(self, new=False)->VideoViewFromModelInterface:

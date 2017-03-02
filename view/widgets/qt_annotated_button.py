@@ -5,8 +5,6 @@ from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QPixmap, QIcon,QFont
 from PyQt5.QtWidgets import QToolButton,QWidget,QPushButton,QLayout,QSizePolicy,QApplication,QVBoxLayout,QLabel
 
-from bs4 import BeautifulStoneSoup
-
 def get_align(align_string='top'):
     s=align_string.upper().split(' ')
     align=Qt.AlignAbsolute
@@ -29,7 +27,7 @@ class QAnnotatedButton(QToolButton):
         for item in labels:
             label=QLabel(self)
             text=item.get('text','')
-            lenght=item.get('lenght',35)
+            lenght=item.get('lenght',31)
             if len(text)>lenght-3:
                 text=text[:lenght-3]+'...'
             label.setText(text)

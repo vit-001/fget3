@@ -138,7 +138,7 @@ class AZloaderMP(BaseLoadProcedure):
             domain=domain.partition('.')[2]
         domain_cash[domain] = method
         self.data['domain_cash'] = domain_cash
-        print(domain_cash)
+        # print(domain_cash)
         self.lock.release()
 
         return method
@@ -256,10 +256,10 @@ class MultiprocessAZloader(BaseLoader):
         return new_process
 
     def on_end_of_process_handler(self, process:LoadProcess, handler=lambda:None):
-        print('удаляем процесс загрузки')
-        print(self.list_of_load_process)
+        # print('удаляем процесс загрузки')
+        # print(self.list_of_load_process)
         self.list_of_load_process.remove(process)
-        print(self.list_of_load_process)
+        # print(self.list_of_load_process)
         handler()
 
     def on_update(self):
@@ -269,7 +269,7 @@ class MultiprocessAZloader(BaseLoader):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
-        print('Start load:', filedata.url)
+        # print('Start load:', filedata.url)
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 

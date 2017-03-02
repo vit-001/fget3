@@ -2,7 +2,7 @@ __author__ = 'Nikitin'
 
 import sys
 
-from view.qt_ui.thumb_view import *
+from view.qt_ui.thumb_widget import *
 
 
 class MyWin(QtWidgets.QMainWindow):

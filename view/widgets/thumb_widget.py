@@ -1,6 +1,6 @@
 __author__ = 'Vit'
 
-__all__ = ['QThumbViewVS']
+__all__ = ['ThumbWidgetVS']
 
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QPixmap, QIcon
@@ -10,7 +10,7 @@ from view.qt_ui.scroll_bar_widget import Ui_ScrollBarWidget
 from view.widgets.qt_annotated_button import QAnnotatedButton
 
 
-class QThumbView(QWidget):
+class ThumbWidget(QWidget):
     def __init__(self, parent=None, scroller=None, thumb_size=200, space=2):
         QWidget.__init__(self, parent)
         self.space = space
@@ -119,14 +119,14 @@ class QThumbView(QWidget):
         self.text_visible = visible
 
 
-class QThumbViewVS(QWidget):
+class ThumbWidgetVS(QWidget):
     def __init__(self, parent=None, Qt_WindowFlags_flags=0, size=200, space=2):
         QWidget.__init__(self, parent)
 
         self.ui = Ui_ScrollBarWidget()
         self.ui.setupUi(self)
 
-        self.thumbs = QThumbView(parent=self.ui.area, scroller=self.ui.scroll_bar, thumb_size=size, space=space)
+        self.thumbs = ThumbWidget(parent=self.ui.area, scroller=self.ui.scroll_bar, thumb_size=size, space=space)
         self.ui.area_layout.addWidget(self.thumbs)
 
     def add(self, pix_fname='', action=lambda: None, popup='',labels:list=tuple()):

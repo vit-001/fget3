@@ -10,6 +10,7 @@ from view.base_view import VideoViewFromModelInterface
 from view.base_view import PictureViewFromModelInterface
 from controller.base_controller import ControllerFromViewInterface
 
+from view.thumb_view import ThumbView
 
 class ViewManager(ViewFromControllerInterface, ViewFromModelInterface):
 
@@ -19,12 +20,17 @@ class ViewManager(ViewFromControllerInterface, ViewFromModelInterface):
         self.main=MainWindow(controller=controller)
         self.main.show()
 
+        self.thumb_views=list()
+
         self.timer = QTimer()
         self.timer.timeout.connect(self.controller.on_cycle_handler)
         self.timer.start(100)
 
-    def prepare_thumb_view(self, new=False) -> ThumbViewFromModelInterface:
-        return ThumbViewFromModelInterface()
+    def prepare_thumb_view(self, name:str, new=False) -> ThumbViewFromModelInterface:
+        tab=self.main.ui.tabWidget
+        view=ThumbView(tab, name)
+        self.thumb_views.append(view)
+        return view
 
     def on_exit(self):
         QGuiApplication.exit(0)

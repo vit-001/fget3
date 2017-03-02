@@ -3,7 +3,10 @@ __author__ = 'Nikitin'
 
 from PyQt5.QtWidgets import QMainWindow
 
-from view.qt_ui.thumb_view import Ui_MainWindow
+from view.qt_ui.thumb_widget import Ui_MainWindow
+from view.widgets.thumb_widget import ThumbWidgetVS
+
+
 from controller.controller import ControllerFromViewInterface
 
 class MainWindow(QMainWindow):
@@ -12,6 +15,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.controller=controller
+        self.resize(454, 779)
+        print(self.geometry())
 
     def closeEvent(self, *args, **kwargs):
         self.controller.on_exit()

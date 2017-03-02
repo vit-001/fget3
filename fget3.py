@@ -14,13 +14,26 @@ from controller.controller import Controller
 if __name__ == '__main__':
     # freeze_support()
 
+    print(sys.argv)
+
+    from xutil.conpile_interfaces import InterfaceCompiler
+    ic = InterfaceCompiler(sys.argv[0].rpartition('/')[0])
+    ic.compile_interfaces()
+
+
     app = QApplication(sys.argv)
 
     view=ViewManager()
     model=Model(view)
     controller=Controller(view,model)
 
-    model.goto_url(URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=2*", test_string='Veronicca'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=3*", test_string='Veronicca'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=4*", test_string='Veronicca'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=5*", test_string='Veronicca'))
+    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=6*", test_string='Veronicca'))
+
 
     sys.exit(app.exec_())
 

@@ -17,21 +17,27 @@ class VeroniccaComSite(BaseSiteParser):
                               url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumbnail in _iter(soup.find_all('div', {'class': 'video-thumb'})):
+        for thumbnail in soup.find_all('div', {'class': ['well well-sm hover', 'channelBox']}):
+            # psp(thumbnail)
             href = URL(thumbnail.a.attrs['href'], base_url=url)
             description = thumbnail.a.img.attrs['alt']
-            thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
 
-            duration = thumbnail.find('span', {'class': "time"})
-            dur_time = '' if duration is None else str(duration.string)
+            thumb_file = thumbnail.img.attrs['src']
+            channel_img = thumbnail.find('img', {'class': "img-responsive"})
+            thumb_file = thumb_file if channel_img is None else channel_img.attrs['src']
 
-            quality = thumbnail.find('span', {'class': "quality"})
-            qual = '' if quality is None else str(quality.string)
+            thumb_url = URL(thumb_file, base_url=url)
+
+            duration = thumbnail.find('div', {'class': "duration"})
+            dur_time = '' if duration is None else duration.stripped_strings.__next__()
 
             self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                                        labels=[{'text': dur_time, 'align': 'top right'},
-                                               {'text': description, 'align': 'bottom center'},
-                                               {'text': qual, 'align': 'top left', 'bold': True}])
+                                               {'text': description, 'align': 'bottom center'}])
+
+    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+        return url.get()
+
 
 if __name__ == "__main__":
     pass

@@ -5,20 +5,20 @@ import os
 
 
 class InterfaceCompiler():
-    def __init__(self, test_compile=False):
+    def __init__(self, base_dir:str, test_compile=False):
 
         # self.test_compile = test_compile
 
-        self.interfaces = ['thumb_view','scroll_bar_widget']
+        self.interfaces = ['thumb_widget','scroll_bar_widget']
 
         # self.test_interfaces = ['tst_qpixmap', 'tst', 'video_player']
 
         # if self.test_compile:
         #     self.interfaces.extend(self.test_interfaces)
 
-        # self.base_dir = 'E:/Dropbox/Hobby/PRG/PyWork/FGet'
-        self.source_dir = '../view/qt_design/'
-        self.dest_dir = '../view/qt_ui/'
+        self.base_dir = base_dir                                     #'E:/repo/fget3'
+        self.source_dir = self.base_dir + '/view/qt_design/'
+        self.dest_dir = self.base_dir + '/view/qt_ui/'
 
         self.pyuic5 = 'C:/Python34/Lib/site-packages/PyQt5/pyuic5.bat '
 
