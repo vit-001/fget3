@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
-import sys
+import sys, time
 from multiprocessing import freeze_support
 
 from PyQt5.QtWidgets import QApplication
@@ -12,7 +12,7 @@ from view.view_manager import ViewManager
 from controller.controller import Controller
 
 if __name__ == '__main__':
-    # freeze_support()
+    freeze_support()
 
     print(sys.argv)
 
@@ -27,15 +27,21 @@ if __name__ == '__main__':
     model=Model(view)
     controller=Controller(view,model)
 
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=2*", test_string='Veronicca'))
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=3*", test_string='Veronicca'))
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=4*", test_string='Veronicca'))
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=5*", test_string='Veronicca'))
-    model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=6*", test_string='Veronicca'))
-
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
+    # time.sleep(1)
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=2*", test_string='Veronicca'))
+    # time.sleep(1)
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=3*", test_string='Veronicca'))
+    # time.sleep(1)
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=4*", test_string='Veronicca'))
+    # time.sleep(1)
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=5*", test_string='Veronicca'))
+    # time.sleep(1)
+    # model.goto_url(URL("https://www.veronicca.com/videos?o=mr&page=6*", test_string='Veronicca'))
 
     sys.exit(app.exec_())
+
+
 
 
 

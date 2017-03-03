@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from common.url import URL
 from common.util import _iter
 
-from model.site.base_site import BaseSiteParser,ViewFromModelInterface, BeautifulSoup
+from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
 
 class VeroniccaComSite(BaseSiteParser):
     @staticmethod
@@ -11,7 +11,7 @@ class VeroniccaComSite(BaseSiteParser):
         return url.contain('veronicca.com/')
 
     @staticmethod
-    def create_start_button(view:ViewFromModelInterface):
+    def create_start_button(view:ViewManagerFromModelInterface):
         view.add_start_button(name='veronicca.com',
                               picture_filename='',
                               url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
@@ -34,6 +34,9 @@ class VeroniccaComSite(BaseSiteParser):
             self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                                        labels=[{'text': dur_time, 'align': 'top right'},
                                                {'text': description, 'align': 'bottom center'}])
+
+    def get_pagination_container(self, soup: BeautifulSoup)->BeautifulSoup:
+        return soup.find('ul', {'class': 'pagination'})
 
     def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
         return url.get()

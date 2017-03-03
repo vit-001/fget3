@@ -104,7 +104,9 @@ class AZloaderMP(BaseLoadProcedure):
         self.trick_load = TrickLoad()
 
     def open(self, url: URL) -> bytes:
+        self.lock.acquire()
         method = self.get_load_method(url)
+        self.lock.release()
 
         if method == 'none':
             raise LoaderError('No way to open, connection not established or content filtered.')
@@ -132,14 +134,14 @@ class AZloaderMP(BaseLoadProcedure):
         method = self._inspect_availability(url)
         print('            ...', method)
 
-        self.lock.acquire()
+        # self.lock.acquire()
         domain_cash = self.data.get('domain_cash', dict())
         if domain.startswith('www.'):
             domain=domain.partition('.')[2]
         domain_cash[domain] = method
         self.data['domain_cash'] = domain_cash
         # print(domain_cash)
-        self.lock.release()
+        # self.lock.release()
 
         return method
 

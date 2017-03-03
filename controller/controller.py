@@ -3,14 +3,15 @@ __author__ = 'Vit'
 from common.url import URL
 
 from controller.base_controller import ControllerFromModelInterface,ControllerFromViewInterface
-from view.base_view import ViewFromControllerInterface
+from view.base_view import ViewManagerFromControllerInterface
 from model.base_model import ModelFromControllerInterface
 
 class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
-    def __init__(self, view:ViewFromControllerInterface,model:ModelFromControllerInterface):
+    def __init__(self, view:ViewManagerFromControllerInterface, model:ModelFromControllerInterface):
         self.view=view
         self.model=model
         self.view.create_main_window(self)
+        self.goto_url=self.model.goto_url
 
     def on_cycle_handler(self):
         self.model.on_cycle_handler()

@@ -2,7 +2,7 @@ __author__ = 'Vit'
 
 __all__ = ['ThumbWidgetVS']
 
-from PyQt5.QtCore import QPoint, QRect, QSize, Qt
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt, QEventLoop
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import *
 
@@ -24,6 +24,9 @@ class ThumbWidget(QWidget):
         self.scroller = scroller
         self.scroller.valueChanged.connect(self.on_scroll)
         self._scroller_setup()
+
+        QEventLoop().processEvents(QEventLoop.AllEvents)
+        self.update()
 
     def add(self, pix_fname='', action=lambda: None, popup='',labels:list=tuple()):
 
@@ -49,6 +52,11 @@ class ThumbWidget(QWidget):
         self.thumbs.append(button)
         self._place()
         self._scroller_set_max()
+
+        QEventLoop().processEvents(QEventLoop.AllEvents)
+        self.update()
+
+
 
     def clear(self):
         for item in self.thumbs:

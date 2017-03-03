@@ -9,7 +9,7 @@ from common.url import URL
 from common.setting import Setting
 from model.loader.base_loader import FLData
 from model.base_model import ModelFromSiteInterface
-from view.base_view import ViewFromModelInterface, ThumbViewFromModelInterface
+from view.base_view import ViewManagerFromModelInterface, ThumbViewFromModelInterface
 
 class ThumbData(FLData):
     def __init__(self, thumb_url: URL, thumb_filename: str, href:URL, popup:str='', labels:list=list()):
@@ -20,7 +20,7 @@ class ThumbData(FLData):
 
 class SiteInterface:
     @staticmethod
-    def create_start_button(view:ViewFromModelInterface):
+    def create_start_button(view:ViewManagerFromModelInterface):
         pass
 
     @staticmethod
@@ -42,11 +42,12 @@ class ParseResult:
 
     def add_thumb(self,thumb_url:URL, href:URL, popup:str='', labels:list=list()):
         self._result_type= 'thumbs'
-        # print('Add thumb:', thumb_url, href, popup, labels)
-        # print(thumb_url.get_path())
-        # print(thumb_url.get_short_filename())
         thumb={'url':thumb_url,'href':href,'popup':popup,'labels':labels}
         self.thumbs.append(thumb)
+
+    def add_page(self,text: str, href: URL, menu=None, style: dict = None):
+        control={'text':text,'href':href,'menu':menu,'style':style}
+        self.controls_bottom.append(control)
 
     @property
     def is_video(self)->bool:
@@ -78,7 +79,7 @@ class BaseSite(SiteInterface, ParseResult):
         loader.start_load_file(filedata, self.on_load_url)
 
     def on_load_url(self, filedata:FLData):
-        print(filedata.url, 'loaded')
+        # print(filedata.url, 'loaded')
         soup=BeautifulSoup(filedata.text,'html.parser')
         self.parse_soup(soup, filedata.url)
         if self.is_no_result:
@@ -97,6 +98,9 @@ class BaseSite(SiteInterface, ParseResult):
             filename=thumb['url'].get_short_filename(base=Setting.cache_path)
             thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
         loader.load_list(thumb_list)
+
+        for item in self.controls_bottom:
+            view.add_bottom_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
 
 
 class BaseSiteParser(BaseSite):
@@ -135,8 +139,8 @@ class BaseSiteParser(BaseSite):
         if container is not None:
             for page in container.find_all('a', {'href': True}):
                 if page.string is not None and page.string.isdigit():
-                    # result.add_page(ControlInfo(page.string, URL(page.attrs['href'], base_url=base_url)))
-                    print('Add page',page.string, URL(page.attrs['href'], base_url=url))
+                    self.add_page(page.string, URL(page.attrs['href'], base_url=url))
+                    # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
 
     def get_pagination_container(self, soup:BeautifulSoup)->BeautifulSoup:
         return None

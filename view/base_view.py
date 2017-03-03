@@ -7,10 +7,10 @@ from controller.base_controller import ControllerFromViewInterface
 
 class ThumbViewFromModelInterface:
     def add_thumb(self,picture_filename:str, href:URL, popup:str='',labels=list):
-        print('Thumb filename:', picture_filename, 'added')
-        print('           url:', href)
-        print('         popup:', popup)
-        print('        labels:', labels)
+        pass
+
+    def add_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
+        pass
 
 class VideoViewFromModelInterface:
     pass
@@ -18,7 +18,11 @@ class VideoViewFromModelInterface:
 class PictureViewFromModelInterface:
     pass
 
-class ViewFromModelInterface:
+class ViewManagerFromViewInterface:
+    def goto_url(self, url:URL):
+        pass
+
+class ViewManagerFromModelInterface:
     def prepare_thumb_view(self, name:str, new=False)->ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
@@ -32,7 +36,7 @@ class ViewFromModelInterface:
         print('Add start button:', name)
 
 
-class ViewFromControllerInterface:
+class ViewManagerFromControllerInterface:
     def create_main_window(self, controller: ControllerFromViewInterface):
         pass
 

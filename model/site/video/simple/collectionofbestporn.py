@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from common.url import URL
 from common.util import _iter
 
-from model.site.base_site import BaseSiteParser,ViewFromModelInterface, BeautifulSoup
+from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
 
 class CollectionofbestpornSite(BaseSiteParser):
     @staticmethod
@@ -11,7 +11,7 @@ class CollectionofbestpornSite(BaseSiteParser):
         return url.contain('collectionofbestporn.com/')
 
     @staticmethod
-    def create_start_button(view:ViewFromModelInterface):
+    def create_start_button(view:ViewManagerFromModelInterface):
         view.add_start_button(name='Collectionofbestporn',
                               picture_filename='',
                               url=URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))

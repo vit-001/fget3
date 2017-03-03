@@ -57,7 +57,7 @@ class URL:
         if not (url.startswith('http://') or url.startswith('https://')):
             url = 'http://' + url
 
-        if url.endswith('*'):
+        if url.endswith('*') or not url.endswith('/'):
             self.no_slash = True
             url = url.rstrip('*')
         else:
