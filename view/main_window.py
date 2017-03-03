@@ -1,41 +1,63 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtGui import QBrush,QColor,QPalette
 
 from common.url import URL
 
-from view.qt_ui.thumb_widget import Ui_MainWindow
+from view.base_view import ViewManagerFromViewInterface
+from view.qt_ui.main_window import Ui_MainWindow
 from view.widgets.thumb_widget import ThumbWidgetVS
 from view.widgets.button_line import ButtonLine,TextButton,ImageButton
+from view.thumb_view import ThumbView
+
 
 
 from controller.controller import ControllerFromViewInterface
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent=None, controller: ControllerFromViewInterface=None):
-        QMainWindow.__init__(self, parent)
+    def __init__(self, view_manager: ViewManagerFromViewInterface=None):
+        QMainWindow.__init__(self, None)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.controller=controller
-        self.resize(454, 779)
-        print(self.geometry())
+        self.view_manager=view_manager
         self.create_widgets()
 
+        self.thumb_views = list()
+
+        self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
+
+    def get_new_thumb_view(self, name: str) -> ThumbView:
+        tab = self.ui.tabWidget
+        view = ThumbView(tab, name, self.view_manager)
+        self.thumb_views.append(view)
+
+        return view
+
+    def get_current_thumb_view(self)->ThumbView:
+        index = self.ui.tabWidget.currentIndex()
+        if index >= 0:
+            return self.thumb_views[index]
+        else:
+            return None
+
+    def create_site_button(self,button):
+        self.sites.add_button(button)
+
     def create_widgets(self):
-        self.sites=ButtonLine(self.ui.top_frame)
+        self.sites=ButtonLine(self.ui.top_frame,height=50)
         self.ui.top_frame_layout.addWidget(self.sites)
 
-        b=TextButton('Ver','1',lambda: self.controller.goto_url(URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca')))
-        self.sites.add_button(b)
-        b=TextButton('CBP','2',lambda: self.controller.goto_url(URL("http://collectionofbestporn.com/most-recent*", test_string='Collection')))
-        self.sites.add_button(b)
-
-
+    def close_tab(self,index:int):
+        self.thumb_views[index].clear()
+        self.thumb_views.pop(index)
+        self.ui.tabWidget.removeTab(index)
+        self.update()
 
     def closeEvent(self, *args, **kwargs):
         self.controller.on_exit()
-
 
 if __name__ == "__main__":
     pass

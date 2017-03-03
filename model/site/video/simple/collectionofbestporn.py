@@ -13,7 +13,7 @@ class CollectionofbestpornSite(BaseSiteParser):
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
         view.add_start_button(name='Collectionofbestporn',
-                              picture_filename='',
+                              picture_filename='model/site/resource/collectionofbestporn.png',
                               url=URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):

@@ -7,7 +7,10 @@ from view.base_view import ViewManagerFromModelInterface
 from model.loader.base_loader import BaseLoader
 
 class ModelFromControllerInterface:
-    def goto_url(self, url:URL):
+    def create_sites(self):
+        pass
+
+    def goto_url(self, url: URL, **options):
         pass
 
     def on_cycle_handler(self):

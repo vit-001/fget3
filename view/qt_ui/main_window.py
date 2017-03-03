@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/thumb_widget.ui'
+# Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/main_window.ui'
 #
-# Created: Fri Mar  3 13:04:11 2017
+# Created: Fri Mar  3 18:07:14 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,6 +18,26 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        brush = QtGui.QBrush(QtGui.QColor(150, 150, 150))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        MainWindow.setPalette(palette)
         MainWindow.setIconSize(QtCore.QSize(24, 24))
         MainWindow.setDocumentMode(False)
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -27,7 +47,7 @@ class Ui_MainWindow(object):
         self.base.setObjectName("base")
         self.base_layout = QtWidgets.QVBoxLayout(self.base)
         self.base_layout.setSpacing(3)
-        self.base_layout.setContentsMargins(4, 0, 0, 0)
+        self.base_layout.setContentsMargins(4, 0, 4, 0)
         self.base_layout.setObjectName("base_layout")
         self.top_frame = QtWidgets.QFrame(self.base)
         self.top_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -60,11 +80,13 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.tabWidget.setFont(font)
+        self.tabWidget.setAutoFillBackground(False)
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Triangular)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(True)
-        self.tabWidget.setTabBarAutoHide(True)
+        self.tabWidget.setMovable(False)
+        self.tabWidget.setTabBarAutoHide(False)
         self.tabWidget.setObjectName("tabWidget")
         self.mid_frame_layout.addWidget(self.tabWidget)
         self.base_layout.addWidget(self.mid_frame)

@@ -11,7 +11,13 @@ class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
         self.view=view
         self.model=model
         self.view.create_main_window(self)
+        self.model.create_sites()
+
+
         self.goto_url=self.model.goto_url
+
+    def goto_url(self, url: URL, **options):
+        self.model.goto_url(url, **options)
 
     def on_cycle_handler(self):
         self.model.on_cycle_handler()

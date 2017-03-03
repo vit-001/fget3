@@ -11,6 +11,7 @@ from multiprocessing import Manager, Queue, Process, Lock
 import requests
 
 from common.url import URL
+from common.setting import Setting
 from model.loader.base_loader import BaseLoader, BaseLoadProcess, LoaderError, FLData, BaseLoadProcedure
 from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
@@ -27,12 +28,12 @@ class DataServer:
         return self.data
 
     def stop(self):
-        self.write_config('resource/az.json')
+        self.write_config(Setting.data_server_config_path+'az.json')
         self.manager.shutdown()
 
     def init_data(self):
         print('Requests version: ' + requests.__version__)
-        self.read_config('resource/az.json')
+        self.read_config(Setting.data_server_config_path+'az.json')
         self.read_proxy_pac(URL("http://antizapret.prostovpn.org/proxy.pac*"))
         self.data['domain_cash'] = dict()
 
@@ -54,11 +55,10 @@ class DataServer:
                 # for item in p:
                 #     proxy_domains.append(item)
                 # self.data['proxy_domains']=proxy_domains
-
-            self.last_load_proxy_pack = datetime.datetime.now()
-
         except LoaderError:
-            print('AZLoader error:', pac_url, 'not loaded')
+            print('AZLoader error:', pac_url, 'not loaded. Lets try to load later...')
+
+        self.last_load_proxy_pack=datetime.datetime.now()
 
     def read_config(self, config_filename):
         try:

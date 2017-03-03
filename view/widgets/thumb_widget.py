@@ -3,7 +3,8 @@ __author__ = 'Vit'
 __all__ = ['ThumbWidgetVS']
 
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt, QEventLoop
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtGui import QPixmap, QIcon, QPalette
+# from PyQt5.QtGui import QBrush,QColor,QPalette
 from PyQt5.QtWidgets import *
 
 from view.qt_ui.scroll_bar_widget import Ui_ScrollBarWidget
@@ -24,6 +25,11 @@ class ThumbWidget(QWidget):
         self.scroller = scroller
         self.scroller.valueChanged.connect(self.on_scroll)
         self._scroller_setup()
+
+        # palette = QPalette()
+        # palette.setColor(QPalette.Background, Qt.gray)
+        # self.setAutoFillBackground(True)
+        # self.setPalette(palette)
 
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.update()

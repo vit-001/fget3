@@ -18,14 +18,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[CollectionofbestpornSite,VeroniccaComSite,
                            ]
 
+    def create_sites(self):
         for site_class in self._site_models:
-            site_class.create_start_button(view)
+            site_class.create_start_button(self.view)
 
-    def goto_url(self, url: URL):
+    def goto_url(self, url: URL, **options):
         for site_class in self._site_models:
             if site_class.can_accept_url(url):
                 site=site_class(self)
-                site.goto_url(url)
+                site.goto_url(url, **options)
                 return
         print('Rejected', url)
 

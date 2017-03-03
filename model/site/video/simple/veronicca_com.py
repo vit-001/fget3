@@ -13,7 +13,7 @@ class VeroniccaComSite(BaseSiteParser):
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
         view.add_start_button(name='veronicca.com',
-                              picture_filename='',
+                              picture_filename='model/site/resource/veronicca_com.png',
                               url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
@@ -34,6 +34,12 @@ class VeroniccaComSite(BaseSiteParser):
             self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                                        labels=[{'text': dur_time, 'align': 'top right'},
                                                {'text': description, 'align': 'bottom center'}])
+
+    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+        tags = soup.find('ul', {'class': 'drop2 hidden-xs'})
+        if tags is not None:
+            for tag in tags.find_all('a'):
+                self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 
     def get_pagination_container(self, soup: BeautifulSoup)->BeautifulSoup:
         return soup.find('ul', {'class': 'pagination'})

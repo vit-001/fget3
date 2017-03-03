@@ -49,6 +49,10 @@ class ParseResult:
         control={'text':text,'href':href,'menu':menu,'style':style}
         self.controls_bottom.append(control)
 
+    def add_tag(self,text: str, href: URL, menu=None, style: dict = None):
+        control={'text':text,'href':href,'menu':menu,'style':style}
+        self.controls_mid.append(control)
+
     @property
     def is_video(self)->bool:
         return self._result_type == 'video'
@@ -70,9 +74,13 @@ class BaseSite(SiteInterface, ParseResult):
     def __init__(self, model:ModelFromSiteInterface):
         ParseResult.__init__(self)
         self.model=model
+        self.start_options=dict()
 
     def goto_url(self, url: URL, **options):
-        print('Goto url:', url)
+        print('Goto url:', url, end='')
+        self.start_options=options
+        print(options)
+
         loader=self.model.loader
         filedata=FLData(url,'')
 
@@ -89,7 +97,11 @@ class BaseSite(SiteInterface, ParseResult):
         return False
 
     def generate_thumb_view(self):
-        view=self.model.view.prepare_thumb_view(self.title)
+        view=self.start_options.get('current_thumb_view', None)
+        if not view:
+            view=self.model.view.prepare_thumb_view(self.title)
+        else:
+            view.re_init(self.title)
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
@@ -102,6 +114,11 @@ class BaseSite(SiteInterface, ParseResult):
         for item in self.controls_bottom:
             view.add_bottom_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
 
+        for item in self.controls_mid:
+            view.add_mid_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
+
+        for item in self.controls_top:
+            view.add_top_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
 
 class BaseSiteParser(BaseSite):
     def parse_soup(self, soup:BeautifulSoup, url:URL):

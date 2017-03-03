@@ -6,10 +6,22 @@ from common.exception import AbstractMethodError
 from controller.base_controller import ControllerFromViewInterface
 
 class ThumbViewFromModelInterface:
+    def clear(self):
+        pass
+
+    def re_init(self, title:str):
+        pass
+
     def add_thumb(self,picture_filename:str, href:URL, popup:str='',labels=list):
         pass
 
     def add_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
+        pass
+
+    def add_top_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
+        pass
+
+    def add_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
         pass
 
 class VideoViewFromModelInterface:
@@ -23,7 +35,7 @@ class ViewManagerFromViewInterface:
         pass
 
 class ViewManagerFromModelInterface:
-    def prepare_thumb_view(self, name:str, new=False)->ThumbViewFromModelInterface:
+    def prepare_thumb_view(self, name:str)->ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
     def prepare_video_view(self, new=False)->VideoViewFromModelInterface:

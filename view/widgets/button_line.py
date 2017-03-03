@@ -2,6 +2,7 @@ __author__ = 'Vit'
 
 from PyQt5.Qt import QFont
 from PyQt5.QtCore import QPoint, QRect, QSize
+from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import *
 
 class ActionButton(QToolButton):
@@ -9,6 +10,7 @@ class ActionButton(QToolButton):
         super().__init__(None)
         self.clicked.connect(action)
         self.setToolTip(tooltip)
+        self.setAutoRaise(True)
 
     def set_button_style(self, attr_value_dict: dict):
         """
@@ -46,7 +48,7 @@ class ActionButton(QToolButton):
         font.setUnderline(attr_value_dict.get('underline',False))
         self.setFont(font)
 
-        self.setAutoRaise(attr_value_dict.get('autoraise',False))
+        self.setAutoRaise(attr_value_dict.get('autoraise',True))
 
     def set_menu(self, menu):
         if menu:
@@ -60,8 +62,14 @@ class TextButton(ActionButton):
 
 
 class ImageButton(ActionButton):
-    def __init__(self, picture_filename:str, action=lambda:None):
-        super().__init__(action)
+    def __init__(self, picture_filename:str, tooltip:str, action=lambda:None):
+        super().__init__(tooltip, action)
+        pixmap = QPixmap(picture_filename)
+        icon = QIcon()
+        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+        self.setIcon(icon)
+        self.setIconSize(QSize(100, 100))
+
 
 
 class ButtonLine(QWidget):
