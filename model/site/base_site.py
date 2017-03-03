@@ -34,8 +34,12 @@ class ParseResult:
     def __init__(self):
         self._result_type= 'none'
         self.title='Title'
+
         self.thumbs=[]
-        self.video = None
+
+        self.video_data = []
+        self.video_default_index=0
+
         self.controls_top = []
         self.controls_bottom = []
         self.controls_mid = []
@@ -52,6 +56,16 @@ class ParseResult:
     def add_tag(self,text: str, href: URL, menu=None, style: dict = None):
         control={'text':text,'href':href,'menu':menu,'style':style}
         self.controls_mid.append(control)
+
+    def add_video(self, caption:str, url:URL):
+        self._result_type='video'
+        self.video_data.append(dict(text=caption, url=url))
+
+    def sort_video(self):
+        self.video_data.sort(key=lambda x:int(x['text']))
+
+    def set_default_video(self, default=0):
+        self.video_default_index=default
 
     @property
     def is_video(self)->bool:
@@ -120,11 +134,27 @@ class BaseSite(SiteInterface, ParseResult):
         for item in self.controls_top:
             view.add_top_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
 
+    def generate_video_view(self):
+        view = self.start_options.get('current_full_view', None)
+        if not view:
+            view = self.model.view.prepare_full_view(self.title)
+        # else:
+        #     view.re_init(self.title)
+
+        default=self.video_data[self.video_default_index]
+        view.play_video(default['text'], default['url'])
+
+        print('Video')
+        for item in self.video_data:
+            print(item)
+        print('Default:', self.video_data[self.video_default_index])
+
 class BaseSiteParser(BaseSite):
     def parse_soup(self, soup:BeautifulSoup, url:URL):
         self.parse_video(soup, url)
         if self.is_video:
             self.parse_video_tags(soup, url)
+            self.generate_video_view()
             return
         self.parse_pictures(soup, url)
         if self.is_pictures:

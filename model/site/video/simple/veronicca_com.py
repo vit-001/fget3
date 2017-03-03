@@ -47,6 +47,13 @@ class VeroniccaComSite(BaseSiteParser):
     def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
         return url.get()
 
+    def parse_video(self, soup: BeautifulSoup, url: URL):
+        video = soup.find('div', {'class': 'video-container'})
+        if video is not None:
+            for source in _iter(video.find_all('source')):
+                self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
+            self.set_default_video(-1)
+
 
 if __name__ == "__main__":
     pass

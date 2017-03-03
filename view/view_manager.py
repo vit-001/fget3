@@ -12,7 +12,7 @@ from common.url import URL
 from controller.base_controller import ControllerFromViewInterface
 from view.base_view import ThumbViewFromModelInterface
 from view.base_view import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
-    ViewManagerFromViewInterface
+    ViewManagerFromViewInterface, FullViewFromModelInterface
 from view.full_view_window import FullViewWindow
 from view.main_window import MainWindow
 from view.thumb_view import ThumbView
@@ -26,7 +26,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main = MainWindow(self)
         self.main.show()
 
-        self.full = FullViewWindow(controller=controller)
+        self.full = FullViewWindow(self)
         self.full.show()
 
         self.configure_viewports()
@@ -69,15 +69,26 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         return view
 
+    def prepare_full_view(self, name:str)->FullViewFromModelInterface:
+        view=self.full.get_new_full_view(name)
+        QEventLoop().processEvents(QEventLoop.AllEvents)
+        self.full.update()
+
+        return view
+
     def goto_url(self, url: URL):
 
         if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
             # print('control')
             self.controller.goto_url(url)
         else:
-            self.controller.goto_url(url, current_thumb_view=self.main.get_current_thumb_view())
+            self.controller.goto_url(url,
+                                     current_thumb_view=self.main.get_current_thumb_view(),
+                                     current_full_view=self.full.get_current_full_view()
+                                     )
 
     def on_exit(self):
+        self.controller.on_exit()
         QGuiApplication.exit(0)
 
 

@@ -24,24 +24,25 @@ class ThumbViewFromModelInterface:
     def add_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
         pass
 
-class VideoViewFromModelInterface:
-    pass
 
-class PictureViewFromModelInterface:
-    pass
+class FullViewFromModelInterface:
+    def play_video(self, name:str, url:URL):
+        pass
+
 
 class ViewManagerFromViewInterface:
     def goto_url(self, url:URL):
         pass
 
+    def on_exit(self):
+        pass
+
+
 class ViewManagerFromModelInterface:
     def prepare_thumb_view(self, name:str)->ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
-    def prepare_video_view(self, new=False)->VideoViewFromModelInterface:
-        raise (AbstractMethodError)
-
-    def prepare_picture_view(self, new=False)->PictureViewFromModelInterface:
+    def prepare_full_view(self, name:str)->FullViewFromModelInterface:
         raise (AbstractMethodError)
 
     def add_start_button(self, name:str, picture_filename:str, url:URL):
@@ -51,10 +52,6 @@ class ViewManagerFromModelInterface:
 class ViewManagerFromControllerInterface:
     def create_main_window(self, controller: ControllerFromViewInterface):
         pass
-
-    def on_exit(self):
-        pass
-
 
 if __name__ == "__main__":
     pass

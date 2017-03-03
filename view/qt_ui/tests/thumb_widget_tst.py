@@ -2,7 +2,7 @@ __author__ = 'Nikitin'
 
 import sys
 
-from view.qt_ui.main_window import *
+from view.qt_ui.ui_main_window import *
 
 
 class MyWin(QtWidgets.QMainWindow):

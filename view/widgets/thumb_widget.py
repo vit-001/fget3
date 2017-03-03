@@ -7,7 +7,7 @@ from PyQt5.QtGui import QPixmap, QIcon, QPalette
 # from PyQt5.QtGui import QBrush,QColor,QPalette
 from PyQt5.QtWidgets import *
 
-from view.qt_ui.scroll_bar_widget import Ui_ScrollBarWidget
+from view.qt_ui.ui_scroll_bar_widget import Ui_ScrollBarWidget
 from view.widgets.qt_annotated_button import QAnnotatedButton
 
 

@@ -9,7 +9,7 @@ class InterfaceCompiler():
 
         # self.test_compile = test_compile
 
-        self.interfaces = ['main_window','scroll_bar_widget', 'full_view_window']
+        self.interfaces = ['main_window','scroll_bar_widget', 'full_view_window', 'video_player_widget']
 
         # self.test_interfaces = ['tst_qpixmap', 'tst', 'video_player']
 
@@ -26,7 +26,7 @@ class InterfaceCompiler():
 
         for fname in self.interfaces:
             source = self.source_dir + fname + '.ui'
-            dest = self.dest_dir + fname + '.py'
+            dest = self.dest_dir + 'ui_' + fname + '.py'
             command = self.pyuic5 + source + ' -o ' + dest
             print(command)
             os.system(command)
