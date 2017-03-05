@@ -8,6 +8,7 @@ from view.view_manager_interface import ViewManagerFromModelInterface
 
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.veronicca_com import VeroniccaComSite
+from model.site.video.simple.hd_easyporn import HdEasyporn
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -15,7 +16,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[CollectionofbestpornSite,VeroniccaComSite,
+        self._site_models=[CollectionofbestpornSite,VeroniccaComSite,HdEasyporn
                            ]
 
     def create_sites(self):

@@ -44,6 +44,9 @@ class CollectionofbestpornSite(BaseSiteParser):
     def get_pagination_container(self, soup: BeautifulSoup):
         return soup.find('ul', {'class': 'pagination'})
 
+    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+        return 'CBP '+ url.get().partition('collectionofbestporn.com/')[2]
+
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('video')
         if video is not None:
@@ -56,6 +59,9 @@ class CollectionofbestpornSite(BaseSiteParser):
             for href in _iter(tag_container.find_all('a')):
                 if href.string is not None:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+
+    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
+        return url.get().rpartition('/')[2].rpartition('.')[0]
 
 
 if __name__ == "__main__":
