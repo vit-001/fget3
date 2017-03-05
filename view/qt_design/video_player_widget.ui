@@ -205,6 +205,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="lb_time">
+        <property name="text">
+         <string>0:00</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+        <property name="margin">
+         <number>2</number>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QDial" name="volume">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -223,6 +236,15 @@
           <width>48</width>
           <height>48</height>
          </size>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>

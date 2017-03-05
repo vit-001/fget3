@@ -3,7 +3,7 @@ __author__ = 'Nikitin'
 
 from common.url import URL
 from common.exception import AbstractMethodError
-from view.base_view import ViewManagerFromModelInterface
+from view.view_manager_interface import ViewManagerFromModelInterface
 from model.loader.base_loader import BaseLoader
 
 class ModelFromControllerInterface:

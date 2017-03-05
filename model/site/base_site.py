@@ -9,7 +9,9 @@ from common.url import URL
 from common.setting import Setting
 from model.loader.base_loader import FLData
 from model.base_model import ModelFromSiteInterface
-from view.base_view import ViewManagerFromModelInterface, ThumbViewFromModelInterface
+from view.view_manager_interface import ViewManagerFromModelInterface
+from view.view_interface import ThumbViewFromModelInterface
+
 
 class ThumbData(FLData):
     def __init__(self, thumb_url: URL, thumb_filename: str, href:URL, popup:str='', labels:list=list()):
@@ -32,6 +34,8 @@ class SiteInterface:
 
 class ParseResult:
     def __init__(self):
+        self.url=URL()
+
         self._result_type= 'none'
         self.title='Title'
 
@@ -92,6 +96,8 @@ class BaseSite(SiteInterface, ParseResult):
 
     def goto_url(self, url: URL, **options):
         print('Goto url:', url, end='')
+
+        self.url=url
         self.start_options=options
         print(options)
 
@@ -113,9 +119,11 @@ class BaseSite(SiteInterface, ParseResult):
     def generate_thumb_view(self):
         view=self.start_options.get('current_thumb_view', None)
         if not view:
-            view=self.model.view.prepare_thumb_view(self.title)
+            view=self.model.view.prepare_thumb_view()
         else:
-            view.re_init(self.title)
+            view.clear()
+
+        view.set_title(self.title, tooltip=self.url.get())
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
@@ -126,23 +134,25 @@ class BaseSite(SiteInterface, ParseResult):
         loader.load_list(thumb_list)
 
         for item in self.controls_bottom:
-            view.add_bottom_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
+            view.add_to_bottom_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
 
         for item in self.controls_mid:
-            view.add_mid_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
+            view.add_to_mid_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
 
         for item in self.controls_top:
-            view.add_top_line(item['text'], item['href'],item['href'].get(),item['menu'],item['style'])
+            view.add_to_top_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
 
     def generate_video_view(self):
         view = self.start_options.get('current_full_view', None)
         if not view:
-            view = self.model.view.prepare_full_view(self.title)
+            view = self.model.view.prepare_full_view()
         # else:
         #     view.re_init(self.title)
 
+        view.set_title(self.title, tooltip=self.url.get())
+
         default=self.video_data[self.video_default_index]
-        view.play_video(default['text'], default['url'])
+        view.set_video(default['url'])
 
         print('Video')
         for item in self.video_data:
@@ -154,6 +164,7 @@ class BaseSiteParser(BaseSite):
         self.parse_video(soup, url)
         if self.is_video:
             self.parse_video_tags(soup, url)
+            self.title=self.parse_video_title(soup,url)
             self.generate_video_view()
             return
         self.parse_pictures(soup, url)
@@ -197,6 +208,9 @@ class BaseSiteParser(BaseSite):
 
     def parse_video_tags(self, soup:BeautifulSoup, url:URL):
         pass
+
+    def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
+        return 'Title'
 
     def parse_pictures_tags(self, soup:BeautifulSoup, url:URL):
         pass

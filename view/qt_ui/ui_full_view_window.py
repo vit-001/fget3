@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/full_view_window.ui'
 #
-# Created: Sat Mar  4 01:01:08 2017
+# Created: Sun Mar  5 16:31:17 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -21,7 +21,7 @@ class Ui_FullViewWindow(object):
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Triangular)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.setMovable(False)
-        self.tabWidget.setTabBarAutoHide(True)
+        self.tabWidget.setTabBarAutoHide(False)
         self.tabWidget.setObjectName("tabWidget")
         self.verticalLayout.addWidget(self.tabWidget)
 

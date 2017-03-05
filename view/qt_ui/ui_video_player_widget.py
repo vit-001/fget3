@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/video_player_widget.ui'
 #
-# Created: Sat Mar  4 01:01:08 2017
+# Created: Sun Mar  5 16:31:17 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -97,6 +97,11 @@ class Ui_VideoPlayerWidget(object):
         self.progress.setOrientation(QtCore.Qt.Horizontal)
         self.progress.setObjectName("progress")
         self.bottom_frame_layout.addWidget(self.progress)
+        self.lb_time = QtWidgets.QLabel(self.bottom_frame)
+        self.lb_time.setTextFormat(QtCore.Qt.AutoText)
+        self.lb_time.setContentsMargins(2, 2, 2, 2)
+        self.lb_time.setObjectName("lb_time")
+        self.bottom_frame_layout.addWidget(self.lb_time)
         self.volume = QtWidgets.QDial(self.bottom_frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -105,6 +110,9 @@ class Ui_VideoPlayerWidget(object):
         self.volume.setSizePolicy(sizePolicy)
         self.volume.setMinimumSize(QtCore.QSize(48, 48))
         self.volume.setMaximumSize(QtCore.QSize(48, 48))
+        self.volume.setMaximum(100)
+        self.volume.setSingleStep(5)
+        self.volume.setPageStep(5)
         self.volume.setOrientation(QtCore.Qt.Horizontal)
         self.volume.setObjectName("volume")
         self.bottom_frame_layout.addWidget(self.volume)
@@ -132,4 +140,5 @@ class Ui_VideoPlayerWidget(object):
         self.bn_pause.setText(_translate("VideoPlayerWidget", "..."))
         self.bn_stop.setText(_translate("VideoPlayerWidget", "..."))
         self.bn_mute.setText(_translate("VideoPlayerWidget", "..."))
+        self.lb_time.setText(_translate("VideoPlayerWidget", "0:00"))
 

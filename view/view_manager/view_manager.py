@@ -4,18 +4,17 @@ __author__ = 'Nikitin'
 # from PyQt5 import Qt
 
 from PyQt5.QtCore import QTimer, QEventLoop, Qt, QRect
-from PyQt5.QtGui import QGuiApplication
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import QGuiApplication, QKeySequence
+from PyQt5.QtWidgets import QApplication, QAction
 
 from common.setting import Setting
 from common.url import URL
 from controller.base_controller import ControllerFromViewInterface
-from view.base_view import ThumbViewFromModelInterface
-from view.base_view import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
+from view.full_view.full_view_window import FullViewWindow
+from view.thumb_view.main_window import MainWindow
+from view.view_interface import ThumbViewFromModelInterface
+from view.view_manager_interface import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
     ViewManagerFromViewInterface, FullViewFromModelInterface
-from view.full_view_window import FullViewWindow
-from view.main_window import MainWindow
-from view.thumb_view import ThumbView
 from view.widgets.button_line import ImageButton
 
 
@@ -31,7 +30,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         self.configure_viewports()
 
-
+        self.add_keyboard_shortcut(self.main, 'Ctrl+`', self.panic)
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.controller.on_cycle_handler)
@@ -57,24 +56,35 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         # self.main.resize(458, 779)
 
+    def add_keyboard_shortcut(self, window, shortcut='', on_pressed=lambda: None):
+        action = QAction(window)
+        action.setShortcut(QKeySequence(shortcut))
+        action.setShortcutContext(Qt.ApplicationShortcut)
+        window.addAction(action)
+        action.triggered.connect(on_pressed)
+
     def add_start_button(self, name: str, picture_filename: str, url: URL):
         b = ImageButton(picture_filename, name, lambda: self.goto_url(url))
         self.main.create_site_button(b)
 
-    def prepare_thumb_view(self, name: str) -> ThumbViewFromModelInterface:
-        view=self.main.get_new_thumb_view(name)
+    def prepare_thumb_view(self) -> ThumbViewFromModelInterface:
+        view=self.main.get_new_thumb_view()
 
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.main.update()
 
         return view
 
-    def prepare_full_view(self, name:str)->FullViewFromModelInterface:
-        view=self.full.get_new_full_view(name)
+    def prepare_full_view(self)->FullViewFromModelInterface:
+        view=self.full.get_new_full_view()
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.full.update()
 
         return view
+
+    def set_tab_text(self, view, text:str, tooltip:str=''):
+        self.main.set_tab_text(view,text, tooltip)
+        self.full.set_tab_text(view,text, tooltip)
 
     def goto_url(self, url: URL):
 
@@ -86,6 +96,14 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
                                      current_thumb_view=self.main.get_current_thumb_view(),
                                      current_full_view=self.full.get_current_full_view()
                                      )
+
+    def is_full_view_tab_active(self, full_view: FullViewFromModelInterface) -> bool:
+        return self.full.is_tab_active(full_view)
+
+    def panic(self):
+        print('Panic!!')
+        self.main.panic()
+        self.full.panic()
 
     def on_exit(self):
         self.controller.on_exit()

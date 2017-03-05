@@ -4,7 +4,7 @@ from common.url import URL
 from common.setting import Setting
 from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
 from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
-from view.base_view import ViewManagerFromModelInterface
+from view.view_manager_interface import ViewManagerFromModelInterface
 
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.veronicca_com import VeroniccaComSite

@@ -54,6 +54,9 @@ class VeroniccaComSite(BaseSiteParser):
                 self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
             self.set_default_video(-1)
 
+    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
+        return url.get().rpartition('/')[2]
+
 
 if __name__ == "__main__":
     pass
