@@ -95,11 +95,11 @@ class BaseSite(SiteInterface, ParseResult):
         self.start_options=dict()
 
     def goto_url(self, url: URL, **options):
-        print('Goto url:', url, end='')
+        print('Goto url:', url)
 
         self.url=url
         self.start_options=options
-        print(options)
+        # print(options)
 
         loader=self.model.loader
         filedata=FLData(url,'')
@@ -119,7 +119,7 @@ class BaseSite(SiteInterface, ParseResult):
     def generate_thumb_view(self):
         view=self.start_options.get('current_thumb_view', None)
         if not view:
-            view=self.model.view.prepare_thumb_view()
+            view=self.model.view_manager.prepare_thumb_view()
         else:
             view.clear()
 
@@ -133,6 +133,25 @@ class BaseSite(SiteInterface, ParseResult):
             thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
         loader.load_list(thumb_list)
 
+        self.add_controls_to_view(view)
+
+    def generate_video_view(self):
+        view = self.start_options.get('current_full_view', None)
+        if not view:
+            view = self.model.view_manager.prepare_full_view()
+
+        view.set_title(self.title, tooltip=self.url.get())
+
+        view.set_video_list(self.video_data, self.video_default_index)
+
+        self.add_controls_to_view(view)
+
+        print('Now playback', self.url) # todo сделать отладочный вывод
+        for item in self.video_data:
+            print(item['text'], item['url'])
+        print('Default:', self.video_data[self.video_default_index]['text'])
+
+    def add_controls_to_view(self, view):
         for item in self.controls_bottom:
             view.add_to_bottom_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
 
@@ -141,23 +160,6 @@ class BaseSite(SiteInterface, ParseResult):
 
         for item in self.controls_top:
             view.add_to_top_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
-
-    def generate_video_view(self):
-        view = self.start_options.get('current_full_view', None)
-        if not view:
-            view = self.model.view.prepare_full_view()
-        # else:
-        #     view.re_init(self.title)
-
-        view.set_title(self.title, tooltip=self.url.get())
-
-        default=self.video_data[self.video_default_index]
-        view.set_video(default['url'])
-
-        print('Video')
-        for item in self.video_data:
-            print(item)
-        print('Default:', self.video_data[self.video_default_index])
 
 class BaseSiteParser(BaseSite):
     def parse_soup(self, soup:BeautifulSoup, url:URL):

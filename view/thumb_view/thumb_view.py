@@ -67,19 +67,19 @@ class ThumbView(ThumbViewFromModelInterface):
 
     def add_to_bottom_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
         button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(menu)
+        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
         button.set_button_style(style)
         self.bottom_line.add_button(button)
 
     def add_to_mid_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
         button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(menu)
+        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
         button.set_button_style(style)
         self.mid_line.add_button(button)
 
     def add_to_top_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
         button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(menu)
+        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
         button.set_button_style(style)
         self.top_line.add_button(button)
 

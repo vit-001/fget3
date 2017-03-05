@@ -21,7 +21,7 @@ class ModelFromControllerInterface:
 
 class ModelFromSiteInterface:
     @property
-    def view(self)->ViewManagerFromModelInterface:
+    def view_manager(self)->ViewManagerFromModelInterface:
         raise(AbstractMethodError)
 
     @property

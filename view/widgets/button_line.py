@@ -71,7 +71,6 @@ class ImageButton(ActionButton):
         self.setIconSize(QSize(100, 100))
 
 
-
 class ButtonLine(QWidget):
     def __init__(self, parent=None, height=25, space=2):
         QWidget.__init__(self, parent)

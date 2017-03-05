@@ -5,10 +5,11 @@ __author__ = 'Nikitin'
 
 from PyQt5.QtCore import QTimer, QEventLoop, Qt, QRect
 from PyQt5.QtGui import QGuiApplication, QKeySequence
-from PyQt5.QtWidgets import QApplication, QAction
+from PyQt5.QtWidgets import QApplication, QAction, QMenu
 
 from common.setting import Setting
 from common.url import URL
+from common.util import get_menu_handler
 from controller.base_controller import ControllerFromViewInterface
 from view.full_view.full_view_window import FullViewWindow
 from view.thumb_view.main_window import MainWindow
@@ -63,9 +64,23 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         window.addAction(action)
         action.triggered.connect(on_pressed)
 
-    def add_start_button(self, name: str, picture_filename: str, url: URL):
+    def add_start_button(self, name: str, picture_filename: str, url: URL, menu_items:dict=None):
         b = ImageButton(picture_filename, name, lambda: self.goto_url(url))
+
+        menu=self.create_button_menu(self.main,menu_items)
+        if menu:
+            b.setMenu(menu)
         self.main.create_site_button(b)
+
+    def create_button_menu(self, parent, menu_items:dict)->QMenu:
+        if menu_items:
+            menu = QMenu(parent)
+            for key in sorted(menu_items.keys()):
+                menu_action = QAction(key, parent, triggered=get_menu_handler(self.goto_url,menu_items[key]))
+                menu.addAction(menu_action)
+            return menu
+        else:
+            return None
 
     def prepare_thumb_view(self) -> ThumbViewFromModelInterface:
         view=self.main.get_new_thumb_view()

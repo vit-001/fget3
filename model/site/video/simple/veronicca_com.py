@@ -12,9 +12,20 @@ class VeroniccaComSite(BaseSiteParser):
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
+        menu_items={
+            'Videos most recsent':URL('https://www.veronicca.com/videos?o=mr*'),
+            'Videos most viewed': URL('https://www.veronicca.com/videos?o=mv*'),
+            'Videos most commented': URL('https://www.veronicca.com/videos?o=md*'),
+            'Videos top rated': URL('https://www.veronicca.com/videos?o=tr*'),
+            'Videos top favorited': URL('https://www.veronicca.com/videos?o=tf*'),
+            'Videos longest': URL('https://www.veronicca.com/videos?o=lg*'),
+            'Channels': URL('https://www.veronicca.com/channels*')
+        }
+
         view.add_start_button(name='veronicca.com',
                               picture_filename='model/site/resource/veronicca_com.png',
-                              url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'))
+                              url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'),
+                              menu_items=menu_items)
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in soup.find_all('div', {'class': ['well well-sm hover', 'channelBox']}):
@@ -45,7 +56,8 @@ class VeroniccaComSite(BaseSiteParser):
         return soup.find('ul', {'class': 'pagination'})
 
     def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get()
+
+        return 'VER '+url.get().rpartition('/')[2]
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'video-container'})
@@ -56,6 +68,22 @@ class VeroniccaComSite(BaseSiteParser):
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         return url.get().rpartition('/')[2]
+
+    def parse_video_tags(self, soup: BeautifulSoup, url: URL):
+        user = soup.find('div', {'class': 'pull-left user-container'})
+        if user is not None:
+            user_strings = [string for string in user.stripped_strings]
+            label = '{0} {1}'.format(user_strings[0], user_strings[1])
+            href = user.find('a', href=lambda x: '#' not in x)
+            self.add_tag(label,
+                         URL(href.attrs['href'] + '/videos', base_url=url),
+                         style={'color':'blue'}
+                        )
+
+        for tag_container in _iter(soup.find_all('div', {'class': 'm-t-10 overflow-hidden'})):
+            for href in _iter(tag_container.find_all('a')):
+                if href.string is not None:
+                    self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
 
 
 if __name__ == "__main__":
