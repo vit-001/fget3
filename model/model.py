@@ -4,7 +4,7 @@ from common.url import URL
 from common.setting import Setting
 from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
 from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
-from view.base_view import ViewManagerFromModelInterface
+from view.view_manager_interface import ViewManagerFromModelInterface
 
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.veronicca_com import VeroniccaComSite
@@ -12,15 +12,15 @@ from model.site.video.simple.veronicca_com import VeroniccaComSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
-    def __init__(self, view:ViewManagerFromModelInterface):
-        self._view=view
+    def __init__(self, view_manager:ViewManagerFromModelInterface):
+        self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
         self._site_models=[CollectionofbestpornSite,VeroniccaComSite,
                            ]
 
     def create_sites(self):
         for site_class in self._site_models:
-            site_class.create_start_button(self.view)
+            site_class.create_start_button(self.view_manager)
 
     def goto_url(self, url: URL, **options):
         for site_class in self._site_models:
@@ -37,8 +37,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader.on_exit()
 
     @property
-    def view(self) -> ViewManagerFromModelInterface:
-        return self._view
+    def view_manager(self) -> ViewManagerFromModelInterface:
+        return self._view_manager
 
     @property
     def loader(self) -> BaseLoader:
