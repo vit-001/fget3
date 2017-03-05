@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication
 from common.url import URL
 
 from model.model import Model
-from view.view_manager import ViewManager
+from view.view_manager.view_manager import ViewManager
 from controller.controller import Controller
 
 if __name__ == '__main__':

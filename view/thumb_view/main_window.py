@@ -7,11 +7,11 @@ from PyQt5.QtGui import QBrush,QColor,QPalette
 
 from common.url import URL
 
-from view.base_view import ViewManagerFromViewInterface
+from view.view_manager_interface import ViewManagerFromViewInterface
 from view.qt_ui.ui_main_window import Ui_MainWindow
 from view.widgets.thumb_widget import ThumbWidgetVS
 from view.widgets.button_line import ButtonLine,TextButton,ImageButton
-from view.thumb_view import ThumbView
+from view.thumb_view.thumb_view import ThumbView
 
 
 
@@ -33,9 +33,9 @@ class MainWindow(QMainWindow):
         self.sites=ButtonLine(self.ui.top_frame,height=50)
         self.ui.top_frame_layout.addWidget(self.sites)
 
-    def get_new_thumb_view(self, name: str) -> ThumbView:
+    def get_new_thumb_view(self) -> ThumbView:
         tab = self.ui.tabWidget
-        view = ThumbView(tab, name, self.view_manager)
+        view = ThumbView(tab, self.view_manager)
         self.thumb_views.append(view)
 
         return view
@@ -47,6 +47,14 @@ class MainWindow(QMainWindow):
         else:
             return None
 
+    def set_tab_text(self, view,text:str, tooltip=''):
+        try:
+            index=self.thumb_views.index(view)
+            self.ui.tabWidget.setTabText(index,text)
+            self.ui.tabWidget.setTabToolTip(index,tooltip)
+        except ValueError:
+            pass
+
     def create_site_button(self,button):
         self.sites.add_button(button)
 
@@ -55,6 +63,9 @@ class MainWindow(QMainWindow):
         self.thumb_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()
+
+    def panic(self):
+        self.showMinimized()
 
     def closeEvent(self, *args, **kwargs):
         self.view_manager.on_exit()

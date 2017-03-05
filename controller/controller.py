@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from common.url import URL
 
 from controller.base_controller import ControllerFromModelInterface,ControllerFromViewInterface
-from view.base_view import ViewManagerFromControllerInterface
+from view.view_manager_interface import ViewManagerFromControllerInterface
 from model.base_model import ModelFromControllerInterface
 
 class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
