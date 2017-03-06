@@ -120,16 +120,18 @@ class BaseSite(SiteInterface, ParseResult):
         view=self.start_options.get('current_thumb_view', None)
         if not view:
             view=self.model.view_manager.prepare_thumb_view()
+            view.subscribe_to_history_event(self.model.thumb_history.add)
         else:
             view.clear()
 
+        view.set_url(self.url)
         view.set_title(self.title, tooltip=self.url.get())
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
         thumb_list=list()
         for thumb in self.thumbs:
-            filename=thumb['url'].get_short_filename(base=Setting.cache_path)
+            filename=thumb['url'].get_short_filename(base=Setting.thumbs_cache_path)
             thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
         loader.load_list(thumb_list)
 
@@ -139,9 +141,11 @@ class BaseSite(SiteInterface, ParseResult):
         view = self.start_options.get('current_full_view', None)
         if not view:
             view = self.model.view_manager.prepare_full_view()
+            view.subscribe_to_history_event(self.model.full_history.add)
         else:
             view.clear()
 
+        view.set_url(self.url)
         view.set_title(self.title, tooltip=self.url.get())
 
         view.set_video_list(self.video_data, self.video_default_index)

@@ -3,11 +3,14 @@ __author__ = 'Vit'
 from common.url import URL
 from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
 from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
+from model.history_model.hystory import HistoryModel
+
+from view.view_manager_interface import ViewManagerFromModelInterface
+
 from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca_com import VeroniccaComSite
-from view.view_manager_interface import ViewManagerFromModelInterface
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -17,6 +20,9 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[CollectionofbestpornSite, VeroniccaComSite, HdEasypornSite, ShockingmoviesSite
                            ]
+
+        self._thumb_history=HistoryModel('thumb')
+        self._full_history=HistoryModel('full')
 
     def create_sites(self):
         for site_class in self._site_models:
@@ -43,6 +49,14 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     @property
     def loader(self) -> BaseLoader:
         return self._loader
+
+    @property
+    def full_history(self) -> HistoryModel:
+        return self._full_history
+
+    @property
+    def thumb_history(self) -> HistoryModel:
+        return self._thumb_history
 
 
 if __name__ == "__main__":

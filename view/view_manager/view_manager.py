@@ -120,6 +120,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.full.panic()
 
     def on_exit(self):
+        self.full.on_exit()
         self.controller.on_exit()
         QGuiApplication.exit(0)
 

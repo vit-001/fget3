@@ -53,7 +53,15 @@ class FullView(BaseFullView):
         self.video_player.mute(muted)
         self.video_player.set_volume(volume)
 
+    def history_event(self):
+        history_data=dict()
+        history_data['url']=self.url
+        # history_data['context']=self.thumbs.context
+        # print('history event', history_data)
+        self.history_handler(history_data)
+
     def destroy(self):
+        self.history_event()
         self.video_player.destroy()
         self.bottom_line.destroy()
         self.tab.destroy()

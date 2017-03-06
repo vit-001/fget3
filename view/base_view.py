@@ -16,6 +16,9 @@ class BaseView(ViewFromModelInterface):
         self.title = ''
         self.parent = parent
 
+        self.url=URL()
+        self.history_handler=lambda dict:None
+
         self.tab = QWidget()
         self.verticalLayout = QVBoxLayout(self.tab)
         self.verticalLayout.setSpacing(0)
@@ -52,13 +55,23 @@ class BaseView(ViewFromModelInterface):
     def binding(self):
         pass
 
+    def subscribe_to_history_event(self, handler=lambda dict: None):
+        self.history_handler=handler
+
+    def set_url(self, url:URL):
+        self.url=url
+
     def clear(self):
+        self.history_event()
         self.content_clear()
         self.top_line.clear()
         self.mid_line.clear()
         self.bottom_line.clear()
 
     def content_clear(self):
+        pass
+
+    def history_event(self):
         pass
 
     def add_to_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):

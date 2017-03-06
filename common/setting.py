@@ -4,6 +4,7 @@ __author__ = 'Vit'
 
 class Setting:
     cache_path = 'common/cashe/'
+    thumbs_cache_path=cache_path+'thumbs/'
     data_server_config_path = 'common/locals/'
     global_data_path = 'common/globals/'
 

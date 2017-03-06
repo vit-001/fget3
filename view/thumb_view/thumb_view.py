@@ -31,7 +31,12 @@ class ThumbView(BaseView):
         # print('        labels:', labels)
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
 
-
+    def history_event(self):
+        history_data=dict()
+        history_data['url']=self.url
+        history_data['context']=self.thumbs.context
+        # print('history event', history_data)
+        self.history_handler(history_data)
 
 if __name__ == "__main__":
     pass

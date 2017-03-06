@@ -5,11 +5,8 @@ from PyQt5.QtWidgets import QWidget
 
 from common.url import URL
 
-
-
-
 class ViewFromModelInterface:
-    def get_rot_widget(self)->QWidget:
+    def set_url(self, url:URL):
         pass
 
     def set_title(self, title:str, tooltip=''):
@@ -22,6 +19,9 @@ class ViewFromModelInterface:
         pass
 
     def add_to_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
+        pass
+
+    def subscribe_to_history_event(self, handler=lambda dict:None):
         pass
 
     def clear(self):

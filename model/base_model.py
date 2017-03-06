@@ -5,6 +5,7 @@ from common.url import URL
 from common.exception import AbstractMethodError
 from view.view_manager_interface import ViewManagerFromModelInterface
 from model.loader.base_loader import BaseLoader
+from model.history_model.hystory import HistoryModel
 
 class ModelFromControllerInterface:
     def create_sites(self):
@@ -26,6 +27,14 @@ class ModelFromSiteInterface:
 
     @property
     def loader(self)->BaseLoader:
+        raise (AbstractMethodError)
+
+    @property
+    def thumb_history(self)->HistoryModel:
+        raise (AbstractMethodError)
+
+    @property
+    def full_history(self)->HistoryModel:
         raise (AbstractMethodError)
 
 if __name__ == "__main__":

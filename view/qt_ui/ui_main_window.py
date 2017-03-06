@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/main_window.ui'
 #
-# Created: Mon Mar  6 15:13:19 2017
+# Created: Mon Mar  6 22:06:32 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -90,6 +90,15 @@ class Ui_MainWindow(object):
         self.tabWidget.setObjectName("tabWidget")
         self.mid_frame_layout.addWidget(self.tabWidget)
         self.base_layout.addWidget(self.mid_frame)
+        self.controls_frame = QtWidgets.QFrame(self.base)
+        self.controls_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.controls_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.controls_frame.setObjectName("controls_frame")
+        self.controls_frame_layout = QtWidgets.QHBoxLayout(self.controls_frame)
+        self.controls_frame_layout.setSpacing(2)
+        self.controls_frame_layout.setContentsMargins(0, 0, 0, 0)
+        self.controls_frame_layout.setObjectName("controls_frame_layout")
+        self.base_layout.addWidget(self.controls_frame)
         self.bottom_frame = QtWidgets.QFrame(self.base)
         self.bottom_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.bottom_frame.setFrameShadow(QtWidgets.QFrame.Raised)

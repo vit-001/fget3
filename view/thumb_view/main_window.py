@@ -12,8 +12,7 @@ from view.qt_ui.ui_main_window import Ui_MainWindow
 from view.widgets.thumb_widget import ThumbWidgetVS
 from view.widgets.button_line import ButtonLine,TextButton,ImageButton
 from view.thumb_view.thumb_view import ThumbView
-
-
+from view.history_view.history_view import HistoryView
 
 from controller.controller import ControllerFromViewInterface
 
@@ -32,6 +31,9 @@ class MainWindow(QMainWindow):
     def create_widgets(self):
         self.sites=ButtonLine(self.ui.top_frame,height=50)
         self.ui.top_frame_layout.addWidget(self.sites)
+
+        self.history=HistoryView(self)
+        self.ui.controls_frame_layout.addWidget(self.history)
 
     def get_new_thumb_view(self) -> ThumbView:
         tab = self.ui.tabWidget
@@ -59,6 +61,7 @@ class MainWindow(QMainWindow):
         self.sites.add_button(button)
 
     def close_tab(self,index:int):
+        # self.thumb_views[index].history_event()
         self.thumb_views[index].clear()
         self.thumb_views.pop(index)
         self.ui.tabWidget.removeTab(index)
@@ -68,6 +71,8 @@ class MainWindow(QMainWindow):
         self.showMinimized()
 
     def closeEvent(self, *args, **kwargs):
+        for thumbs in self.thumb_views:
+            thumbs.history_event()
         self.view_manager.on_exit()
 
 if __name__ == "__main__":

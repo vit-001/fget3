@@ -66,6 +66,7 @@ class FullViewWindow(QWidget):
 
     def close_tab(self,index:int):
         view=self.full_views[index]
+        view.history_event()
         if index == self.ui.tabWidget.currentIndex(): #Close active tab
             self.global_muted=view.is_muted()
             self.global_volume=view.get_volume()
@@ -94,6 +95,10 @@ class FullViewWindow(QWidget):
         self.do_method_with_all_tab('mute',True)
         self.do_method_with_current_tab('pause')
         self.showMinimized()
+
+    def on_exit(self):
+        for view in self.full_views:
+            view.destroy()
 
     def do_method_with_all_tab(self, method_name:str, *args, **options):
         for view in self.full_views:
