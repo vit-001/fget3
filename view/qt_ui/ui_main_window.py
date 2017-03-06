@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/main_window.ui'
 #
-# Created: Sun Mar  5 23:25:12 2017
+# Created: Mon Mar  6 15:13:19 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

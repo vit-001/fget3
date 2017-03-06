@@ -13,9 +13,8 @@ from common.util import get_menu_handler
 from controller.base_controller import ControllerFromViewInterface
 from view.full_view.full_view_window import FullViewWindow
 from view.thumb_view.main_window import MainWindow
-from view.view_interface import ThumbViewFromModelInterface
 from view.view_manager_interface import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
-    ViewManagerFromViewInterface, FullViewFromModelInterface
+    ViewManagerFromViewInterface, ViewFromModelInterface
 from view.widgets.button_line import ImageButton
 
 
@@ -82,7 +81,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         else:
             return None
 
-    def prepare_thumb_view(self) -> ThumbViewFromModelInterface:
+    def prepare_thumb_view(self) -> ViewFromModelInterface:
         view=self.main.get_new_thumb_view()
 
         QEventLoop().processEvents(QEventLoop.AllEvents)
@@ -90,7 +89,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         return view
 
-    def prepare_full_view(self)->FullViewFromModelInterface:
+    def prepare_full_view(self)->ViewFromModelInterface:
         view=self.full.get_new_full_view()
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.full.update()
@@ -112,7 +111,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
                                      current_full_view=self.full.get_current_full_view()
                                      )
 
-    def is_full_view_tab_active(self, full_view: FullViewFromModelInterface) -> bool:
+    def is_full_view_tab_active(self, full_view: ViewFromModelInterface) -> bool:
         return self.full.is_tab_active(full_view)
 
     def panic(self):

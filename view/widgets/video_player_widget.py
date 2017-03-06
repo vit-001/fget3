@@ -83,9 +83,13 @@ class VideoPlayerWidget(QWidget):
     def positionChanged(self, position):
         def time_format(ms):
             dur = ms // 1000
-            minutes = dur // 60
-            secundes = dur - minutes * 60
-            return '%d:%02d' % (minutes, secundes)
+            hours=dur // 3600
+            minutes =  dur // 60 - hours*60
+            secundes = dur - minutes * 60- hours*3600
+            if hours==0:
+                return '%2d:%02d' % (minutes, secundes)
+            else:
+                return '%d:%02d:%02d' % (hours, minutes, secundes)
         self.ui.progress.setValue(position)
         self.ui.lb_time.setText(time_format(position) + ' / ' + time_format(self.duration))
 

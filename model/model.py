@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 from common.url import URL
-from common.setting import Setting
 from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
 from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
-from view.view_manager_interface import ViewManagerFromModelInterface
-
+from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
+from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca_com import VeroniccaComSite
-from model.site.video.simple.hd_easyporn import HdEasyporn
+from view.view_manager_interface import ViewManagerFromModelInterface
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -16,7 +15,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[CollectionofbestpornSite,VeroniccaComSite,HdEasyporn
+        self._site_models=[CollectionofbestpornSite, VeroniccaComSite, HdEasypornSite, ShockingmoviesSite
                            ]
 
     def create_sites(self):

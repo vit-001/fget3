@@ -10,7 +10,7 @@ from common.setting import Setting
 from model.loader.base_loader import FLData
 from model.base_model import ModelFromSiteInterface
 from view.view_manager_interface import ViewManagerFromModelInterface
-from view.view_interface import ThumbViewFromModelInterface
+# from view.view_interface import ThumbViewFromModelInterface
 
 
 class ThumbData(FLData):
@@ -139,6 +139,8 @@ class BaseSite(SiteInterface, ParseResult):
         view = self.start_options.get('current_full_view', None)
         if not view:
             view = self.model.view_manager.prepare_full_view()
+        else:
+            view.clear()
 
         view.set_title(self.title, tooltip=self.url.get())
 

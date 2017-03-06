@@ -14,7 +14,7 @@ from view.full_view.full_view import FullView
 
 from controller.controller import ControllerFromViewInterface
 from view.view_manager_interface import ViewManagerFromViewInterface
-from view.view_interface import FullViewFromModelInterface
+from view.view_interface import ViewFromModelInterface
 
 
 class FullViewWindow(QWidget):
@@ -82,7 +82,7 @@ class FullViewWindow(QWidget):
         self.global_muted = self.full_views[self.ui.tabWidget.currentIndex()].is_muted()
         self.global_volume= self.full_views[self.ui.tabWidget.currentIndex()].get_volume()
 
-    def is_tab_active(self,full_view: FullViewFromModelInterface):
+    def is_tab_active(self,full_view: ViewFromModelInterface):
         index=self.full_views.index(full_view)
         return index == self.ui.tabWidget.currentIndex()
 
