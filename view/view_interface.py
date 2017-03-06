@@ -9,6 +9,10 @@ class ViewFromModelInterface:
     def set_url(self, url:URL):
         pass
 
+    def set_context(self,context):
+        print('set context', context)
+        pass
+
     def set_title(self, title:str, tooltip=''):
         pass
 

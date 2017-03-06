@@ -10,19 +10,19 @@ from view.view_manager_interface import ViewManagerFromModelInterface
 from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
-from model.site.video.simple.veronicca_com import VeroniccaComSite
-
+from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.script.xhamster import XhamsterSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[CollectionofbestpornSite, VeroniccaComSite, HdEasypornSite, ShockingmoviesSite
+        self._site_models=[XhamsterSite, CollectionofbestpornSite, VeroniccaComSite, HdEasypornSite, ShockingmoviesSite
                            ]
 
-        self._thumb_history=HistoryModel('thumb')
-        self._full_history=HistoryModel('full')
+        self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)
+        self._full_history=HistoryModel('full', self._view_manager.on_full_history_changed)
 
     def create_sites(self):
         for site_class in self._site_models:

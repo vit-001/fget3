@@ -16,7 +16,7 @@ from view.thumb_view.main_window import MainWindow
 from view.view_manager_interface import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
     ViewManagerFromViewInterface, ViewFromModelInterface
 from view.widgets.button_line import ImageButton
-
+from model.history_model.hystory_interface import HistoryFromViewInterface
 
 class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterface, ViewManagerFromViewInterface):
     def create_main_window(self, controller: ControllerFromViewInterface):
@@ -81,6 +81,9 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         else:
             return None
 
+    def on_thumb_history_changed(self, history: HistoryFromViewInterface):
+        self.main.on_history_changed(history)
+
     def prepare_thumb_view(self) -> ViewFromModelInterface:
         view=self.main.get_new_thumb_view()
 
@@ -100,13 +103,14 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.set_tab_text(view,text, tooltip)
         self.full.set_tab_text(view,text, tooltip)
 
-    def goto_url(self, url: URL):
+    def goto_url(self, url: URL, context=None):
 
         if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
             # print('control')
-            self.controller.goto_url(url)
+            self.controller.goto_url(url, context=context)
         else:
             self.controller.goto_url(url,
+                                     context=context,
                                      current_thumb_view=self.main.get_current_thumb_view(),
                                      current_full_view=self.full.get_current_full_view()
                                      )

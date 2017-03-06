@@ -19,16 +19,15 @@ class ThumbView(BaseView):
     def content_clear(self):
         self.thumbs.clear()
 
+    def set_context(self,context):
+        self.thumbs.context=context
+
     def set_title(self, title: str, tooltip=''):
         index=self.parent.indexOf(self.tab)
         self.parent.setTabText(index, title)
         self.parent.setTabToolTip(index, tooltip)
 
     def add_thumb(self, picture_filename: str, href: URL, popup: str = '', labels=list):
-        # print('Thumb filename:', picture_filename, 'added')
-        # print('           url:', href)
-        # print('         popup:', popup)
-        # print('        labels:', labels)
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
 
     def history_event(self):

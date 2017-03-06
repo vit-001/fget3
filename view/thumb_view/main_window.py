@@ -13,6 +13,7 @@ from view.widgets.thumb_widget import ThumbWidgetVS
 from view.widgets.button_line import ButtonLine,TextButton,ImageButton
 from view.thumb_view.thumb_view import ThumbView
 from view.history_view.history_view import HistoryView
+from model.history_model.hystory_interface import HistoryFromViewInterface
 
 from controller.controller import ControllerFromViewInterface
 
@@ -29,10 +30,10 @@ class MainWindow(QMainWindow):
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
 
     def create_widgets(self):
-        self.sites=ButtonLine(self.ui.top_frame,height=50)
+        self.sites=ButtonLine(self.ui.top_frame,height=50, speed=90, space=5)
         self.ui.top_frame_layout.addWidget(self.sites)
 
-        self.history=HistoryView(self)
+        self.history=HistoryView(self, self.view_manager)
         self.ui.controls_frame_layout.addWidget(self.history)
 
     def get_new_thumb_view(self) -> ThumbView:
@@ -69,6 +70,9 @@ class MainWindow(QMainWindow):
 
     def panic(self):
         self.showMinimized()
+
+    def on_history_changed(self, history:HistoryFromViewInterface):
+        self.history.update_history(history)
 
     def closeEvent(self, *args, **kwargs):
         for thumbs in self.thumb_views:

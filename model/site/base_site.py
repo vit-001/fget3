@@ -125,6 +125,7 @@ class BaseSite(SiteInterface, ParseResult):
             view.clear()
 
         view.set_url(self.url)
+        view.set_context(self.start_options.get('context', None))
         view.set_title(self.title, tooltip=self.url.get())
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))

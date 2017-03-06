@@ -2,7 +2,8 @@
 __author__ = 'Vit'
 
 class HistoryFromViewInterface:
-    pass
+    def get_history(self)->list:
+        return []
 
 if __name__ == "__main__":
     pass

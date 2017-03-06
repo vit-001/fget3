@@ -30,7 +30,7 @@ class ActionButton(QToolButton):
         if not attr_value_dict:
             return
         style=''
-        if 'color' in attr_value_dict:
+        if 'color' in attr_value_dict and attr_value_dict['color']:
             style+='color: '+ attr_value_dict['color'] +';'
         if 'background' in attr_value_dict:
             style+='background-color: '+ attr_value_dict['background'] +';'
@@ -72,7 +72,7 @@ class ImageButton(ActionButton):
 
 
 class ButtonLine(QWidget):
-    def __init__(self, parent=None, height=25, space=2):
+    def __init__(self, parent=None, height=25, space=2, speed=40):
         QWidget.__init__(self, parent)
         self.parent = parent
         self.space = space
@@ -80,7 +80,7 @@ class ButtonLine(QWidget):
         self.buttons = list()
         self.buttons_width = self.space * 2
         self.curr_scroll = 0
-        self.speed = 40
+        self.speed = speed
 
     def add_button(self,button:QToolButton):
         button.setParent(self)
