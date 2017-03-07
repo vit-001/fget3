@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from common.url import URL
-from common.util import _iter
+from bs4 import BeautifulSoup
 
-from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
+from data_format.url import URL
+from common.util import _iter, quotes
+
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.site.base_site import BaseSiteParser
+
 
 class CollectionofbestpornSite(BaseSiteParser):
     @staticmethod

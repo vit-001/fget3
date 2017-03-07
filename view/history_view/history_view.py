@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 import os
+
 from PyQt5.QtWidgets import QWidget
 
-from common.url import URL
+from data_format.url import URL
+
+from interface.hystory_interface import HistoryFromViewInterface
+from interface.view_manager_interface import ViewManagerFromViewInterface
 
 from view.qt_ui.ui_history_view import Ui_HistoryView
 
-from view.view_manager_interface import ViewManagerFromViewInterface
-from model.history_model.hystory_interface import HistoryFromViewInterface
 
 class HistoryView(QWidget):
     def __init__(self, parent:QWidget, view_manager:ViewManagerFromViewInterface):

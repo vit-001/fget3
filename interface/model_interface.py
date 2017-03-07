@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-from common.url import URL
-from common.exception import AbstractMethodError
-from view.view_manager_interface import ViewManagerFromModelInterface
-from model.loader.base_loader import BaseLoader
+from data_format.error import AbstractMethodError
+from data_format.url import URL
+from interface.loader_interface import LoaderInterface
+from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.history_model.hystory import HistoryModel
+
 
 class ModelFromControllerInterface:
     def create_sites(self):
@@ -26,7 +27,7 @@ class ModelFromSiteInterface:
         raise(AbstractMethodError)
 
     @property
-    def loader(self)->BaseLoader:
+    def loader(self)->LoaderInterface:
         raise (AbstractMethodError)
 
     @property

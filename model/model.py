@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from common.url import URL
-from model.base_model import ModelFromControllerInterface,ModelFromSiteInterface
-from model.loader.multiprocess_az_loader import MultiprocessAZloader,BaseLoader
-from model.history_model.hystory import HistoryModel
+from data_format.url import URL
 
-from view.view_manager_interface import ViewManagerFromModelInterface
+from interface.loader_interface import LoaderInterface
+from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.history_model.hystory import HistoryModel
+from model.loader.multiprocess_az_loader import MultiprocessAZloader
 
 from model.site.video.script.shockingmovies import ShockingmoviesSite
+from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.script.xhamster import XhamsterSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -47,7 +50,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         return self._view_manager
 
     @property
-    def loader(self) -> BaseLoader:
+    def loader(self) -> LoaderInterface:
         return self._loader
 
     @property

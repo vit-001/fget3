@@ -3,12 +3,11 @@
 __author__ = 'Nikitin'
 from PyQt5.QtWidgets import QMenu
 
-from common.exception import AbstractMethodError
-from common.url import URL
-from controller.base_controller import ControllerFromViewInterface
-from model.history_model.hystory_interface import HistoryFromViewInterface
-
-from view.view_interface import ViewFromModelInterface
+from data_format.error import AbstractMethodError
+from data_format.url import URL
+from interface.controller_interface import ControllerFromViewInterface
+from interface.hystory_interface import HistoryFromViewInterface
+from interface.view_interface import ViewFromModelInterface, ThumbViewFromModelInterface, FullViewFromModelInterface
 
 class ViewManagerFromViewInterface:
     def add_keyboard_shortcut(self, window, shortcut='', on_pressed=lambda: None):
@@ -20,7 +19,7 @@ class ViewManagerFromViewInterface:
     def set_tab_text(self, view, text:str, tooltip:str=''):
         pass
 
-    def is_full_view_tab_active(self, full_view: ViewFromModelInterface)->bool:
+    def is_full_view_tab_active(self, full_view: FullViewFromModelInterface)->bool:
         return False
 
     def create_button_menu(self, parent, menu_items:dict)->QMenu:
@@ -31,10 +30,10 @@ class ViewManagerFromViewInterface:
 
 
 class ViewManagerFromModelInterface:
-    def prepare_thumb_view(self)-> ViewFromModelInterface:
+    def prepare_thumb_view(self)-> ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
-    def prepare_full_view(self)-> ViewFromModelInterface:
+    def prepare_full_view(self)-> FullViewFromModelInterface:
         raise (AbstractMethodError)
 
     def on_thumb_history_changed(self, history:HistoryFromViewInterface):

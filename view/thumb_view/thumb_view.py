@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget
 
-from common.url import URL
-from view.view_manager_interface import ViewManagerFromViewInterface
+from data_format.url import URL
+
 from view.base_view import BaseView
-
 from view.widgets.thumb_widget import ThumbWidgetVS
-from view.widgets.button_line import ButtonLine, TextButton
+
 
 class ThumbView(BaseView):
     def get_main_content(self, parent:QWidget)->QWidget:

@@ -8,15 +8,21 @@ from PyQt5.QtGui import QGuiApplication, QKeySequence
 from PyQt5.QtWidgets import QApplication, QAction, QMenu
 
 from common.setting import Setting
-from common.url import URL
 from common.util import get_menu_handler
-from controller.base_controller import ControllerFromViewInterface
+
+from data_format.url import URL
+
+from interface.view_manager_interface import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
+    ViewManagerFromViewInterface
+from interface.controller_interface import ControllerFromViewInterface
+from interface.hystory_interface import HistoryFromViewInterface
+from interface.view_interface import FullViewFromModelInterface,ThumbViewFromModelInterface
+
 from view.full_view.full_view_window import FullViewWindow
 from view.thumb_view.main_window import MainWindow
-from view.view_manager_interface import ViewManagerFromModelInterface, ViewManagerFromControllerInterface, \
-    ViewManagerFromViewInterface, ViewFromModelInterface
+
 from view.widgets.button_line import ImageButton
-from model.history_model.hystory_interface import HistoryFromViewInterface
+
 
 class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterface, ViewManagerFromViewInterface):
     def create_main_window(self, controller: ControllerFromViewInterface):
@@ -84,7 +90,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
     def on_thumb_history_changed(self, history: HistoryFromViewInterface):
         self.main.on_history_changed(history)
 
-    def prepare_thumb_view(self) -> ViewFromModelInterface:
+    def prepare_thumb_view(self) -> ThumbViewFromModelInterface:
         view=self.main.get_new_thumb_view()
 
         QEventLoop().processEvents(QEventLoop.AllEvents)
@@ -92,7 +98,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         return view
 
-    def prepare_full_view(self)->ViewFromModelInterface:
+    def prepare_full_view(self)->FullViewFromModelInterface:
         view=self.full.get_new_full_view()
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.full.update()
@@ -115,7 +121,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
                                      current_full_view=self.full.get_current_full_view()
                                      )
 
-    def is_full_view_tab_active(self, full_view: ViewFromModelInterface) -> bool:
+    def is_full_view_tab_active(self, full_view: FullViewFromModelInterface) -> bool:
         return self.full.is_tab_active(full_view)
 
     def panic(self):

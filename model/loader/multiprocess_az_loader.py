@@ -5,16 +5,21 @@ import datetime
 import json
 import os
 import re
-from io import StringIO
+import requests
 from multiprocessing import Manager, Queue, Process, Lock
 
-import requests
-
-from common.url import URL
 from common.setting import Setting
-from model.loader.base_loader import BaseLoader, BaseLoadProcess, LoaderError, FLData, BaseLoadProcedure
+
+from data_format.fl_data import FLData
+from data_format.url import URL
+from data_format.loader_error import LoaderError
+
+from interface.loader_interface import LoadProcessInterface, LoaderInterface
+
+from model.loader.base_loader import BaseLoadProcedure
 from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
+
 
 class DataServer:
     def __init__(self):
@@ -205,7 +210,7 @@ class LoadServer(Process):
         self.events.put(LoadProcessEvent('done'))
 
 
-class LoadProcess(BaseLoadProcess):
+class LoadProcess(LoadProcessInterface):
     def __init__(self, data_server: DataServer, lock: Lock):
         self.loader = None
         self.events_queue = Queue()
@@ -237,7 +242,7 @@ class LoadProcess(BaseLoadProcess):
             self.update()
 
 
-class MultiprocessAZloader(BaseLoader):
+class MultiprocessAZloader(LoaderInterface):
 
     # todo: переделать логику работы: сделать удаление процесса - готово - проверить
 
@@ -248,7 +253,7 @@ class MultiprocessAZloader(BaseLoader):
         self.single_file_loader = None
 
     def get_new_load_process(self, on_load_handler=lambda filedata: None,
-                             on_end_handler=lambda: None) -> BaseLoadProcess:
+                             on_end_handler=lambda: None) -> LoadProcessInterface:
 
         new_process = LoadProcess(data_server=self.data,
                                   lock=self.lock)

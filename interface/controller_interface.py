@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from common.url import URL
+from data_format.url import URL
 
 class ControllerFromViewInterface:
     def goto_url(self, url:URL, **options):

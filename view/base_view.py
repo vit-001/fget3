@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from common.url import URL
-from common.exception import AbstractMethodError
-
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 
-from view.view_interface import ViewFromModelInterface
-from view.view_manager_interface import ViewManagerFromViewInterface
+from data_format.error import AbstractMethodError
+from data_format.url import URL
+
+from interface.view_interface import ThumbViewFromModelInterface,FullViewFromModelInterface
+from interface.view_manager_interface import ViewManagerFromViewInterface
+
 from view.widgets.button_line import TextButton, ButtonLine
 
-class BaseView(ViewFromModelInterface):
+
+class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
     def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface):
         self.view_manager=view_manager
         self.title = ''

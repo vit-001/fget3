@@ -1,8 +1,13 @@
 __author__ = 'Vit'
-from common.url import URL
+from bs4 import BeautifulSoup
+
+from data_format.url import URL
 from common.util import _iter, quotes
 
-from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.site.base_site import BaseSiteParser
+
 
 class XhamsterSite(BaseSiteParser):
     @staticmethod
@@ -45,13 +50,14 @@ class XhamsterSite(BaseSiteParser):
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         menu=soup.find('div', {'id':'menuLeft'})
-        hrefs=menu.find_all('a',{'href':lambda x: '/channels/' in x})
-        for item in _iter(hrefs):
-            label=''
-            for s in item.stripped_strings:
-                label +=s
-            href = item.attrs['href']
-            self.add_tag(label.strip(), URL(href, base_url=url))
+        if menu:
+            hrefs=menu.find_all('a',{'href':lambda x: '/channels/' in x})
+            for item in _iter(hrefs):
+                label=''
+                for s in item.stripped_strings:
+                    label +=s
+                href = item.attrs['href']
+                self.add_tag(label.strip(), URL(href, base_url=url))
 
     def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
         return 'XHM '+ url.get().partition('xhamster.com/')[2].rpartition('.')[0]

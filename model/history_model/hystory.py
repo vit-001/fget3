@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from model.history_model.hystory_interface import HistoryFromViewInterface
+from interface.hystory_interface import HistoryFromViewInterface, HistoryFromModelInterface
 
-class HistoryModel(HistoryFromViewInterface):
+
+class HistoryModel(HistoryFromViewInterface, HistoryFromModelInterface):
     def __init__(self, history_name:str, on_changed_handlr: lambda history_from_view_interface:None):
         self.name=history_name
         self.data=list()
@@ -16,6 +17,7 @@ class HistoryModel(HistoryFromViewInterface):
 
     def get_history(self) -> list:
         return self.data
+
 
 
 if __name__ == "__main__":

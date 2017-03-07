@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFrame, QSizePolicy
-from PyQt5.QtGui import QPalette
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QWidget
 
-from common.url import URL
-
-# from view.view_manager_interface import ViewManagerFromViewInterface
-# from view.view_interface import FullViewFromModelInterface
 from view.full_view.base_full_view import BaseFullView
-from view.widgets.button_line import ButtonLine, TextButton
 from view.widgets.video_player_widget import VideoPlayerWidget
 
 

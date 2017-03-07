@@ -2,15 +2,14 @@
 __author__ = 'Vit'
 import os
 
-from PyQt5.QtCore import QUrl, QPoint, QRect, QSize, Qt, QEventLoop
-from PyQt5.QtNetwork import QNetworkRequest, QNetworkProxy
-from PyQt5.QtGui import QPixmap, QIcon, QPalette
-from PyQt5.QtWidgets import QWidget, QSizePolicy, QMenu, QAction
+from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtNetwork import QNetworkRequest
+from PyQt5.QtWidgets import QWidget, QMenu, QAction
 
-from common.url import URL
 from common.util import get_menu_handler
+from data_format.url import URL
 
 from view.qt_ui.ui_video_player_widget import Ui_VideoPlayerWidget
 

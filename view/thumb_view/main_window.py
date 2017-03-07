@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtGui import QBrush,QColor,QPalette
 
-from common.url import URL
+from interface.hystory_interface import HistoryFromViewInterface
+from interface.view_manager_interface import ViewManagerFromViewInterface
 
-from view.view_manager_interface import ViewManagerFromViewInterface
-from view.qt_ui.ui_main_window import Ui_MainWindow
-from view.widgets.thumb_widget import ThumbWidgetVS
-from view.widgets.button_line import ButtonLine,TextButton,ImageButton
-from view.thumb_view.thumb_view import ThumbView
 from view.history_view.history_view import HistoryView
-from model.history_model.hystory_interface import HistoryFromViewInterface
+from view.thumb_view.thumb_view import ThumbView
+from view.widgets.button_line import ButtonLine
 
-from controller.controller import ControllerFromViewInterface
+from view.qt_ui.ui_main_window import Ui_MainWindow
+
 
 class MainWindow(QMainWindow):
     def __init__(self, view_manager: ViewManagerFromViewInterface=None):

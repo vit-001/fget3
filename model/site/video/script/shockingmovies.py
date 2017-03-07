@@ -1,8 +1,13 @@
 __author__ = 'Vit'
-from common.url import URL
+from bs4 import BeautifulSoup
+
+from data_format.url import URL
 from common.util import _iter, quotes
 
-from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.site.base_site import BaseSiteParser
+
 
 class ShockingmoviesSite(BaseSiteParser):
     @staticmethod
@@ -41,6 +46,9 @@ class ShockingmoviesSite(BaseSiteParser):
             href = tag.find('a', href=lambda x: '/channels/' in str(x))
             if href is not None:
                 self.add_tag(str(href.string).strip(), URL(href.attrs['href'], base_url=url))
+
+    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+        return 'SM '+ url.get().partition('shockingmovies.com/')[2].partition('.')[0].strip('/')
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div', {'class': 'pagination-block'})

@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QWidget, QSizePolicy
-from PyQt5.QtGui import QBrush,QColor,QPalette
+from PyQt5.QtWidgets import QWidget
 
-from common.url import URL
+from interface.view_interface import ViewFromModelInterface
+from interface.view_manager_interface import ViewManagerFromViewInterface
 
-from view.qt_ui.ui_full_view_window import Ui_FullViewWindow
-from view.widgets.thumb_widget import ThumbWidgetVS
-from view.widgets.button_line import ButtonLine,TextButton,ImageButton
-from view.widgets.video_player_widget import VideoPlayerWidget
 from view.full_view.full_view import FullView
-
-from controller.controller import ControllerFromViewInterface
-from view.view_manager_interface import ViewManagerFromViewInterface
-from view.view_interface import ViewFromModelInterface
+from view.qt_ui.ui_full_view_window import Ui_FullViewWindow
 
 
 class FullViewWindow(QWidget):

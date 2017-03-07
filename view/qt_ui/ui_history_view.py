@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/history_view.ui'
 #
-# Created: Tue Mar  7 00:09:31 2017
+# Created: Tue Mar  7 14:01:06 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

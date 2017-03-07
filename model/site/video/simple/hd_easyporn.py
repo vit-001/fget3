@@ -1,9 +1,12 @@
 __author__ = 'Vit'
+from bs4 import BeautifulSoup
 
-from common.url import URL
-from common.util import _iter
+from data_format.url import URL
+from common.util import _iter, quotes
 
-from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.site.base_site import BaseSiteParser
 
 
 class HdEasypornSite(BaseSiteParser):

@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from abc import abstractmethod, ABCMeta
-
 __author__ = 'Vit'
 
 from bs4 import BeautifulSoup
 
-from common.url import URL
 from common.setting import Setting
-from model.loader.base_loader import FLData
-from model.base_model import ModelFromSiteInterface
-from view.view_manager_interface import ViewManagerFromModelInterface
-# from view.view_interface import ThumbViewFromModelInterface
+
+from data_format.url import URL
+from data_format.fl_data import FLData
+
+from interface.site_interface import SiteInterface
+from interface.model_interface import ModelFromSiteInterface
 
 
 class ThumbData(FLData):
@@ -20,17 +19,6 @@ class ThumbData(FLData):
         self.popup=popup
         self.labels=labels
 
-class SiteInterface:
-    @staticmethod
-    def create_start_button(view:ViewManagerFromModelInterface):
-        pass
-
-    @staticmethod
-    def can_accept_url(url:URL)->bool:
-        return False
-
-    def goto_url(self, url:URL, **options):
-        pass
 
 class ParseResult:
     def __init__(self):

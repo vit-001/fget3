@@ -4,8 +4,10 @@ __author__ = 'Vit'
 import socket
 import urllib.parse
 
-from common.url import URL
-from model.loader.base_loader import BaseLoadProcedure, LoaderError
+from data_format.url import URL
+from data_format.loader_error import LoaderError
+
+from model.loader.base_loader import BaseLoadProcedure
 
 
 class TrickLoad(BaseLoadProcedure):

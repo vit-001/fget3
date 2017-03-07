@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
-from PyQt5.QtWidgets import QWidget
-
-from common.url import URL
+from data_format.url import URL
 
 class ViewFromModelInterface:
     def set_url(self, url:URL):
@@ -31,13 +29,11 @@ class ViewFromModelInterface:
     def clear(self):
         pass
 
-# class ThumbViewFromModelInterface(ViewFromModelInterface):
-#
-#
-#     def add_thumb(self,picture_filename:str, href:URL, popup:str='',labels=list):
-#         pass
-#
-#
-# class FullViewFromModelInterface(ViewFromModelInterface):
-#     def set_video_list(self, list_of_dict:list, default:int):
-#         pass
+class ThumbViewFromModelInterface(ViewFromModelInterface):
+    def add_thumb(self,picture_filename:str, href:URL, popup:str='',labels=list):
+        pass
+
+
+class FullViewFromModelInterface(ViewFromModelInterface):
+    def set_video_list(self, list_of_dict:list, default:int):
+        pass
