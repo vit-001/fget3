@@ -13,7 +13,7 @@ class ViewManagerFromViewInterface:
     def add_keyboard_shortcut(self, window, shortcut='', on_pressed=lambda: None):
         pass
 
-    def goto_url(self, url:URL, context=None, flags=None):
+    def goto_url(self, url:URL, flags=None):
         pass
 
     def set_tab_text(self, view, text:str, tooltip:str=''):
@@ -33,10 +33,10 @@ class ViewManagerFromViewInterface:
 
 
 class ViewManagerFromModelInterface:
-    def prepare_thumb_view(self)-> ThumbViewFromModelInterface:
+    def prepare_thumb_view(self, flags)-> ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
-    def prepare_full_view(self)-> FullViewFromModelInterface:
+    def prepare_full_view(self, flags)-> FullViewFromModelInterface:
         raise (AbstractMethodError)
 
     def on_thumb_history_changed(self, history:HistoryFromViewInterface):

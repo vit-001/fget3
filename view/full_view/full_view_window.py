@@ -34,8 +34,8 @@ class FullViewWindow(QWidget):
     def create_widgets(self):
         pass
 
-    def get_new_full_view(self) -> FullView:
-        view = FullView(self.ui.tabWidget,self.view_manager)
+    def get_new_full_view(self, flags) -> FullView:
+        view = FullView(self.ui.tabWidget,self.view_manager,flags)
         self.full_views.append(view)
         view.mute(self.global_muted)
         view.set_volume(self.global_volume)

@@ -13,10 +13,11 @@ from view.widgets.button_line import TextButton, ButtonLine
 
 
 class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
-    def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface):
+    def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface, flags):
         self.view_manager=view_manager
         self.title = ''
         self.parent = parent
+        self.flags=flags
 
         self.url=URL()
         self.history_handler=lambda dict:None
@@ -29,6 +30,8 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
 
         self.create_widgets()
         self.binding()
+
+        self.content_re_init()
 
     def create_widgets(self):
         self.top_line=ButtonLine(self.tab)
@@ -64,19 +67,20 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         self.url=url
 
     def re_init(self, flags):
+        self.flags=flags
 
         no_history=False
-        if flags:
+        if self.flags:
             no_history=flags.get('no_history', False)
 
         if not no_history:
             self.history_event()
-        self.content_clear()
+        self.content_re_init()
         self.top_line.clear()
         self.mid_line.clear()
         self.bottom_line.clear()
 
-    def content_clear(self):
+    def content_re_init(self):
         pass
 
     def history_event(self):

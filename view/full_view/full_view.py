@@ -16,8 +16,8 @@ class FullView(BaseFullView):
     def binding(self):
         self.little_forward = self.video_player.little_forward
 
-    def content_clear(self):
-        super().content_clear()
+    def content_re_init(self):
+        super().content_re_init()
 
     def set_title(self, title:str, tooltip=''):
         self.view_manager.set_tab_text(self,title,tooltip)

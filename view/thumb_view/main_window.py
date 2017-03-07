@@ -35,9 +35,9 @@ class MainWindow(QMainWindow):
         self.history=HistoryView(self, self.view_manager)
         self.ui.controls_frame_layout.addWidget(self.history)
 
-    def get_new_thumb_view(self) -> ThumbView:
+    def get_new_thumb_view(self, flags) -> ThumbView:
         tab = self.ui.tabWidget
-        view = ThumbView(tab, self.view_manager)
+        view = ThumbView(tab, self.view_manager, flags)
         self.thumb_views.append(view)
 
         return view

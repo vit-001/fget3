@@ -14,6 +14,8 @@ from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.script.v24videos import V24videoSite
+from model.site.video.script.redtube import RedtubeSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -21,7 +23,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[XhamsterSite, CollectionofbestpornSite, VeroniccaComSite, HdEasypornSite, ShockingmoviesSite
+        self._site_models=[XhamsterSite, CollectionofbestpornSite,RedtubeSite,
+                           VeroniccaComSite, HdEasypornSite, ShockingmoviesSite, V24videoSite
                            ]
 
         self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)

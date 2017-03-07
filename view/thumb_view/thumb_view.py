@@ -15,15 +15,14 @@ class ThumbView(BaseView):
         self.thumbs=ThumbWidgetVS(parent)
         return self.thumbs
 
-    def content_clear(self):
+    def content_re_init(self):
         self.thumbs.clear()
+        if self.flags:
+            self.thumbs.context=self.flags.get('context', None)
 
     def set_url(self, url: URL):
         super().set_url(url)
         self.view_manager.on_thumb_tab_url_changed(self)
-
-    def set_context(self,context):
-        self.thumbs.context=context
 
     def set_title(self, title: str, tooltip=''):
         index=self.parent.indexOf(self.tab)

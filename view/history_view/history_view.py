@@ -59,7 +59,7 @@ class HistoryView(QWidget):
         else:
             if text.strip() == self.history_items[index - 1].url.get():
                 item = self.history_items[index - 1]
-                self.view_manager.goto_url(item.url, item.context)
+                self.view_manager.goto_url(item.url, {'context':item.context})
             else:
                 self.view_manager.goto_url(URL(text))
 
@@ -67,7 +67,7 @@ class HistoryView(QWidget):
         if self.history:
             item=self.history.back()
             if item:
-                self.view_manager.goto_url(item.url,item.context,{'no_history':True})
+                self.view_manager.goto_url(item.url,{'context':item.context,'no_history':True})
 
 
 if __name__ == "__main__":
