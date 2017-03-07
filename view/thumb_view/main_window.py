@@ -3,6 +3,8 @@ __author__ = 'Nikitin'
 
 from PyQt5.QtWidgets import QMainWindow
 
+from data_format.url import URL
+
 from interface.hystory_interface import HistoryFromViewInterface
 from interface.view_manager_interface import ViewManagerFromViewInterface
 
@@ -23,7 +25,8 @@ class MainWindow(QMainWindow):
 
         self.thumb_views = list()
 
-        self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
+        self.ui.tabWidget.tabCloseRequested.connect(self.on_close_tab)
+        self.ui.tabWidget.currentChanged.connect(self.on_current_tab_changed)
 
     def create_widgets(self):
         self.sites=ButtonLine(self.ui.top_frame,height=50, speed=90, space=5)
@@ -57,9 +60,9 @@ class MainWindow(QMainWindow):
     def create_site_button(self,button):
         self.sites.add_button(button)
 
-    def close_tab(self,index:int):
+    def on_close_tab(self, index:int):
         # self.thumb_views[index].history_event()
-        self.thumb_views[index].clear()
+        self.thumb_views[index].re_init(dict())
         self.thumb_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()
@@ -69,6 +72,17 @@ class MainWindow(QMainWindow):
 
     def on_history_changed(self, history:HistoryFromViewInterface):
         self.history.update_history(history)
+
+    def on_current_tab_changed(self, index:int):
+        if index>=0 and len(self.thumb_views)>0:
+            self.history.set_current_url(self.thumb_views[index].url)
+        else:
+            self.history.set_current_url(URL())
+
+    def on_url_in_tab_changed(self, view):
+        if self.thumb_views[self.ui.tabWidget.currentIndex()] == view:
+            print(view.url.get())
+            self.history.set_current_url(view.url)
 
     def closeEvent(self, *args, **kwargs):
         for thumbs in self.thumb_views:

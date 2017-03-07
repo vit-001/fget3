@@ -127,29 +127,29 @@ class URL:
     def __str__(self, *args, **kwargs):
         return self.get()
 
-    # def __eq__(self, url2):
-    #     # print('Compare', self,url2)
-    #     if url2 is None:
-    #         return False
-    #     if self.method != url2.method:
-    #         return False
-    #     if self.method == 'GET':
-    #         return url2.to_save() == self.to_save()
-    #     elif self.method == 'POST':
-    #         if url2.to_save() != self.to_save():
-    #             return False
-    #         if self.post_data is None:
-    #             return url2.post_data is None
-    #         if url2.post_data is None:
-    #             return False
-    #         for key in self.post_data:
-    #             if self.post_data[key] != url2.post_data[key]:
-    #                 return False
-    #         for key in url2.post_data:
-    #             if self.post_data[key] != url2.post_data[key]:
-    #                 return False
-    #         return True
-    #     return False
+    def __eq__(self, url2):
+        # print('Compare', self,url2)
+        if url2 is None:
+            return False
+        if self.method != url2.method:
+            return False
+        if self.method == 'GET':
+            return url2.get() == self.get()
+        elif self.method == 'POST':
+            if url2.get() != self.get():
+                return False
+            if self.post_data is None:
+                return url2.post_data is None
+            if url2.post_data is None:
+                return False
+            for key in self.post_data:
+                if self.post_data[key] != url2.post_data[key]:
+                    return False
+            for key in url2.post_data:
+                if self.post_data[key] != url2.post_data[key]:
+                    return False
+            return True
+        return False
 
 
 

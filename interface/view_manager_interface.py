@@ -13,10 +13,13 @@ class ViewManagerFromViewInterface:
     def add_keyboard_shortcut(self, window, shortcut='', on_pressed=lambda: None):
         pass
 
-    def goto_url(self, url:URL, context=None):
+    def goto_url(self, url:URL, context=None, flags=None):
         pass
 
     def set_tab_text(self, view, text:str, tooltip:str=''):
+        pass
+
+    def on_thumb_tab_url_changed(self, view):
         pass
 
     def is_full_view_tab_active(self, full_view: FullViewFromModelInterface)->bool:

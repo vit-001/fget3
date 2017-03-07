@@ -109,16 +109,23 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.set_tab_text(view,text, tooltip)
         self.full.set_tab_text(view,text, tooltip)
 
-    def goto_url(self, url: URL, context=None):
+    def on_thumb_tab_url_changed(self, view):
+        self.main.on_url_in_tab_changed(view)
+
+    def goto_url(self, url: URL, context=None, flags=None):
+
+        if flags is None:
+            flags=dict()
 
         if QGuiApplication.keyboardModifiers() == Qt.ControlModifier:
             # print('control')
-            self.controller.goto_url(url, context=context)
+            self.controller.goto_url(url, context=context, flags=flags)
         else:
             self.controller.goto_url(url,
                                      context=context,
                                      current_thumb_view=self.main.get_current_thumb_view(),
-                                     current_full_view=self.full.get_current_full_view()
+                                     current_full_view=self.full.get_current_full_view(),
+                                     flags=flags
                                      )
 
     def is_full_view_tab_active(self, full_view: FullViewFromModelInterface) -> bool:

@@ -26,7 +26,7 @@ class ViewFromModelInterface:
     def subscribe_to_history_event(self, handler=lambda dict:None):
         pass
 
-    def clear(self):
+    def re_init(self, flags):
         pass
 
 class ThumbViewFromModelInterface(ViewFromModelInterface):

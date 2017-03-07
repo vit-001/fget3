@@ -4,6 +4,7 @@ __author__ = 'Nikitin'
 from PyQt5.QtWidgets import QWidget
 
 from data_format.url import URL
+from data_format.history_data import HistoryData
 
 from view.base_view import BaseView
 from view.widgets.thumb_widget import ThumbWidgetVS
@@ -17,6 +18,10 @@ class ThumbView(BaseView):
     def content_clear(self):
         self.thumbs.clear()
 
+    def set_url(self, url: URL):
+        super().set_url(url)
+        self.view_manager.on_thumb_tab_url_changed(self)
+
     def set_context(self,context):
         self.thumbs.context=context
 
@@ -29,10 +34,7 @@ class ThumbView(BaseView):
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
 
     def history_event(self):
-        history_data=dict()
-        history_data['url']=self.url
-        history_data['context']=self.thumbs.context
-        # print('history event', history_data)
+        history_data = HistoryData(self.url,self.thumbs.context)
         self.history_handler(history_data)
 
 if __name__ == "__main__":

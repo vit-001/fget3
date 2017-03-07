@@ -63,8 +63,14 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
     def set_url(self, url:URL):
         self.url=url
 
-    def clear(self):
-        self.history_event()
+    def re_init(self, flags):
+
+        no_history=False
+        if flags:
+            no_history=flags.get('no_history', False)
+
+        if not no_history:
+            self.history_event()
         self.content_clear()
         self.top_line.clear()
         self.mid_line.clear()

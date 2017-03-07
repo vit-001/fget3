@@ -2,6 +2,8 @@
 __author__ = 'Vit'
 from PyQt5.QtWidgets import QWidget
 
+from data_format.history_data import HistoryData
+
 from view.full_view.base_full_view import BaseFullView
 from view.widgets.video_player_widget import VideoPlayerWidget
 
@@ -47,10 +49,7 @@ class FullView(BaseFullView):
         self.video_player.set_volume(volume)
 
     def history_event(self):
-        history_data=dict()
-        history_data['url']=self.url
-        # history_data['context']=self.thumbs.context
-        # print('history event', history_data)
+        history_data=HistoryData(self.url)
         self.history_handler(history_data)
 
     def destroy(self):

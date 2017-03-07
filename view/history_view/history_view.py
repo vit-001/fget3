@@ -19,6 +19,8 @@ class HistoryView(QWidget):
         self.view_manager=view_manager
 
         self.history_items=list()
+        self.current_url=URL()
+        self.history=None
 
         self.ui=Ui_HistoryView()
         savecwd = os.getcwd()
@@ -26,6 +28,7 @@ class HistoryView(QWidget):
         self.ui.setupUi(self)
         os.chdir(savecwd)
 
+        self.ui.combo_history.addItem(self.current_url.get())
         self.binding()
 
     def binding(self):
@@ -33,35 +36,38 @@ class HistoryView(QWidget):
         self.ui.bn_back.clicked.connect(self.on_back_clicked)
 
     def update_history(self, history:HistoryFromViewInterface):
-        print('updating history')
+        self.history=history
         self.ui.combo_history.clear()
         self.history_items.clear()
-        self.ui.combo_history.addItem('---')
+        self.ui.combo_history.addItem(self.current_url.get())
         for item in reversed(history.get_history()):
-            print(item)
-            self.ui.combo_history.addItem(item['url'].get())
+            self.ui.combo_history.addItem(item.url.get())
             self.history_items.append(item)
 
+    def set_current_url(self, url:URL):
+        self.current_url=url
+        self.ui.combo_history.setItemText(0,self.current_url.get())
+
     def on_go_clicked(self):
-        print('go')
         index=self.ui.combo_history.currentIndex()
         text=self.ui.combo_history.currentText()
         if index==0:
-            pass # todo подумать что здесь
+            if text.strip() == self.current_url.get():
+                self.view_manager.goto_url(self.current_url)
+            else:
+                self.view_manager.goto_url(URL(text))
         else:
-            print(index, text, self.history_items[index-1])
-            if text.strip() == self.history_items[index - 1]['url'].get():
-                self.go_to_index(index)
+            if text.strip() == self.history_items[index - 1].url.get():
+                item = self.history_items[index - 1]
+                self.view_manager.goto_url(item.url, item.context)
             else:
                 self.view_manager.goto_url(URL(text))
 
-    def go_to_index(self, index):
-        item = self.history_items[index - 1]
-        self.view_manager.goto_url(item['url'], item['context'])
-
     def on_back_clicked(self):
-        print('back')
-        self.go_to_index(1) #todo много чего
+        if self.history:
+            item=self.history.back()
+            if item:
+                self.view_manager.goto_url(item.url,item.context,{'no_history':True})
 
 
 if __name__ == "__main__":

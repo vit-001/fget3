@@ -106,11 +106,12 @@ class BaseSite(SiteInterface, ParseResult):
 
     def generate_thumb_view(self):
         view=self.start_options.get('current_thumb_view', None)
+        flags=self.start_options.get('flags',dict())
         if not view:
             view=self.model.view_manager.prepare_thumb_view()
             view.subscribe_to_history_event(self.model.thumb_history.add)
         else:
-            view.clear()
+            view.re_init(flags)
 
         view.set_url(self.url)
         view.set_context(self.start_options.get('context', None))
@@ -128,11 +129,12 @@ class BaseSite(SiteInterface, ParseResult):
 
     def generate_video_view(self):
         view = self.start_options.get('current_full_view', None)
+        flags = self.start_options.get('flags', dict())
         if not view:
             view = self.model.view_manager.prepare_full_view()
             view.subscribe_to_history_event(self.model.full_history.add)
         else:
-            view.clear()
+            view.re_init(flags)
 
         view.set_url(self.url)
         view.set_title(self.title, tooltip=self.url.get())
