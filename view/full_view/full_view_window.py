@@ -101,6 +101,10 @@ class FullViewWindow(QWidget):
         if current_tab_index>=0 and len(self.full_views)>0:
             self.full_views[current_tab_index].__getattribute__(method_name)(*args,**options)
 
+    def resizeEvent(self, QResizeEvent):
+        super().resizeEvent(QResizeEvent)
+        for view in self.full_views:
+            view.resize_event()
 
 if __name__ == "__main__":
     pass

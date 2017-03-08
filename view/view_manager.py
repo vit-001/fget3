@@ -44,7 +44,6 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
     def configure_viewports(self):
         desktop = QApplication.desktop().screenGeometry()
-        print(desktop)
         main_x_base = Setting.main_window_x0_in_percents * desktop.width() // 100
         main_y_base = Setting.main_window_y0_in_percents * desktop.height() // 100
         main_h = Setting.main_window_h_in_percents * desktop.height() // 100

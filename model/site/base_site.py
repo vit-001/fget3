@@ -33,6 +33,8 @@ class ParseResult:
         self.video_data = []
         self.video_default_index=0
 
+        self.pictures=[]
+
         self.controls_top = []
         self.controls_bottom = []
         self.controls_mid = []
@@ -53,6 +55,10 @@ class ParseResult:
     def add_video(self, caption:str, url:URL):
         self._result_type='video'
         self.video_data.append(dict(text=caption, url=url))
+
+    def add_picture(self, filename:str, url:URL):
+        self._result_type='pictures'
+        self.pictures.append(dict(file=filename, url=url))
 
     def sort_video(self):
         self.video_data.sort(key=lambda x:int(x['text']))
@@ -84,6 +90,7 @@ class BaseSite(SiteInterface, ParseResult):
         self.start_options=dict()
 
     def goto_url(self, url: URL, **options):
+        print() #todo отладочный вывод
         print('Goto url:', url)
 
         self.url=url
@@ -123,9 +130,25 @@ class BaseSite(SiteInterface, ParseResult):
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
         thumb_list=list()
+        statistic=dict()
+        accepted=0
+        rejected=0
         for thumb in self.thumbs:
-            filename=thumb['url'].get_short_filename(base=Setting.thumbs_cache_path)
-            thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
+            domain=thumb['href'].domain()
+            statistic[domain]=statistic.get(domain,0)+1
+            if self.model.can_accept_url(thumb['href']):
+                accepted+=1
+                filename=thumb['url'].get_short_filename(base=Setting.thumbs_cache_path)
+                thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
+            else:
+                rejected+=1
+
+        print()#todo отладочный вывод
+        print('Statistic for',self.url)
+        for domain in statistic:
+            print('  {0:5d} in {1}'.format(statistic[domain], domain))
+        print('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
+
         loader.load_list(thumb_list)
 
         self.add_controls_to_view(view)
@@ -148,10 +171,44 @@ class BaseSite(SiteInterface, ParseResult):
 
         self.add_controls_to_view(view)
 
+        print()
         print('Now playback', self.url) # todo сделать отладочный вывод
         for item in self.video_data:
             print(item['text'], item['url'])
         print('Default:', self.video_data[self.video_default_index]['text'])
+
+    def generate_pictures_view(self):
+        if self.waiting_data:
+            return
+        view = self.start_options.get('current_full_view', None)
+        flags = self.start_options.get('flags')
+        if not view:
+            view = self.model.view_manager.prepare_full_view(flags)
+            view.subscribe_to_history_event(self.model.full_history.add)
+        else:
+            view.re_init(flags)
+
+        view.set_url(self.url)
+        view.set_title(self.title, tooltip=self.url.get())
+
+        pictures_list=list()
+        for picture in self.pictures:
+                filename=Setting.pictures_path+picture['file'].strip('/')
+
+                pictures_list.append(FLData(picture['url'],filename,overwrite=False))
+
+        loader=self.model.loader.get_new_load_process(
+            on_load_handler=lambda fl_data:view.add_picture(fl_data.filename))
+
+        loader.load_list(pictures_list)
+
+        self.add_controls_to_view(view)
+
+        # print()
+        # print('Now playback', self.url) # todo сделать отладочный вывод
+        # for item in self.video_data:
+        #     print(item['text'], item['url'])
+        # print('Default:', self.video_data[self.video_default_index]['text'])
 
     def add_controls_to_view(self, view):
         for item in self.controls_bottom:
@@ -174,6 +231,8 @@ class BaseSiteParser(BaseSite):
         self.parse_pictures(soup, url)
         if self.is_pictures:
             self.parse_pictures_tags(soup, url)
+            self.title=self.parse_pictures_title(soup,url)
+            self.generate_pictures_view()
             return
         self.parse_thumbs(soup, url)
         if self.is_no_result:
@@ -213,14 +272,17 @@ class BaseSiteParser(BaseSite):
     def parse_video_tags(self, soup:BeautifulSoup, url:URL):
         pass
 
-    def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'Title'
-
     def parse_pictures_tags(self, soup:BeautifulSoup, url:URL):
         pass
 
     def parse_thumb_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'Title'
+        return 'No title'
+
+    def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
+        return 'No title'
+
+    def parse_pictures_title(self, soup:BeautifulSoup, url:URL)->str:
+        return 'No title'
 
 if __name__ == "__main__":
     pass

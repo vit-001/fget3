@@ -3,10 +3,11 @@ __author__ = 'Nikitin'
 
 from data_format.error import AbstractMethodError
 from data_format.url import URL
+
 from interface.loader_interface import LoaderInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
-from model.history_model.hystory import HistoryModel
-
+from interface.site_interface import SiteInterface
+from interface.hystory_interface import HistoryFromModelInterface
 
 class ModelFromControllerInterface:
     def create_sites(self):
@@ -22,6 +23,9 @@ class ModelFromControllerInterface:
         pass
 
 class ModelFromSiteInterface:
+    def can_accept_url(self,url:URL)->SiteInterface.__class__:
+        return None
+
     @property
     def view_manager(self)->ViewManagerFromModelInterface:
         raise(AbstractMethodError)
@@ -31,11 +35,11 @@ class ModelFromSiteInterface:
         raise (AbstractMethodError)
 
     @property
-    def thumb_history(self)->HistoryModel:
+    def thumb_history(self)->HistoryFromModelInterface:
         raise (AbstractMethodError)
 
     @property
-    def full_history(self)->HistoryModel:
+    def full_history(self)->HistoryFromModelInterface:
         raise (AbstractMethodError)
 
 if __name__ == "__main__":

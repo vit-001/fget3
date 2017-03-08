@@ -43,7 +43,7 @@ class VideoPlayerWidget(QWidget):
 
         self.ui.bn_play.clicked.connect(self.media_player.play)
         self.ui.bn_pause.clicked.connect(self.media_player.pause)
-        self.ui.bn_stop.clicked.connect(self.media_player.stop)
+        self.ui.bn_stop.clicked.connect(self.stop)
         self.ui.bn_mute.clicked.connect(self.media_player.setMuted)
         self.ui.progress.sliderMoved.connect(self.media_player.setPosition)
         self.ui.volume.valueChanged.connect(self.media_player.setVolume)
@@ -104,6 +104,9 @@ class VideoPlayerWidget(QWidget):
 
     def play(self):
         self.media_player.play()
+
+    def stop(self):
+        self.media_player.stop()
 
     def pause(self):
         self.media_player.pause()

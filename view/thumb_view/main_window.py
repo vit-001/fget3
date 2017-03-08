@@ -81,7 +81,7 @@ class MainWindow(QMainWindow):
 
     def on_url_in_tab_changed(self, view):
         if self.thumb_views[self.ui.tabWidget.currentIndex()] == view:
-            print(view.url.get())
+            # print(view.url.get())
             self.history.set_current_url(view.url)
 
     def closeEvent(self, *args, **kwargs):

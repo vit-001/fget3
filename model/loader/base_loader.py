@@ -30,11 +30,15 @@ class BaseLoadProcedure(LoadProcedureInterface):
                 os.makedirs(path)
 
             buf = io.BytesIO(result)
-            with open(file.filename, 'wb') as fd:
-                chunk = buf.read(256)
-                while len(chunk) > 0:
-                    fd.write(chunk)
+            try:
+                with open(file.filename, 'wb') as fd:
                     chunk = buf.read(256)
+                    while len(chunk) > 0:
+                        fd.write(chunk)
+                        chunk = buf.read(256)
+            except FileNotFoundError as err:
+                print(err)
+
         return file
 
 

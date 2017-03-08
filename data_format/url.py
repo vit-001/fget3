@@ -79,12 +79,12 @@ class URL:
         p = urlparse(self.get())
         return base.rstrip('/') + '/' + p[1] + '/' + p[2].strip(' /').replace('/', '..')
 
-    # def get_path(self, base=''):
-    #     p = urlparse(self.get())
-    #     p2 = p[2]
-    #     if p2.endswith('.html') or p2.endswith('.jpg'):
-    #         p2 = p2.rpartition('/')[0] + '/'
-    #     return base.rstrip('/') + '/' + p[1] + p2.rstrip('/') + '/'
+    def get_path(self, base=''):
+        p = urlparse(self.get())
+        p2 = p[2]
+        if p2.endswith('.html') or p2.endswith('.jpg'):
+            p2 = p2.rpartition('/')[0] + '/'
+        return base.rstrip('/') + '/' + p[1] + p2.rstrip('/') + '/'
 
     def domain(self):
         return  urlparse(self.get())[1]

@@ -1,22 +1,40 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLabel, QFrame, QHBoxLayout, QToolButton, QSizePolicy
+from PyQt5.QtGui import QPixmap, QPicture, QIcon
+from PyQt5.QtCore import Qt
 
 from data_format.history_data import HistoryData
 
 from view.full_view.base_full_view import BaseFullView
 from view.widgets.video_player_widget import VideoPlayerWidget
+from view.widgets.picture_browser import PictureBrowser
 
 
 class FullView(BaseFullView):
     def get_main_content(self, parent: QWidget) -> QWidget:
-        self.video_player = VideoPlayerWidget(parent)
-        return self.video_player
+        self.parent=parent
+        frame=QFrame(self.parent)
+
+        layout=QHBoxLayout(frame)
+        # layout.setAlignment(Qt.AlignCenter)
+
+        self.video_player = VideoPlayerWidget(frame)
+        self.picture=PictureBrowser(self.parent)
+
+        self.picture.setFixedSize(self.parent.size())
+
+        layout.addWidget(self.video_player)
+        self.picture.hide()
+        self.video_player.hide()
+        return frame
 
     def binding(self):
         self.little_forward = self.video_player.little_forward
 
     def content_re_init(self):
+        print('re-init')
+        self.picture.re_init()
         super().content_re_init()
 
     def set_title(self, title:str, tooltip=''):
@@ -24,9 +42,17 @@ class FullView(BaseFullView):
 
     def set_video_list(self, list_of_dict:list, default:int):
         self.video_player.show()
+        self.picture.hide()
         self.video_player.set_url_list(list_of_dict,default)
         if self.view_manager.is_full_view_tab_active(self):
             self.video_player.play()
+
+    def add_picture(self, filename):
+        self.video_player.stop()
+        self.video_player.hide()
+        self.picture.show()
+
+        self.picture.add_picture(filename)
 
     def mute(self, on:bool):
         self.video_player.mute(on)
@@ -51,6 +77,10 @@ class FullView(BaseFullView):
     def history_event(self):
         history_data=HistoryData(self.url)
         self.history_handler(history_data)
+
+    def resize_event(self):
+        self.picture.setFixedSize(self.parent.size())
+        self.picture.show_current_picture()
 
     def destroy(self):
         self.history_event()

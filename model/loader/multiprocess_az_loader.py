@@ -44,11 +44,10 @@ class DataServer:
 
     def read_proxy_pac(self, pac_url):
         if self.last_load_proxy_pack:
-            print(datetime.datetime.now() - self.last_load_proxy_pack)
             if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(hours=2):
                 return
         try:
-            print('loading', pac_url)
+            print('Loading', pac_url)
             pac = RequestLoad().open(pac_url).decode()
 
             r = re.search('\"PROXY (.*); DIRECT', pac)

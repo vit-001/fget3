@@ -33,3 +33,8 @@ class ThumbViewFromModelInterface(ViewFromModelInterface):
 class FullViewFromModelInterface(ViewFromModelInterface):
     def set_video_list(self, list_of_dict:list, default:int):
         pass
+
+    def add_picture(self, filename):
+        print(filename)
+        pass
+
