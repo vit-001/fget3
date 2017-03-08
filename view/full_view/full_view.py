@@ -33,25 +33,24 @@ class FullView(BaseFullView):
         self.little_forward = self.video_player.little_forward
 
     def content_re_init(self):
-        print('re-init')
         self.picture.re_init()
-        super().content_re_init()
+        self.video_player.stop()
+        self.video_player.hide()
+        self.picture.hide()
 
     def set_title(self, title:str, tooltip=''):
         self.view_manager.set_tab_text(self,title,tooltip)
 
     def set_video_list(self, list_of_dict:list, default:int):
         self.video_player.show()
-        self.picture.hide()
+        # self.picture.hide()
         self.video_player.set_url_list(list_of_dict,default)
         if self.view_manager.is_full_view_tab_active(self):
             self.video_player.play()
 
     def add_picture(self, filename):
-        self.video_player.stop()
-        self.video_player.hide()
+        # self.video_player.hide()
         self.picture.show()
-
         self.picture.add_picture(filename)
 
     def mute(self, on:bool):

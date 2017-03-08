@@ -10,6 +10,8 @@ from interface.site_interface import SiteInterface
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
 
+from model.site.space import Space
+
 from model.site.picture.tomorrowporn import TomorrowpornSite
 
 from model.site.video.script.shockingmovies import ShockingmoviesSite
@@ -30,10 +32,26 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[TomorrowpornSite,
-                           XhamsterSite, CollectionofbestpornSite,PornComSite,
-                           RedtubeSite, RealGfSite, PornoxoSite, MotherlessSite,
-                           VeroniccaComSite, HdEasypornSite, ShockingmoviesSite, V24videoSite
+        self._site_models=[
+
+                           Space('Classic:'),
+                           XhamsterSite, CollectionofbestpornSite, PornComSite,
+                           RedtubeSite,PornoxoSite,  V24videoSite,
+                           VeroniccaComSite, HdEasypornSite,
+
+                           Space('Amateur:'),
+                           MotherlessSite, RealGfSite,
+
+                           Space('Deviant:'),ShockingmoviesSite,
+
+                           Space('Short:'),
+
+                           Space('Photo:'),
+                           TomorrowpornSite,
+                           Space('Non working:'),
+
+                           Space('Info:'),
+
                            ]
 
         self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)

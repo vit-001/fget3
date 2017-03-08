@@ -21,7 +21,7 @@ class BaseLoadProcedure(LoadProcedureInterface):
             result = self.open(file.url)
 
             if file.filename is None or file.filename is '':
-                file.text = result.decode()
+                file.text = result.decode(errors='ignore')
                 return file
 
             path = os.path.dirname(file.filename)

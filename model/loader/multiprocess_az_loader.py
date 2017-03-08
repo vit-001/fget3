@@ -48,7 +48,7 @@ class DataServer:
                 return
         try:
             print('Loading', pac_url)
-            pac = RequestLoad().open(pac_url).decode()
+            pac = RequestLoad().open(pac_url).decode(errors='ignore')
 
             r = re.search('\"PROXY (.*); DIRECT', pac)
             if r:
@@ -152,7 +152,7 @@ class AZloaderMP(BaseLoadProcedure):
     def _inspect_availability(self, url: URL) -> str:
         self.request_load.proxies = None
         try:
-            string = self.request_load.open(url).decode()
+            string = self.request_load.open(url).decode(errors='ignore')
 
             if url.test_string in string:
                 return 'plain'
@@ -161,7 +161,7 @@ class AZloaderMP(BaseLoadProcedure):
 
         try:
             self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
-            string = self.request_load.open(url).decode()
+            string = self.request_load.open(url).decode(errors='ignore')
 
             if url.test_string in string:
                 return 'proxy'
@@ -170,7 +170,7 @@ class AZloaderMP(BaseLoadProcedure):
 
         for method_name in self.trick_load.trick_headers:
             # print(method_name)
-            string = self.trick_load.open(url,trick=method_name).decode()
+            string = self.trick_load.open(url,trick=method_name).decode(errors='ignore')
             # print(string)
             if url.test_string in string:
                 return method_name

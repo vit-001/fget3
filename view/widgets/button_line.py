@@ -64,11 +64,13 @@ class TextButton(ActionButton):
 class ImageButton(ActionButton):
     def __init__(self, picture_filename:str, tooltip:str, action=lambda:None):
         super().__init__(tooltip, action)
-        pixmap = QPixmap(picture_filename)
-        icon = QIcon()
-        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
-        self.setIcon(icon)
-        self.setIconSize(QSize(100, 100))
+        self.setText(tooltip)
+        if picture_filename:
+            pixmap = QPixmap(picture_filename)
+            icon = QIcon()
+            icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+            self.setIcon(icon)
+            self.setIconSize(QSize(100, 100))
 
 
 class ButtonLine(QWidget):

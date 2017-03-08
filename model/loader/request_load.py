@@ -45,4 +45,4 @@ class RequestLoad(BaseLoadProcedure):
 if __name__ == "__main__":
     l = RequestLoad()
     url = URL('http://scs.spb.ru')
-    print(l.open(url).decode())
+    print(l.open(url).decode(errors='ignore'))
