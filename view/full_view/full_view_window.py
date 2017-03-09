@@ -34,8 +34,8 @@ class FullViewWindow(QWidget):
     def create_widgets(self):
         pass
 
-    def get_new_full_view(self, flags) -> FullView:
-        view = FullView(self.ui.tabWidget,self.view_manager,flags)
+    def get_new_full_view(self) -> FullView:
+        view = FullView(self.ui.tabWidget,self.view_manager)
         self.full_views.append(view)
         view.mute(self.global_muted)
         view.set_volume(self.global_volume)
@@ -58,11 +58,12 @@ class FullViewWindow(QWidget):
 
     def close_tab(self,index:int):
         view=self.full_views[index]
-        view.history_event()
+        view.prepare_to_close()
         if index == self.ui.tabWidget.currentIndex(): #Close active tab
             self.global_muted=view.is_muted()
             self.global_volume=view.get_volume()
         view.destroy()
+
         self.full_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()

@@ -25,7 +25,7 @@ class MainWindow(QMainWindow):
 
         self.thumb_views = list()
 
-        self.ui.tabWidget.tabCloseRequested.connect(self.on_close_tab)
+        self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.ui.tabWidget.currentChanged.connect(self.on_current_tab_changed)
 
     def create_widgets(self):
@@ -35,9 +35,9 @@ class MainWindow(QMainWindow):
         self.history=HistoryView(self, self.view_manager)
         self.ui.controls_frame_layout.addWidget(self.history)
 
-    def get_new_thumb_view(self, flags) -> ThumbView:
+    def get_new_thumb_view(self) -> ThumbView:
         tab = self.ui.tabWidget
-        view = ThumbView(tab, self.view_manager, flags)
+        view = ThumbView(tab, self.view_manager)
         self.thumb_views.append(view)
 
         return view
@@ -60,9 +60,9 @@ class MainWindow(QMainWindow):
     def create_site_button(self,button):
         self.sites.add_button(button)
 
-    def on_close_tab(self, index:int):
+    def close_tab(self, index:int):
         # self.thumb_views[index].history_event()
-        self.thumb_views[index].re_init(dict())
+        self.thumb_views[index].prepare_to_close()
         self.thumb_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()

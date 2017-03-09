@@ -13,14 +13,15 @@ from view.widgets.button_line import TextButton, ButtonLine
 
 
 class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
-    def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface, flags):
+    def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface):
         self.view_manager=view_manager
         self.title = ''
         self.parent = parent
-        self.flags=flags
+        self.flags=None
 
         self.url=URL()
         self.history_handler=lambda dict:None
+        self.on_stop=lambda:None
 
         self.tab = QWidget()
         self.verticalLayout = QVBoxLayout(self.tab)
@@ -31,7 +32,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         self.create_widgets()
         self.binding()
 
-        self.content_re_init()
+        # self.content_prepare()
 
     def create_widgets(self):
         self.top_line=ButtonLine(self.tab)
@@ -63,46 +64,79 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
     def subscribe_to_history_event(self, handler=lambda dict: None):
         self.history_handler=handler
 
-    def set_url(self, url:URL):
-        self.url=url
+    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None):
+        self.on_stop()
+        self.on_stop=on_stop
 
-    def re_init(self, flags):
         self.flags=flags
+        self.set_url(url)
+        self.set_title(title,tooltip)
 
         no_history=False
         if self.flags:
             no_history=flags.get('no_history', False)
-
         if not no_history:
             self.history_event()
-        self.content_re_init()
+
+        self.prepare_content()
         self.top_line.clear()
         self.mid_line.clear()
         self.bottom_line.clear()
 
-    def content_re_init(self):
+    def prepare_to_close(self):
+        self.on_stop()
+        self.history_event()
+        self.prepare_content_to_close()
+        self.top_line.clear()
+        self.mid_line.clear()
+        self.bottom_line.clear()
+
+    def set_url(self, url:URL):
+        self.url=url
+
+    def set_title(self, title:str, tooltip=''):
+        pass
+
+    def prepare_content(self):
+        pass
+
+    def prepare_content_to_close(self):
         pass
 
     def history_event(self):
         pass
 
+    def resize_event(self):
+        pass
+
     def add_to_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.bottom_line.add_button(button)
+        self.add_button(self.bottom_line, text, href, tooltip, menu, style)
+        # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
+        # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
+        # button.set_button_style(style)
+        # self.bottom_line.add_button(button)
 
     def add_to_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.mid_line.add_button(button)
+        self.add_button(self.mid_line, text, href, tooltip, menu, style)
+        # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
+        # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
+        # button.set_button_style(style)
+        # self.mid_line.add_button(button)
 
     def add_to_top_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
+        self.add_button(self.top_line,text,href,tooltip,menu,style)
+        # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
+        # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
+        # button.set_button_style(style)
+        # self.top_line.add_button(button)
+
+    def add_button(self, destination:ButtonLine, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
         button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
         button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
         button.set_button_style(style)
-        self.top_line.add_button(button)
+        destination.add_button(button)
+        # self.resize_event()
+
 
 if __name__ == "__main__":
     pass

@@ -14,29 +14,33 @@ from view.widgets.picture_browser import PictureBrowser
 class FullView(BaseFullView):
     def get_main_content(self, parent: QWidget) -> QWidget:
         self.parent=parent
-        frame=QFrame(self.parent)
+        self.frame=QFrame(self.parent)
 
-        layout=QHBoxLayout(frame)
+        layout=QHBoxLayout(self.frame)
         # layout.setAlignment(Qt.AlignCenter)
 
-        self.video_player = VideoPlayerWidget(frame)
+        self.video_player = VideoPlayerWidget(self.frame)
         self.picture=PictureBrowser(self.parent)
 
-        self.picture.setFixedSize(self.parent.size())
+        # self.picture.setFixedSize(self.parent.size())
 
         layout.addWidget(self.video_player)
         self.picture.hide()
         self.video_player.hide()
-        return frame
+        return self.frame
 
     def binding(self):
         self.little_forward = self.video_player.little_forward
 
-    def content_re_init(self):
+    def prepare_content(self):
         self.picture.re_init()
         self.video_player.stop()
         self.video_player.hide()
         self.picture.hide()
+
+    def prepare_content_to_close(self):
+        self.picture.re_init()
+        self.video_player.stop()
 
     def set_title(self, title:str, tooltip=''):
         self.view_manager.set_tab_text(self,title,tooltip)
@@ -52,6 +56,7 @@ class FullView(BaseFullView):
         # self.video_player.hide()
         self.picture.show()
         self.picture.add_picture(filename)
+        self.resize_event()
 
     def mute(self, on:bool):
         self.video_player.mute(on)
@@ -78,7 +83,7 @@ class FullView(BaseFullView):
         self.history_handler(history_data)
 
     def resize_event(self):
-        self.picture.setFixedSize(self.parent.size())
+        self.picture.setFixedSize(self.frame.size())
         self.picture.show_current_picture()
 
     def destroy(self):

@@ -8,7 +8,7 @@ from common.util import _iter, quotes
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
-from model.site.base_site import BaseSiteParser
+from model.site.parser import BaseSiteParser
 
 
 class PornoxoSite(BaseSiteParser):

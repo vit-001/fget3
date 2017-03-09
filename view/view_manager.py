@@ -89,16 +89,16 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
     def on_thumb_history_changed(self, history: HistoryFromViewInterface):
         self.main.on_history_changed(history)
 
-    def prepare_thumb_view(self, flags) -> ThumbViewFromModelInterface:
-        view=self.main.get_new_thumb_view(flags)
+    def new_thumb_view(self) -> ThumbViewFromModelInterface:
+        view=self.main.get_new_thumb_view()
 
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.main.update()
 
         return view
 
-    def prepare_full_view(self, flags)->FullViewFromModelInterface:
-        view=self.full.get_new_full_view(flags)
+    def new_full_view(self)->FullViewFromModelInterface:
+        view=self.full.get_new_full_view()
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.full.update()
 

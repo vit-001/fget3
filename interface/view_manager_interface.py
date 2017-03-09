@@ -33,10 +33,10 @@ class ViewManagerFromViewInterface:
 
 
 class ViewManagerFromModelInterface:
-    def prepare_thumb_view(self, flags)-> ThumbViewFromModelInterface:
+    def new_thumb_view(self)-> ThumbViewFromModelInterface:
         raise(AbstractMethodError)
 
-    def prepare_full_view(self, flags)-> FullViewFromModelInterface:
+    def new_full_view(self)-> FullViewFromModelInterface:
         raise (AbstractMethodError)
 
     def on_thumb_history_changed(self, history:HistoryFromViewInterface):

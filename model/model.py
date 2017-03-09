@@ -1,30 +1,26 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 from data_format.url import URL
-
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
-from interface.view_manager_interface import ViewManagerFromModelInterface
 from interface.site_interface import SiteInterface
-
+from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
-
-from model.site.space import Space
-
+from model.site.other.space import Space
+from model.site.picture.teenport import TeenportSite
 from model.site.picture.tomorrowporn import TomorrowpornSite
-
+from model.site.video.script.motherless import MotherlessSite
+from model.site.video.script.porncom import PornComSite
+from model.site.video.script.pornoxo import PornoxoSite
+from model.site.video.script.realgf import RealGfSite
+from model.site.video.script.redtube import RedtubeSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
+from model.site.video.script.v24videos import V24videoSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.script.v24videos import V24videoSite
-from model.site.video.script.redtube import RedtubeSite
-from model.site.video.script.realgf import RealGfSite
-from model.site.video.script.pornoxo import PornoxoSite
-from model.site.video.script.porncom import PornComSite
-from model.site.video.script.motherless import MotherlessSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -32,7 +28,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[
+        self._site_models=[TeenportSite,
 
                            Space('Classic:'),
                            XhamsterSite, CollectionofbestpornSite, PornComSite,

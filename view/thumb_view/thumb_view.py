@@ -15,10 +15,13 @@ class ThumbView(BaseView):
         self.thumbs=ThumbWidgetVS(parent)
         return self.thumbs
 
-    def content_re_init(self):
+    def prepare_content(self):
         self.thumbs.clear()
         if self.flags:
             self.thumbs.context=self.flags.get('context', None)
+
+    def prepare_content_to_close(self):
+        self.thumbs.clear()
 
     def set_url(self, url: URL):
         super().set_url(url)

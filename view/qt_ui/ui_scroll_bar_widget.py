@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/scroll_bar_widget.ui'
 #
-# Created: Thu Mar  9 01:15:26 2017
+# Created: Thu Mar  9 13:42:40 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

@@ -4,10 +4,10 @@ __author__ = 'Vit'
 from data_format.url import URL
 
 class ViewFromModelInterface:
-    def set_url(self, url:URL):
+    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None):
         pass
 
-    def set_title(self, title:str, tooltip=''):
+    def subscribe_to_history_event(self, handler=lambda dict:None):
         pass
 
     def add_to_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
@@ -17,12 +17,6 @@ class ViewFromModelInterface:
         pass
 
     def add_to_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        pass
-
-    def subscribe_to_history_event(self, handler=lambda dict:None):
-        pass
-
-    def re_init(self, flags):
         pass
 
 class ThumbViewFromModelInterface(ViewFromModelInterface):

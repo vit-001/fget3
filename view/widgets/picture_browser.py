@@ -3,7 +3,7 @@ __author__ = 'Vit'
 
 from PyQt5.QtWidgets import QWidget, QLabel
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QEventLoop
 
 class PictureBrowser(QLabel):
     def __init__(self, *__args):
@@ -19,6 +19,8 @@ class PictureBrowser(QLabel):
     def add_picture(self, filename):
         self.pictures.append(QPixmap(filename))
         self.show_current_picture()
+        QEventLoop().processEvents(QEventLoop.AllEvents)
+        self.update()
 
     def show_current_picture(self):
         self.show_picture(self.current_picture)
