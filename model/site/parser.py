@@ -2,6 +2,7 @@
 __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
+from common.util import _iter
 from data_format.url import URL
 from model.site.base_site import BaseSite
 
@@ -52,9 +53,9 @@ class BaseSiteParser(BaseSite):
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         container = self.get_pagination_container(soup)
-        if container is not None:
-            for page in container.find_all('a', {'href': True}):
-                if page.string is not None and page.string.isdigit():
+        if container:
+            for page in _iter(container.find_all('a', {'href': True})):
+                if page.string and page.string.isdigit():
                     self.add_page(page.string, URL(page.attrs['href'], base_url=url))
                     # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
 

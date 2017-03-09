@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
-from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
-
 from data_format.url import URL
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
@@ -11,10 +8,13 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
 from model.site.other.space import Space
+from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
 from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
+from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
 from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
 from model.site.video.script.pornoxo import PornoxoSite
+from model.site.video.script.porntrex import PorntrexSite
 from model.site.video.script.realgf import RealGfSite
 from model.site.video.script.redtube import RedtubeSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
@@ -33,6 +33,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[
 
                            Space('Classic:'),
+                           PorntrexSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite,
                            RedtubeSite,PornoxoSite,  V24videoSite,
                            VeroniccaComSite, HdEasypornSite,
@@ -65,12 +66,6 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
             site(self).goto_url(url, **options)
         else:
             print('Rejected', url)
-        # for site_class in self._site_models:
-        #     if site_class.can_accept_url(url):
-        #         site=site_class(self)
-        #         site.goto_url(url, **options)
-        #         return
-        # print('Rejected', url)
 
     def can_accept_url(self, url: URL) -> SiteInterface.__class__:
         for site_class in self._site_models:
