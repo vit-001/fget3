@@ -20,9 +20,7 @@ class FullView(BaseFullView):
         # layout.setAlignment(Qt.AlignCenter)
 
         self.video_player = VideoPlayerWidget(self.frame)
-        self.picture=PictureBrowser(self.parent)
-
-        # self.picture.setFixedSize(self.parent.size())
+        self.picture=PictureBrowser(self.parent, lambda index:self.progress.set_value('current pix', index+1))
 
         layout.addWidget(self.video_player)
         self.picture.hide()
@@ -37,6 +35,9 @@ class FullView(BaseFullView):
         self.video_player.stop()
         self.video_player.hide()
         self.picture.hide()
+        self.progress.add_progress('loaded pix',Qt.darkBlue)
+        self.progress.add_progress('current pix', Qt.red)
+        self.progress.set_autohide_bar_name('loaded pix')
 
     def prepare_content_to_close(self):
         self.picture.re_init()
@@ -47,16 +48,15 @@ class FullView(BaseFullView):
 
     def set_video_list(self, list_of_dict:list, default:int):
         self.video_player.show()
-        # self.picture.hide()
         self.video_player.set_url_list(list_of_dict,default)
         if self.view_manager.is_full_view_tab_active(self):
             self.video_player.play()
 
     def add_picture(self, filename):
-        # self.video_player.hide()
         self.picture.show()
         self.picture.add_picture(filename)
         self.resize_event()
+        self.progress.set_value('loaded pix', self.picture.count)
 
     def mute(self, on:bool):
         self.video_player.mute(on)

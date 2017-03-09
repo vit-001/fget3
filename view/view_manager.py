@@ -3,7 +3,7 @@ __author__ = 'Nikitin'
 
 # from PyQt5 import Qt
 
-from PyQt5.QtCore import QTimer, QEventLoop, Qt, QRect
+from PyQt5.QtCore import QTimer, QEventLoop, Qt, QRect, qVersion
 from PyQt5.QtGui import QGuiApplication, QKeySequence
 from PyQt5.QtWidgets import QApplication, QAction, QMenu
 
@@ -25,8 +25,13 @@ from view.widgets.button_line import ImageButton
 
 
 class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterface, ViewManagerFromViewInterface):
+    def __init__(self):
+        print('PyQt version: ' + qVersion())
+
     def create_main_window(self, controller: ControllerFromViewInterface):
         self.controller = controller
+
+
 
         self.main = MainWindow(self)
         self.main.show()

@@ -29,7 +29,16 @@ class BaseSiteParser(BaseSite):
             self.title=self.parse_thumb_title(soup,url)
             self.generate_thumb_view()
 
-    def parse_thumbs(self, soup:BeautifulSoup, url:URL):
+    def parse_thumbs(self, soup: BeautifulSoup, url: URL):
+        self.parse_video_thumbs(soup,url)
+        if self.is_thumbs:
+            return
+        self.parse_picture_thumbs(soup,url)
+
+    def parse_video_thumbs(self, soup:BeautifulSoup, url:URL):
+        pass
+
+    def parse_picture_thumbs(self, soup:BeautifulSoup, url:URL):
         pass
 
     def parse_video(self, soup:BeautifulSoup, url:URL):

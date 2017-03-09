@@ -124,7 +124,7 @@ class BaseSite(SiteInterface, ParseResult):
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
-        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags)
+
 
         thumb_list=list()
         statistic=dict()
@@ -139,6 +139,8 @@ class BaseSite(SiteInterface, ParseResult):
                 thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
             else:
                 rejected+=1
+
+        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(thumb_list))
 
         print()#todo отладочный вывод
         print('Statistic for',self.url)
@@ -184,7 +186,7 @@ class BaseSite(SiteInterface, ParseResult):
         flags = self.start_options.get('flags')
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda fl_data:view.add_picture(fl_data.filename))
-        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags)
+        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(self.pictures))
 
         pictures_list=list()
         for picture in self.pictures:

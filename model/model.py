@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
+from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
+from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
+
 from data_format.url import URL
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
@@ -8,8 +11,7 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
 from model.site.other.space import Space
-from model.site.picture.teenport import TeenportSite
-from model.site.picture.tomorrowporn import TomorrowpornSite
+from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
 from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
 from model.site.video.script.pornoxo import PornoxoSite
@@ -28,7 +30,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[TeenportSite,
+        self._site_models=[
 
                            Space('Classic:'),
                            XhamsterSite, CollectionofbestpornSite, PornComSite,
@@ -43,7 +45,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            Space('Short:'),
 
                            Space('Photo:'),
-                           TomorrowpornSite,
+                           BravoeroticaSite,TomorrowpornSite,TeenportSite,
                            Space('Non working:'),
 
                            Space('Info:'),

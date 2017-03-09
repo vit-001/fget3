@@ -2,6 +2,7 @@
 __author__ = 'Nikitin'
 
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import Qt
 
 from data_format.url import URL
 from data_format.history_data import HistoryData
@@ -19,6 +20,8 @@ class ThumbView(BaseView):
         self.thumbs.clear()
         if self.flags:
             self.thumbs.context=self.flags.get('context', None)
+        self.progress.add_progress('thumbs',Qt.darkBlue)
+        self.progress.set_autohide_bar_name('thumbs')
 
     def prepare_content_to_close(self):
         self.thumbs.clear()
@@ -34,6 +37,7 @@ class ThumbView(BaseView):
 
     def add_thumb(self, picture_filename: str, href: URL, popup: str = '', labels=list):
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
+        self.progress.set_value('thumbs',self.thumbs.count)
 
     def history_event(self):
         history_data = HistoryData(self.url,self.thumbs.context)

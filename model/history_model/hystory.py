@@ -12,6 +12,7 @@ class HistoryModel(HistoryFromViewInterface, HistoryFromModelInterface):
         self.handler=on_changed_handlr
 
     def add(self, data:HistoryData):
+        # print('=======add to history==',data)
         self.back_data.append(data)
         self.handler(self)
 
@@ -22,6 +23,7 @@ class HistoryModel(HistoryFromViewInterface, HistoryFromModelInterface):
         return super().forward()
 
     def back(self) -> HistoryData:
+        # print('=======go back=========')
         if self.back_data:
             item=self.back_data.pop()
             self.handler(self)

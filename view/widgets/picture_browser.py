@@ -6,11 +6,12 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt, QEventLoop
 
 class PictureBrowser(QLabel):
-    def __init__(self, *__args):
-        super().__init__(*__args)
+    def __init__(self, parent:QWidget, on_current_change:lambda index:None):
+        super().__init__(parent)
         self.setAlignment(Qt.AlignCenter)
         self.pictures=list()
         self.current_picture=0
+        self.on_current_change=on_current_change
 
     def re_init(self):
         self.pictures = list()
@@ -21,6 +22,10 @@ class PictureBrowser(QLabel):
         self.show_current_picture()
         QEventLoop().processEvents(QEventLoop.AllEvents)
         self.update()
+
+    @property
+    def count(self):
+        return len(self.pictures)
 
     def show_current_picture(self):
         self.show_picture(self.current_picture)
@@ -42,6 +47,7 @@ class PictureBrowser(QLabel):
                 pass
         except IndexError:
             pass
+        self.on_current_change(self.current_picture)
 
     def wheelEvent(self, event):
         self.current_picture -= event.angleDelta().y() // 120
@@ -49,6 +55,7 @@ class PictureBrowser(QLabel):
         if self.current_picture > len(self.pictures) - 1:
             self.current_picture = len(self.pictures) - 1
         self.show_current_picture()
+
 
 
 

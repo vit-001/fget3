@@ -4,7 +4,7 @@ __author__ = 'Vit'
 from data_format.url import URL
 
 class ViewFromModelInterface:
-    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None):
+    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None, max_progress:int=0):
         pass
 
     def subscribe_to_history_event(self, handler=lambda dict:None):

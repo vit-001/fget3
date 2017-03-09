@@ -10,6 +10,7 @@ from interface.view_interface import ThumbViewFromModelInterface,FullViewFromMod
 from interface.view_manager_interface import ViewManagerFromViewInterface
 
 from view.widgets.button_line import TextButton, ButtonLine
+from view.widgets.progress_line import ProgressHLine
 
 
 class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
@@ -21,6 +22,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
 
         self.url=URL()
         self.history_handler=lambda dict:None
+        self.no_history = True
         self.on_stop=lambda:None
 
         self.tab = QWidget()
@@ -47,6 +49,10 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         content.setSizePolicy(sizePolicy)
         self.verticalLayout.addWidget(content)
 
+        self.progress=ProgressHLine(self.tab)
+        self.verticalLayout.addWidget(self.progress)
+        self.progress.show()
+
         self.mid_line=ButtonLine(self.tab)
         self.verticalLayout.addWidget(self.mid_line)
         self.mid_line.hide()
@@ -64,20 +70,23 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
     def subscribe_to_history_event(self, handler=lambda dict: None):
         self.history_handler=handler
 
-    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None):
+    def prepare(self, url:URL, title:str, tooltip='',on_stop=lambda:None, flags:dict=None, max_progress:int=0):
         self.on_stop()
         self.on_stop=on_stop
 
         self.flags=flags
+
+        if self.flags:
+            self.no_history=flags.get('no_history', False)
+        if not self.no_history:
+            self.history_event()
+        self.no_history=False
+
         self.set_url(url)
         self.set_title(title,tooltip)
 
-        no_history=False
-        if self.flags:
-            no_history=flags.get('no_history', False)
-        if not no_history:
-            self.history_event()
-
+        self.progress.reset()
+        self.progress.set_max_value(max_progress)
         self.prepare_content()
         self.top_line.clear()
         self.mid_line.clear()
