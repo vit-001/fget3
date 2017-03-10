@@ -151,6 +151,14 @@ class URL:
             return True
         return False
 
+    def to_dict_serialize(self)->dict:
+        return dict(url=self.get())
+
+    @staticmethod
+    def from_dict(data:dict):
+        return URL(url=data.get('url',''),
+                   )
+
 
 
 if __name__ == "__main__":

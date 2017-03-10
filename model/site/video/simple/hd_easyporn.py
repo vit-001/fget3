@@ -23,11 +23,13 @@ class HdEasypornSite(BaseSiteParser):
                     Categories=URL('http://www.hd-easyporn.com/categories/')
                     )
 
-        view.add_start_button(name='Hd-easyporn',
-                              picture_filename='model/site/resource/hd_easyporn.png',
+        view.add_start_button(picture_filename='model/site/resource/hd_easyporn.png',
                               menu_items=menu_items,
                               url=URL("http://www.hd-easyporn.com/", test_string='HD Porn'))
 
+
+    def get_shrink_name(self):
+        return 'HDEP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         thumbs_container = soup.find('div', {'class': 'videos cf'})
@@ -56,9 +58,6 @@ class HdEasypornSite(BaseSiteParser):
                                            labels=[{'text': title, 'align': 'top right'}])
                 categories.add(title)
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'HD '+ url.get().partition('hd-easyporn.com/')[2]
-
     def get_pagination_container(self, soup: BeautifulSoup):
         return soup.find('div', {'class': 'pagination'})
 
@@ -76,13 +75,14 @@ class HdEasypornSite(BaseSiteParser):
             self.set_default_video(-1)
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return  url.get().rstrip('/').rpartition('/')[2].rpartition('-')[0]
+        return super().parse_video_title(soup, url).rpartition('-')[0]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         for tag_container in _iter(soup.find_all('div', {'class': 'video_header'})):
             for href in _iter(tag_container.find_all('a')):
                 if href.string is not None:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+
 
 if __name__ == "__main__":
     pass

@@ -21,10 +21,12 @@ class V24videoSite(BaseSiteParser):
                     Videos_Top_Rated=URL('http://www.24videos.tv/top-rated/')
                     )
 
-        view.add_start_button(name='24videos',
-                              picture_filename='model/site/resource/24video.png',
+        view.add_start_button(picture_filename='model/site/resource/24video.png',
                               menu_items=menu_items,
                               url=URL("http://www.24videos.tv/latest-updates/", test_string='24Videos.TV'))
+
+    def get_shrink_name(self):
+        return 'V24 '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'list-videos'})
@@ -46,8 +48,8 @@ class V24videoSite(BaseSiteParser):
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div',{'class':'pagination'})
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'V24 '+ url.get().partition('24videos.tv/')[2].strip('/')
+    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return 'V24 '+ url.get().partition('24videos.tv/')[2].strip('/')
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         content = soup.find('div', {'class': 'player'})
@@ -73,8 +75,8 @@ class V24videoSite(BaseSiteParser):
                 for key in sorted(files.keys(), reverse=True):
                     self.add_video(key, URL(files[key]))
 
-    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().strip('/').rpartition('/')[2]
+    # def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return url.get().strip('/').rpartition('/')[2]
 
 
 if __name__ == "__main__":

@@ -34,10 +34,12 @@ class PornComSite(BaseSiteParser):
                     Video_Viewed_All_Time=URL('http://www.porn.com/videos?o=v*')
                     )
 
-        view.add_start_button(name='PornCom',
-                              picture_filename='model/site/resource/porncom.svg',
+        view.add_start_button(picture_filename='model/site/resource/porncom.svg',
                               menu_items=menu_items,
                               url=URL("http://www.porn.com/videos*", test_string='PORN.COM'))
+
+    def get_shrink_name(self):
+        return 'PC '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         mainw = soup.find('div', {'class': ['mainw', 'profileContent']})
@@ -78,9 +80,6 @@ class PornComSite(BaseSiteParser):
                                            {'text': label, 'align': 'bottom center'},
                                            {'text': hd, 'align': 'top left'}])
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'PC '+ url.get().partition('porn.com/')[2]
-
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         # adding tags to thumbs
         tags_container = soup.find('div', {'class': 'listFilters'})
@@ -116,7 +115,7 @@ class PornComSite(BaseSiteParser):
                 self.set_default_video(-1)
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2].rpartition('-')[0]
+        return super().parse_video_title(soup, url).rpartition('-')[0]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         vid_source = soup.find('div', {'class': 'vidSource'})

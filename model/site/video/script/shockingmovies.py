@@ -23,10 +23,12 @@ class ShockingmoviesSite(BaseSiteParser):
                     top_rated=URL('http://shockingmovies.com/top-rated/'),
                     longest=URL('http://shockingmovies.com/longest/'))
 
-        view.add_start_button(name='Shockingmovies',
-                              picture_filename='model/site/resource/shockingmovies.png',
+        view.add_start_button(picture_filename='model/site/resource/shockingmovies.png',
                               menu_items=menu_items,
                               url=URL("http://shockingmovies.com/most-recent/", test_string='Shocking'))
+
+    def get_shrink_name(self):
+        return 'SM '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('a', {'class': 'video-box'})):
@@ -47,9 +49,6 @@ class ShockingmoviesSite(BaseSiteParser):
             if href is not None:
                 self.add_tag(str(href.string).strip(), URL(href.attrs['href'], base_url=url))
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'SM '+ url.get().partition('shockingmovies.com/')[2].partition('.')[0].strip('/')
-
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div', {'class': 'pagination-block'})
 
@@ -59,7 +58,7 @@ class ShockingmoviesSite(BaseSiteParser):
             self.add_video('DEFAULT', URL(quotes(str(script.string), 'file:"', '"'), base_url=url))
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2].rpartition('.')[0].rpartition('-')[0]
+        return super().parse_video_title(soup, url).rpartition('-')[0]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         # adding "user" to video

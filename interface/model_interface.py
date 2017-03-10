@@ -16,6 +16,9 @@ class ModelFromControllerInterface:
     def goto_url(self, url: URL, **options):
         pass
 
+    def add_to_favorites(self, url: URL, label:str=None):
+        pass
+
     def on_cycle_handler(self):
         pass
 
@@ -25,6 +28,12 @@ class ModelFromControllerInterface:
 class ModelFromSiteInterface:
     def can_accept_url(self,url:URL)->SiteInterface.__class__:
         return None
+
+    def get_favorite_items(self, site:SiteInterface)->list:
+        pass
+
+    def remove_favorite(self, url):
+        pass
 
     @property
     def view_manager(self)->ViewManagerFromModelInterface:

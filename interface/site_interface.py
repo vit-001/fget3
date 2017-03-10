@@ -13,6 +13,14 @@ class SiteInterface:
     def can_accept_url(url:URL)->bool:
         return False
 
+    @staticmethod
+    def get_thumb_label(url:URL)->str:
+        return 'xxxx'
+
+    @staticmethod
+    def get_full_label(url:URL)->str:
+        return ''
+
     def goto_url(self, url:URL, **options):
         pass
 

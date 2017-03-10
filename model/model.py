@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 from data_format.url import URL
+from common.setting import Setting
+
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
 from interface.site_interface import SiteInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
+
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
+from model.favorites.favorites import Favorites
+
 from model.site.other.space import Space
 from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
 from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
@@ -55,6 +60,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
         self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)
         self._full_history=HistoryModel('full', self._view_manager.on_full_history_changed)
+        self._favorites=Favorites(Setting.global_data_path+'favorites.json')
+
 
     def create_sites(self):
         for site_class in self._site_models:
@@ -67,7 +74,24 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         else:
             print('Rejected', url)
 
-    def can_accept_url(self, url: URL) -> SiteInterface.__class__:
+    def add_to_favorites(self, url: URL, label:str=None):
+        if label:
+            self._favorites.add(label,url)
+        else:
+            site_class=self.can_accept_url(url)
+            if site_class:
+                label=site_class.get_thumb_label(url)
+                self._favorites.add(label, url)
+
+    def remove_favorite(self, url):
+        print('Removing',url)
+        self._favorites.remove(url)
+        self._view_manager.refresh_thumb_view()
+
+    def get_favorite_items(self, site: SiteInterface) -> list:
+        return self._favorites.get_favorite_items(site)
+
+    def can_accept_url(self, url: URL):
         for site_class in self._site_models:
             if site_class.can_accept_url(url):
                 return site_class
@@ -78,6 +102,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def on_exit(self):
         self._loader.on_exit()
+        self._favorites.on_exit()
 
     @property
     def view_manager(self) -> ViewManagerFromModelInterface:

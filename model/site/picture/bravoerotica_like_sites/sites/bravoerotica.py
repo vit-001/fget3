@@ -22,10 +22,12 @@ class BravoeroticaSite(BravoeroticaLikeSite):
                         # LatestUpdates=URL('http://www.tomorrowporn.com/latest_updates.html'),
                     )
 
-        view.add_start_button(name='Tomorrowporn',
-                              picture_filename='model/site/resource/picture/bravoerotica.png',
+        view.add_start_button(picture_filename='model/site/resource/picture/bravoerotica.png',
                               menu_items=menu_items,
                               url=URL("http://www.bravoerotica.com/"))
+
+    def get_shrink_name(self):
+        return 'BE '
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_containers = _iter(soup.find_all('li', {'class': 'dropdown'}))
@@ -37,8 +39,8 @@ class BravoeroticaSite(BravoeroticaLikeSite):
     def get_pagination_container(self, soup: BeautifulSoup)->BeautifulSoup:
         return soup.find('div', {'class': ['pages','pg']})
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'BE '+ url.get().partition('bravoerotica.com/')[2].rpartition('.')[0]
+    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return 'BE '+ url.get().partition('bravoerotica.com/')[2].rpartition('.')[0]
 
     def parse_video_thumbs(self, soup: BeautifulSoup, url: URL):
         thumbs_containers = _iter(soup.find_all('div', {'class': 'video_list'}))

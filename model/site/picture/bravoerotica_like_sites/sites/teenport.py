@@ -22,10 +22,12 @@ class TeenportSite(BravoeroticaLikeSite):
                         LatestUpdates=URL('http://www.tomorrowporn.com/latest_updates.html'),
                     )
 
-        view.add_start_button(name='Teenport',
-                              picture_filename='model/site/resource/picture/teenport.gif',
+        view.add_start_button(picture_filename='model/site/resource/picture/teenport.gif',
                               # menu_items=menu_items,
                               url=URL("http://www.teenport.com/st/archives/archive1.html"))
+
+    def get_shrink_name(self):
+        return 'TP '
 
     def get_thumbs_containers(self, soup: BeautifulSoup) -> list:
         return soup.find_all('div',{'class':'thumbs_main'})
@@ -36,14 +38,14 @@ class TeenportSite(BravoeroticaLikeSite):
     def get_pagination_container(self, soup: BeautifulSoup):
         return soup.find('div', {'class': 'head'})
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'TP '+ url.get().partition('teenport.com/')[2].rpartition('.')[0]
+    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return 'TP '+ url.get().partition('teenport.com/')[2].rpartition('.')[0]
 
     def get_pictures_containers(self, soup: BeautifulSoup) -> list:
         return soup.find_all('div',{'class':'thumb_box'})
 
-    def parse_pictures_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().strip('/').rpartition('/')[2]
+    # def parse_pictures_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return url.get().strip('/').rpartition('/')[2]
 
     def get_picture_tag_containers(self, soup: BeautifulSoup) -> list:
         return soup.find_all('div', {'class': 'title'})

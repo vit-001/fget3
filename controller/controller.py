@@ -19,6 +19,9 @@ class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
     def goto_url(self, url: URL, **options):
         self.model.goto_url(url, **options)
 
+    def favorite_add(self, url: URL):
+        self.model.add_to_favorites(url)
+
     def on_cycle_handler(self):
         self.model.on_cycle_handler()
 

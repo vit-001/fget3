@@ -19,40 +19,38 @@ class PorntrexSite(BaseSiteParser):
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
         menu_items= {
-            'Categories': URL('http://www.porntrex.com/categories/')
+            'Categories' : URL('http://www.porntrex.com/categories/'),
+            'Top rated'  : URL('http://www.porntrex.com/top-rated/'),
+            'Most viewed': URL('http://www.porntrex.com/most-popular/'),
+            'Latest'     : URL('http://www.porntrex.com/latest-updates/')
         }
-            # dict(All_Videos=URL('http://www.porntrex.com/videos?t=a*'),
-            #         Added_Today=URL('http://www.porntrex.com/videos?t=t*'),
-            #         Added_This_Week=URL('http://www.porntrex.com/videos?t=w*'),
-            #         Added_Tis_Month=URL('http://www.porntrex.com/videos?t=m*'),
-            #         Photo_Most_Recent=URL('http://www.porntrex.com/albums?o=mr*'),
-            #         Photo_Most_Photos=URL('http://www.porntrex.com/albums?o=mp*'),
-            #         Photo_Top_Rated=URL('http://www.porntrex.com/albums?o=tr*'),
-            #         Photo_Most_Viewed=URL('http://www.porntrex.com/albums?o=mv*')
-            #
-            #         )
 
-        view.add_start_button(name='Porntrex',
-                              picture_filename='model/site/resource/porntrex.png',
+        view.add_start_button(picture_filename='model/site/resource/porntrex.png',
                               menu_items=menu_items,
                               url=URL("http://www.porntrex.com/latest-updates/"))
 
+    def get_shrink_name(self):
+        return 'PT '
+
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'video-item'})):
-            href = URL(thumbnail.a.attrs['href'], base_url=url)
-            description = thumbnail.img.attrs['alt']
-            thumb_url = URL(thumbnail.img.attrs['data-original'], base_url=url)
+            private=thumbnail.find('span',{'class':'ico-private'})
+            if not private:
+                href = URL(thumbnail.a.attrs['href'], base_url=url)
+                description = thumbnail.img.attrs['alt']
+                thumb_url = URL(thumbnail.img.attrs['data-original'], base_url=url)
 
-            duration = thumbnail.find('div', {'class': 'durations'})
-            dur_time = '' if duration is None else str(duration.contents[-1]).strip()
+                duration = thumbnail.find('div', {'class': 'durations'})
+                dur_time = '' if duration is None else str(duration.contents[-1]).strip()
 
-            hd_div = thumbnail.find('div', {'class': 'hd-text-icon'})
-            hd = '' if hd_div is None else str(hd_div.string).strip()
+                hd_div = thumbnail.find('div', {'class': 'hd-text-icon'})
+                hd = '' if hd_div is None else str(hd_div.string).strip()
 
-            self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                           labels=[{'text': dur_time, 'align': 'top right'},
-                                   {'text': description, 'align': 'bottom center'},
-                                   {'text': hd, 'align': 'top left', 'bold': True}])
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                               labels=[{'text': dur_time, 'align': 'top right'},
+                                       {'text': description, 'align': 'bottom center'},
+                                       {'text': hd, 'align': 'top left', 'bold': True}])
+
 
     def parse_others(self, soup: BeautifulSoup, url: URL):
         # Categories page
@@ -74,9 +72,6 @@ class PorntrexSite(BaseSiteParser):
             self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                             labels=[{'text': no_of_video, 'align': 'top right'},
                                     {'text': description, 'align': 'bottom center'}])
-
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'PT '+ url.get().partition('porntrex.com/')[2]
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         for tags_container in _iter(soup.find_all('div', {'class': 'sidebar'})):
@@ -123,9 +118,6 @@ class PorntrexSite(BaseSiteParser):
                 for key in sorted(files.keys(), reverse=True):
                     self.add_video(key, URL(files[key]))
 
-    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2]
-
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         # adding user to video
         user_container = soup.find('div', {'class': 'username'})
@@ -138,30 +130,7 @@ class PorntrexSite(BaseSiteParser):
             for href in _iter(item.find_all('a', href=lambda x:'/categories/' in str(x) )):
                 if href.string is not None:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
-#
 
-            #todo картинки
-#     def parse_pictures(self, soup: BeautifulSoup, result: ParseResult, base_url: URL):
-#         photo_container = soup.find('div', {'class': 'panel-body'})
-#         if photo_container is not None:
-#             s1, s2, s3 = photo_container.find_all('span', recursive=False)
-#             num_of_photos = int(s3.string)
-#             first = photo_container.find('img')
-#             href_first = str(first.attrs['data-original']).replace('/tmb/', '/')
-#             part = href_first.rpartition('/')
-#             first_num = int(part[2].partition('.')[0])
-#             ext = part[2].partition('.')[2]
-#
-#             base_dir = base_url.get_path(base=Setting.base_dir)
-#             result.set_gallery_path(base_dir)
-#
-#             for number in range(first_num, first_num + num_of_photos):
-#                 name = str(number) + '.' + ext
-#                 url = URL(part[0] + '/' + name, base_url=base_url)
-#                 picture = FullPictureInfo(abs_href=url, rel_name=name)
-#                 picture.set_base(base_dir)
-#                 result.add_full(picture)
-#
 
 if __name__ == "__main__":
     pass

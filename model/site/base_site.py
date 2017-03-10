@@ -4,6 +4,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from common.setting import Setting
+from common.util import get_menu_handler
 from data_format.fl_data import FLData
 from data_format.url import URL
 from interface.model_interface import ModelFromSiteInterface
@@ -41,6 +42,10 @@ class ParseResult:
         self._result_type= 'thumbs'
         thumb={'url':thumb_url,'href':href,'popup':popup,'labels':labels}
         self.thumbs.append(thumb)
+
+    def add_fav(self,text: str, href: URL, menu=None, style: dict = None):
+        control={'text':text,'href':href,'menu':menu,'style':style}
+        self.controls_top.append(control)
 
     def add_page(self,text: str, href: URL, menu=None, style: dict = None):
         control={'text':text,'href':href,'menu':menu,'style':style}
@@ -124,8 +129,6 @@ class BaseSite(SiteInterface, ParseResult):
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
-
-
         thumb_list=list()
         statistic=dict()
         accepted=0
@@ -142,6 +145,7 @@ class BaseSite(SiteInterface, ParseResult):
 
         view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(thumb_list))
 
+        # print statistic for url
         print()#todo отладочный вывод
         print('Statistic for',self.url)
         for domain in statistic:
@@ -149,6 +153,9 @@ class BaseSite(SiteInterface, ParseResult):
         print('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
 
         loader.load_list(thumb_list)
+
+        for item in self.model.get_favorite_items(self):
+            self.add_fav(item['label'], item['url'], style=dict(on_remove=get_menu_handler(self.model.remove_favorite,item['url'])))
 
         self.add_controls_to_view(view)
 

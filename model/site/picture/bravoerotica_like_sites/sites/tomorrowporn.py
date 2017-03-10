@@ -22,10 +22,12 @@ class TomorrowpornSite(BravoeroticaLikeSite):
                         LatestUpdates=URL('http://www.tomorrowporn.com/latest_updates.html'),
                     )
 
-        view.add_start_button(name='Tomorrowporn',
-                              picture_filename='model/site/resource/picture/tomorrowporn.png',
+        view.add_start_button(picture_filename='model/site/resource/picture/tomorrowporn.png',
                               # menu_items=menu_items,
                               url=URL("http://www.tomorrowporn.com/"))
+
+    def get_shrink_name(self):
+        return 'TWP '
 
     def get_thumbs_containers(self, soup: BeautifulSoup) -> list:
         container = soup.find_all('div',{'class':'thumbs'})
@@ -36,8 +38,8 @@ class TomorrowpornSite(BravoeroticaLikeSite):
         if container:
             return container
 
-    def parse_pictures_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().strip('/').rpartition('/')[2]
+    # def parse_pictures_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return url.get().strip('/').rpartition('/')[2]
 
     def get_picture_tag_containers(self, soup: BeautifulSoup) -> list:
         tag_container=soup.find('div',{'class':'menus'})

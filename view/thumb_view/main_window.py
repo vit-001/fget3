@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QToolButton
+from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtCore import QSize
 
 from data_format.url import URL
 
@@ -27,6 +29,7 @@ class MainWindow(QMainWindow):
 
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.ui.tabWidget.currentChanged.connect(self.on_current_tab_changed)
+        self.bn_favorite.clicked.connect(self.view_manager.add_to_favorite)
 
     def create_widgets(self):
         self.sites=ButtonLine(self.ui.top_frame,height=50, speed=90, space=5)
@@ -34,6 +37,15 @@ class MainWindow(QMainWindow):
 
         self.history=HistoryView(self, self.view_manager)
         self.ui.controls_frame_layout.addWidget(self.history)
+
+        self.bn_favorite = QToolButton(self.ui.controls_frame)
+        self.bn_favorite.setAutoRaise(True)
+        icon = QIcon()
+        icon.addPixmap(QPixmap("view/resource/icons/ic_add_box_white_48dp.png"), QIcon.Normal, QIcon.Off)
+        self.bn_favorite.setIcon(icon)
+        self.bn_favorite.setIconSize(QSize(32, 32))
+        self.bn_favorite.setObjectName("bn_favorite")
+        self.ui.controls_frame_layout.addWidget(self.bn_favorite)
 
     def get_new_thumb_view(self) -> ThumbView:
         tab = self.ui.tabWidget

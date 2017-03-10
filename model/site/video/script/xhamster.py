@@ -24,10 +24,12 @@ class XhamsterSite(BaseSiteParser):
                     Alltime_Top=URL('https://ru.xhamster.com/rankings/alltime-top-videos.html'),
                     )
 
-        view.add_start_button(name='Xhmaster',
-                              picture_filename='model/site/resource/xmaster.svg',
+        view.add_start_button(picture_filename='model/site/resource/xmaster.svg',
                               menu_items=menu_items,
                               url=URL("http://ru.xhamster.com/", test_string='xHamster'))
+
+    def get_shrink_name(self):
+        return 'XM '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumb_container in _iter(soup.find_all('div',{'class':['box boxTL','box boxTR'], 'id':lambda x: x!='vPromo'})):
@@ -60,7 +62,7 @@ class XhamsterSite(BaseSiteParser):
                 self.add_tag(label.strip(), URL(href, base_url=url))
 
     def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'XHM '+ url.get().partition('xhamster.com/')[2].rpartition('.')[0]
+        return super().parse_thumb_title(soup, url).partition('.')[0]
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div', {'class': 'pager'})
@@ -97,9 +99,6 @@ class XhamsterSite(BaseSiteParser):
                 href = href.replace('/user/','/user/video/')+'/new-1.html'
 
             self.add_tag(label.strip(), URL(href, base_url=url), style={'color':color})
-
-    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2].rpartition('.')[0]
 
 
 if __name__ == "__main__":

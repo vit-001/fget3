@@ -7,6 +7,9 @@ class ControllerFromViewInterface:
     def goto_url(self, url:URL, **options):
         pass
 
+    def favorite_add(self, url:URL):
+        print('Add to fav', url)
+
     def on_cycle_handler(self):
         pass
 

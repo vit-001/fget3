@@ -34,10 +34,12 @@ class RedtubeSite(BaseSiteParser):
                     Channels_Most_Viewed=URL('http://www.redtube.com/channel/most-viewed*')
                     )
 
-        view.add_start_button(name='redtube',
-                              picture_filename='model/site/resource/redtube.png',
+        view.add_start_button(picture_filename='model/site/resource/redtube.png',
                               menu_items=menu_items,
                               url=URL("http://www.redtube.com/", test_string='Redtube'))
+
+    def get_shrink_name(self):
+        return 'RT '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         thumbnail_containers = soup.find_all('ul', {'class': ['video-listing']})
@@ -113,8 +115,8 @@ class RedtubeSite(BaseSiteParser):
                                        {'text': label, 'align': 'bottom center'}])
         self.generate_thumb_view()
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'RT '+ url.get().partition('redtube.com/')[2]
+    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return 'RT '+ url.get().partition('redtube.com/')[2]
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_containers = _iter(soup.find_all('ul', {'class': ['categories-listing', 'categories-popular-listing']}))

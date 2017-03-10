@@ -1,9 +1,11 @@
 __author__ = 'Vit'
 
-from PyQt5.Qt import QFont
-from PyQt5.QtCore import QPoint, QRect, QSize
+from PyQt5.Qt import QFont, QMenu, QAction
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import *
+
+from common.util import get_menu_handler
 
 class ActionButton(QToolButton):
     def __init__(self,tooltip:str, action:lambda:None):
@@ -24,6 +26,7 @@ class ActionButton(QToolButton):
                     'italic'
                     'underline'
                     'autoraise' - autoraise button
+                    'on_remove' - handler of remove function, None if no need
 
             Example: button.set_button_style({'color':'magenta' , 'font_size': 18})
         """
@@ -49,6 +52,20 @@ class ActionButton(QToolButton):
         self.setFont(font)
 
         self.setAutoRaise(attr_value_dict.get('autoraise',True))
+        self.remove=attr_value_dict.get('on_remove',None)
+        if self.remove:
+            # set button context menu policy
+            self.setContextMenuPolicy(Qt.CustomContextMenu)
+            self.customContextMenuRequested.connect(self.on_context_menu)
+
+            # create context menu
+            self.popMenu = QMenu(self)
+            menu_action = QAction('Remove', self, triggered=self.remove)
+            self.popMenu.addAction(menu_action)
+
+    def on_context_menu(self, point):
+        # show context menu
+        self.popMenu.exec_(self.mapToGlobal(point))
 
     def set_menu(self, menu):
         if menu:

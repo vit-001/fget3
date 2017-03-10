@@ -25,10 +25,12 @@ class RealGfSite(BaseSiteParser):
                     Top_Rated=URL('http://www.realgfporn.com/top-rated/')
                     )
 
-        view.add_start_button(name='Realgf',
-                              picture_filename='model/site/resource/realgf.png',
+        view.add_start_button(picture_filename='model/site/resource/realgf.png',
                               menu_items=menu_items,
                               url=URL("http://www.realgfporn.com/most-recent/", test_string='Real GF Porn'))
+
+    def get_shrink_name(self):
+        return 'RGF'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'post'})):
@@ -38,15 +40,11 @@ class RealGfSite(BaseSiteParser):
 
             duration = thumbnail.find('b', {'class': 'post-duration'})
             dur_time = '' if duration is None else str(duration.string)
-            print(dur_time,href)
 
             if dur_time != 'Link':
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
                                labels=[{'text': dur_time, 'align': 'top right'},
                                        {'text': description, 'align': 'bottom center'}])
-
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'RGF '+ url.get().partition('realgfporn.com/')[2].strip('/')
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'class': 'site-cats'})
@@ -67,7 +65,7 @@ class RealGfSite(BaseSiteParser):
                 self.add_video('DEFAULT', URL(file, base_url=url))
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2].rpartition('.')[0].rpartition('-')[0]
+        return super().parse_video_title(soup, url).rpartition('-')[0]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         tags = list()

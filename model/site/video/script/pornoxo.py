@@ -24,10 +24,12 @@ class PornoxoSite(BaseSiteParser):
                     Top_Rated=URL('http://www.pornoxo.com/top-rated/page1.html?s*'),
                     Longest=URL('http://www.pornoxo.com/longest/page1.html?s*'))
 
-        view.add_start_button(name='Pornoxo',
-                              picture_filename='model/site/resource/pornoxo.png',
+        view.add_start_button(picture_filename='model/site/resource/pornoxo.png',
                               menu_items=menu_items,
                               url=URL("http://www.pornoxo.com/", test_string='PornoXO'))
+
+    def get_shrink_name(self):
+        return 'PX '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('li', {'class': 'thumb-item'})):
@@ -45,9 +47,6 @@ class PornoxoSite(BaseSiteParser):
                            labels=[{'text':dur_time, 'align':'top right'},
                                    {'text':label, 'align':'bottom center'},
                                    {'text': hd, 'align': 'top left'}])
-
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'PX '+ url.get().partition('pornoxo.com/')[2].strip('/')
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'class': 'left-menu-box-wrapper'})
@@ -79,9 +78,6 @@ class PornoxoSite(BaseSiteParser):
                     self.add_video('DEFAULT', URL(file, base_url=url))
 
                 self.set_default_video(-1)
-
-    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().strip('/').rpartition('/')[2]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         # adding "user" to video

@@ -30,10 +30,12 @@ class MotherlessSite(BaseSiteParser):
                     Videos_All_Time_Most_Favorited=URL('http://motherless.com/videos/all/favorited*'),
                     Videos_Archived=URL('http://motherless.com/videos/archives*'))
 
-        view.add_start_button(name='Motherless',
-                              picture_filename='model/site/resource/motherless.png',
+        view.add_start_button(picture_filename='model/site/resource/motherless.png',
                               menu_items=menu_items,
                               url=URL("http://motherless.com/videos/recent?page=1*", test_string='MOTHERLESS.COM'))
+
+    def get_shrink_name(self):
+        return 'ML '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for item in _iter(soup.find_all('div', {'class': ['content-inner']})):
@@ -55,10 +57,6 @@ class MotherlessSite(BaseSiteParser):
                                    labels=[{'text': dur_time, 'align': 'top right'},
                                            {'text': label, 'align': 'bottom center'},
                                            {'text': username, 'align': 'top left'}])
-
-
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return 'ML '+ url.get().partition('motherless.com/')[2]
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags = soup.find('div', {'class': 'dark-menu'})

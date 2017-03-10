@@ -16,6 +16,9 @@ class ViewManagerFromViewInterface:
     def goto_url(self, url:URL, flags=None):
         pass
 
+    def add_to_favorite(self):
+        pass
+
     def set_tab_text(self, view, text:str, tooltip:str=''):
         pass
 
@@ -45,8 +48,11 @@ class ViewManagerFromModelInterface:
     def on_full_history_changed(self, history:HistoryFromViewInterface):
         print('full history changed')
 
-    def add_start_button(self, name:str, picture_filename:str, url:URL, menu_items:dict=None):
-        print('Add start button:', name)
+    def add_start_button(self, picture_filename:str, url:URL, menu_items:dict=None, name:str=None):
+        print('Add start button:', url.domain())
+
+    def refresh_thumb_view(self):
+        print('refresh thumb view')
 
 class ViewManagerFromControllerInterface:
     def create_main_window(self, controller: ControllerFromViewInterface):

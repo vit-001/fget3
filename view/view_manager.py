@@ -73,7 +73,9 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         window.addAction(action)
         action.triggered.connect(on_pressed)
 
-    def add_start_button(self, name: str, picture_filename: str, url: URL, menu_items:dict=None):
+    def add_start_button(self, picture_filename: str, url: URL, menu_items:dict=None, name:str=None):
+        if not name:
+            name=url.domain()
         b = ImageButton(picture_filename, name, lambda: self.goto_url(url))
 
         menu=self.create_button_menu(self.main,menu_items)
@@ -117,7 +119,6 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.on_url_in_tab_changed(view)
 
     def goto_url(self, url: URL, flags=None):
-
         if flags is None:
             flags=dict()
 
@@ -130,6 +131,19 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
                                      current_full_view=self.full.get_current_full_view(),
                                      flags=flags
                                      )
+
+    def refresh_thumb_view(self):
+        view = self.main.get_current_thumb_view()
+        if view:
+            url = view.url
+            self.goto_url(url)
+
+    def add_to_favorite(self):
+        view=self.main.get_current_thumb_view()
+        if view:
+            url=view.url
+            self.controller.favorite_add(url)
+            self.goto_url(url)
 
     def is_full_view_tab_active(self, full_view: FullViewFromModelInterface) -> bool:
         return self.full.is_tab_active(full_view)

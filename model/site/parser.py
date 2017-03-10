@@ -72,13 +72,24 @@ class BaseSiteParser(BaseSite):
         pass
 
     def parse_thumb_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'No title'
+        return self.get_shrink_name()+self.get_thumb_label(url)
 
     def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'No title'
+        return self.get_full_label(url)
 
     def parse_pictures_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'No title'
+        return self.get_full_label(url)
+
+    @staticmethod
+    def get_thumb_label(url: URL) -> str:
+        return url.get().partition(url.domain())[2].strip('/')
+
+    @staticmethod
+    def get_full_label(url: URL) -> str:
+        return url.get().strip('/').rpartition('/')[2].partition('.')[0]
+
+    def get_shrink_name(self):
+        return ''
 
 
 if __name__ == "__main__":

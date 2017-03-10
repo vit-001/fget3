@@ -27,10 +27,12 @@ class VeroniccaComSite(BaseSiteParser):
             'Channels': URL('https://www.veronicca.com/channels*')
         }
 
-        view.add_start_button(name='veronicca.com',
-                              picture_filename='model/site/resource/veronicca_com.png',
+        view.add_start_button(picture_filename='model/site/resource/veronicca_com.png',
                               url=URL("https://www.veronicca.com/videos?o=mr*", test_string='Veronicca'),
                               menu_items=menu_items)
+
+    def get_shrink_name(self):
+        return 'VER '
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in soup.find_all('div', {'class': ['well well-sm hover', 'channelBox']}):
@@ -60,19 +62,12 @@ class VeroniccaComSite(BaseSiteParser):
     def get_pagination_container(self, soup: BeautifulSoup)->BeautifulSoup:
         return soup.find('ul', {'class': 'pagination'})
 
-    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-
-        return 'VER '+url.get().rpartition('/')[2]
-
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'video-container'})
         if video is not None:
             for source in _iter(video.find_all('source')):
                 self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
             self.set_default_video(-1)
-
-    def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        return url.get().rpartition('/')[2]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         user = soup.find('div', {'class': 'pull-left user-container'})
