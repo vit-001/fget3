@@ -35,7 +35,7 @@ class MotherlessSite(BaseSiteParser):
                               url=URL("http://motherless.com/videos/recent?page=1*", test_string='MOTHERLESS.COM'))
 
     def get_shrink_name(self):
-        return 'ML '
+        return 'ML'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for item in _iter(soup.find_all('div', {'class': ['content-inner']})):

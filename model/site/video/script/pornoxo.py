@@ -29,7 +29,7 @@ class PornoxoSite(BaseSiteParser):
                               url=URL("http://www.pornoxo.com/", test_string='PornoXO'))
 
     def get_shrink_name(self):
-        return 'PX '
+        return 'PX'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('li', {'class': 'thumb-item'})):

@@ -30,7 +30,7 @@ class PorntrexSite(BaseSiteParser):
                               url=URL("http://www.porntrex.com/latest-updates/"))
 
     def get_shrink_name(self):
-        return 'PT '
+        return 'PT'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'video-item'})):

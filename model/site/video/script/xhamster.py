@@ -29,7 +29,7 @@ class XhamsterSite(BaseSiteParser):
                               url=URL("http://ru.xhamster.com/", test_string='xHamster'))
 
     def get_shrink_name(self):
-        return 'XM '
+        return 'XM'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumb_container in _iter(soup.find_all('div',{'class':['box boxTL','box boxTR'], 'id':lambda x: x!='vPromo'})):

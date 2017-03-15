@@ -29,6 +29,7 @@ from model.site.video.simple.collectionofbestporn import CollectionofbestpornSit
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.plus_file.yourporn import YourpornSite
+from model.site.video.plus_file.sexix import SexixSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -39,7 +40,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[
 
                            Space('Classic:'),
-                           YourpornSite, PorntrexSite,
+                           YourpornSite, PorntrexSite,SexixSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite,
                            RedtubeSite,PornoxoSite,  V24videoSite,
                            VeroniccaComSite, HdEasypornSite,

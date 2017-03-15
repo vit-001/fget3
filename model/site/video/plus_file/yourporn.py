@@ -32,7 +32,7 @@ class YourpornSite(BaseSiteParser):
                               url=URL("https://yourporn.sexy/blog/all/0.html*", test_string='YourPorn'))
 
     def get_shrink_name(self):
-        return 'YP '
+        return 'YP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for post in _iter(soup.find_all('div', {'class':'post_el'})):

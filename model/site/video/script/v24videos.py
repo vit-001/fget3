@@ -26,7 +26,7 @@ class V24videoSite(BaseSiteParser):
                               url=URL("http://www.24videos.tv/latest-updates/", test_string='24Videos.TV'))
 
     def get_shrink_name(self):
-        return 'V24 '
+        return 'V24'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'list-videos'})

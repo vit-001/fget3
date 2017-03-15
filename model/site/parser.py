@@ -72,7 +72,7 @@ class BaseSiteParser(BaseSite):
         pass
 
     def parse_thumb_title(self, soup:BeautifulSoup, url:URL)->str:
-        return self.get_shrink_name()+self.get_thumb_label(url)
+        return self.get_shrink_name().strip()+' '+self.get_thumb_label(url)
 
     def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
         return self.get_full_label(url)

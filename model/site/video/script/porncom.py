@@ -39,7 +39,7 @@ class PornComSite(BaseSiteParser):
                               url=URL("http://www.porn.com/videos*", test_string='PORN.COM'))
 
     def get_shrink_name(self):
-        return 'PC '
+        return 'PC'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         mainw = soup.find('div', {'class': ['mainw', 'profileContent']})

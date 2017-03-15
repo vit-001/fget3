@@ -28,7 +28,7 @@ class ShockingmoviesSite(BaseSiteParser):
                               url=URL("http://shockingmovies.com/most-recent/", test_string='Shocking'))
 
     def get_shrink_name(self):
-        return 'SM '
+        return 'SM'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('a', {'class': 'video-box'})):

@@ -32,7 +32,7 @@ class VeroniccaComSite(BaseSiteParser):
                               menu_items=menu_items)
 
     def get_shrink_name(self):
-        return 'VER '
+        return 'VER'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in soup.find_all('div', {'class': ['well well-sm hover', 'channelBox']}):

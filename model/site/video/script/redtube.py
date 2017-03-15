@@ -39,7 +39,7 @@ class RedtubeSite(BaseSiteParser):
                               url=URL("http://www.redtube.com/", test_string='Redtube'))
 
     def get_shrink_name(self):
-        return 'RT '
+        return 'RT'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         thumbnail_containers = soup.find_all('ul', {'class': ['video-listing']})

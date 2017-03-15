@@ -29,7 +29,7 @@ class CollectionofbestpornSite(BaseSiteParser):
                               url=URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))
 
     def get_shrink_name(self):
-        return 'CBP '
+        return 'CBP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'video-thumb'})):
