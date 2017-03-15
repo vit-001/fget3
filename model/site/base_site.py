@@ -2,6 +2,7 @@
 __author__ = 'Vit'
 
 from bs4 import BeautifulSoup
+from time import time
 
 from common.setting import Setting
 from common.util import get_menu_handler
@@ -92,9 +93,14 @@ class BaseSite(SiteInterface, ParseResult):
         self.model=model
         self.start_options=dict()
 
+    @staticmethod
+    def number_of_accepted_dimains() ->int:
+        return 1
+
     def goto_url(self, url: URL, **options):
         print() #todo отладочный вывод
         print('Goto url:', url)
+
 
         self.url=url
         self.start_options=options
@@ -107,6 +113,8 @@ class BaseSite(SiteInterface, ParseResult):
 
     def on_load_url(self, filedata:FLData):
         # print(filedata.url, 'loaded')
+        self.start_time = time()
+
         soup=BeautifulSoup(filedata.text,'html.parser')
         self.parse_soup(soup, filedata.url)
 
@@ -117,8 +125,10 @@ class BaseSite(SiteInterface, ParseResult):
         return False
 
     def generate_thumb_view(self):
-        if self.waiting_data:
+        if self.waiting_data or not self.thumbs:
             return
+
+        print('Parsing time {0:.2f} s'.format(time()-self.start_time))
 
         view=self.start_options.get('current_thumb_view', None)
         if not view:
@@ -160,8 +170,10 @@ class BaseSite(SiteInterface, ParseResult):
         self.add_controls_to_view(view)
 
     def generate_video_view(self):
-        if self.waiting_data:
+        if self.waiting_data or not self.video_data:
             return
+
+        print('Parsing time {0:.2f} s'.format(time() - self.start_time))
 
         view = self.start_options.get('current_full_view', None)
         if not view:
@@ -184,6 +196,8 @@ class BaseSite(SiteInterface, ParseResult):
     def generate_pictures_view(self):
         if self.waiting_data:
             return
+
+        print('Parsing time {0:.2f} s'.format(time() - self.start_time))
 
         view = self.start_options.get('current_full_view', None)
         if not view:

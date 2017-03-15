@@ -10,9 +10,9 @@ def get_href(txt: str, base_url):
     if txt.startswith('https://'):
         return txt
     if txt.startswith('//'):
-        return 'http:' + txt
+        return base_url.scheme() + ':'+ txt
     if txt.startswith('/'):
-        return 'http://' + base_url.domain() + txt
+        return base_url.scheme() +'://'+ base_url.domain() + txt
     return base_url.get().rpartition('/')[0] + '/' + txt
 
 class URL:
@@ -89,6 +89,9 @@ class URL:
     def domain(self):
         return  urlparse(self.get())[1]
 
+    def scheme(self):
+        return urlsplit(self.get())[0]
+
     def contain(self, text:str):
         return text in self.url
 
@@ -162,4 +165,7 @@ class URL:
 
 
 if __name__ == "__main__":
-    pass
+    url1=URL('https://yourporn.sexy/blog/all/0.html')
+    url2=URL('/post/58c7c669574dc.html', base_url=url1)
+
+    print(url2)

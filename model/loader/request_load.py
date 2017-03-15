@@ -18,6 +18,8 @@ class RequestLoad(BaseLoadProcedure):
             if url.method == 'GET':
                 response = requests.get(url.get(), cookies=url.coockies, proxies=self.proxies)
             elif url.method == 'POST':
+                print('Loading POST')
+                print(url.get(), url.post_data)
                 response = requests.post(url.get(), data=url.post_data, proxies=self.proxies)
             else:
                 raise LoaderError('Unknown method:' + url.method)

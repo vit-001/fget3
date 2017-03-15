@@ -6,11 +6,12 @@ from data_format.url import URL
 from common.util import _iter, quotes
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
+from interface.site_interface import SiteInterface
 
 from model.site.parser import BaseSiteParser
 
 
-class Space:
+class Space(SiteInterface):
     def __init__(self, text:str, icon_filename:str=None):
         self.text=text
         self.icon_filename=icon_filename

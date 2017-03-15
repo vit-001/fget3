@@ -46,7 +46,7 @@ class RedtubeSite(BaseSiteParser):
         channel_containers = soup.find_all('ul', {'class': ['channels-list']})
         stars_containers = soup.find_all('ul', {'class': ['pornStarsThumbs']})
 
-        if thumbnail_containers is not None and len(thumbnail_containers) > 0:
+        if thumbnail_containers and len(thumbnail_containers) > 0:
             # parce thumbnail page
             for thumbnail_container in thumbnail_containers:
                 for thumbnail in _iter(thumbnail_container.find_all('li')):
@@ -126,7 +126,7 @@ class RedtubeSite(BaseSiteParser):
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         pagination = soup.find('div', {'class': 'pages'})
-        if pagination is not None:
+        if pagination:
             for page in _iter(pagination.find_all('a')):
                 num = '' if page.string is None else str(page.string)
                 if num.isdigit():
@@ -134,9 +134,9 @@ class RedtubeSite(BaseSiteParser):
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'watch'})
-        if video is not None:
+        if video:
             script = video.find('script', text=lambda x: 'redtube_flv_player' in str(x))
-            if script is not None:
+            if script:
                 data = str(script.string).replace(' ', '').replace('\\', '')
                 sources = quotes(data, 'sources:{', '}').split(',')
                 for item in sources:
@@ -158,9 +158,9 @@ class RedtubeSite(BaseSiteParser):
         video_detail = soup.find('div', {'class': 'video-details'})
         # first add user reference
         user_container = video_detail.find('td', {'class': 'withbadge'})
-        if user_container is not None:
+        if user_container:
             user = user_container.find('a')
-            if user is not None:
+            if user:
                 href = user.attrs['href']
                 username = user.string
                 self.add_tag(username, URL(href, base_url=url), style={'color':'blue'})
@@ -169,7 +169,7 @@ class RedtubeSite(BaseSiteParser):
         stars = _iter(stars_container.find_all('li', {'class': None}, recursive=False))
         for star in stars:
             href = star.find('a')
-            if href is not None:
+            if href:
                 info = list(star.find('span', {'class': 'pornstar-info'}).stripped_strings)
                 name = info[0] + ' ' + info[1]
                 url = URL(href.attrs['href'], base_url=url)
@@ -177,7 +177,7 @@ class RedtubeSite(BaseSiteParser):
         # other tags
         for links_container in _iter(video_detail.find_all('td', {'class': 'links'})):
             for href in _iter(links_container.find_all('a', {'href': lambda x: 'javascript' not in x})):
-                if href.string is not None:
+                if href.string:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
 #
 

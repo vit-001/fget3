@@ -28,6 +28,7 @@ from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.plus_file.yourporn import YourpornSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -38,7 +39,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[
 
                            Space('Classic:'),
-                           PorntrexSite,
+                           YourpornSite, PorntrexSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite,
                            RedtubeSite,PornoxoSite,  V24videoSite,
                            VeroniccaComSite, HdEasypornSite,
@@ -61,6 +62,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)
         self._full_history=HistoryModel('full', self._view_manager.on_full_history_changed)
         self._favorites=Favorites(Setting.global_data_path+'favorites.json')
+
+        n=0
+        for site in self._site_models:
+           n+=site.number_of_accepted_dimains()
+        print('No of sites:',n)
 
 
     def create_sites(self):

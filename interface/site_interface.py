@@ -14,6 +14,10 @@ class SiteInterface:
         return False
 
     @staticmethod
+    def number_of_accepted_dimains()->int:
+        return 0
+
+    @staticmethod
     def get_thumb_label(url:URL)->str:
         return 'xxxx'
 
