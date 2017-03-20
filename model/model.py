@@ -30,25 +30,27 @@ from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.plus_file.yourporn import YourpornSite
 from model.site.video.plus_file.sexix import SexixSite
-
+from model.site.video.script.tube8 import Tube8Site
+from model.site.video.script.deviantclip import DeviantclipSite
+from model.site.video.script.pornbaze import PornbrazeSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[
+        self._site_models=[PornbrazeSite,
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite,
                            RedtubeSite,PornoxoSite,  V24videoSite,
-                           VeroniccaComSite, HdEasypornSite,
+                           VeroniccaComSite, HdEasypornSite, Tube8Site,
 
                            Space('Amateur:'),
                            MotherlessSite, RealGfSite,
 
-                           Space('Deviant:'),ShockingmoviesSite,
+                           Space('Deviant:'),ShockingmoviesSite,DeviantclipSite,
 
                            Space('Short:'),
 

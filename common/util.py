@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 
+from bs4 import BeautifulSoup
+
 def _iter(source):
     if source is None:
         return []
@@ -12,6 +14,13 @@ def get_menu_handler(function,*args,**options):
 
 def quotes(text:str, from_lex:str, to_lex:str):
     return text.partition(from_lex)[2].partition(to_lex)[0]
+
+def collect_string(soup:BeautifulSoup)->str:
+    result=''
+    for s in soup.stripped_strings:
+        result += s
+
+    return result
 
 def sp():
     print('=========================================')

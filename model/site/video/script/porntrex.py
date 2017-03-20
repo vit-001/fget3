@@ -102,15 +102,18 @@ class PorntrexSite(BaseSiteParser):
         if content is not None:
             script =content.find('script', text=lambda x: 'flashvars =' in str(x))
             if script is not None:
+                # psp(script)
                 data = str(script.string).replace(' ', '').replace('\n', '').replace('\t', '')
                 flashvars = quotes(data,'flashvars={', '};').split(',')
+                # psp(flashvars)
                 fv = dict()
                 for flashvar in flashvars:
                     split = flashvar.partition(':')
                     fv[split[0]] = split[2].strip("'\"")
+                # psp(fv)
                 files = dict()
                 for f in fv:
-                    if fv[f].startswith('http://') and fv[f].endswith('.mp4/'):
+                    if (fv[f].startswith('http://') or fv[f].startswith('https://')) and fv[f].endswith('.mp4/'):
                         file = fv[f]
                         label = fv.get(f + '_text', f)
                         files[label] = file

@@ -101,7 +101,7 @@ class PornComSite(BaseSiteParser):
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         head = soup.find('head')
-        if head is not None:
+        if head:
 
             script = head.find('script', text=lambda x: 'streams:' in str(x))
             if script is not None:
