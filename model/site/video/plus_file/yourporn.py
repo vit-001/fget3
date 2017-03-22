@@ -117,12 +117,9 @@ class YourpornSite(BaseSiteParser):
         title=''
         post_text=soup.find('div', {'class':'post_text'})
         for txt in post_text.stripped_strings:
-            print(txt)
             if not txt.startswith('#'):
                 title+=' '+txt
         return title
-
-
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
 

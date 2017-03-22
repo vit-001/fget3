@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QIcon, QPixmap
 
 from interface.view_interface import ViewFromModelInterface
 from interface.view_manager_interface import ViewManagerFromViewInterface
@@ -18,6 +19,15 @@ class FullViewWindow(QWidget):
         self.ui.setupUi(self)
 
         self.create_widgets()
+
+        pixmap = QPixmap('view/resource/icons_my/icon.png')
+        icon = QIcon()
+        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+
+        self.setWindowTitle('P Browser - thumbnail view')
+        self.setWindowIcon(icon)
+
+
         # define variables
         self.full_views=list()
         self.global_muted=True

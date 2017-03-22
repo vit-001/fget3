@@ -134,9 +134,11 @@ class AZloaderMP(BaseLoadProcedure):
         if url.test_string is None:
             return 'plain'
 
-        print('Testing domain:', domain, '... ')
+        if Setting.debug_loader:
+            print('Testing domain:', domain, '... ')
         method = self._inspect_availability(url)
-        print('            ...', method)
+        if Setting.debug_loader:
+            print('            ...', method)
 
         # self.lock.acquire()
         domain_cash = self.data.get('domain_cash', dict())
@@ -240,11 +242,7 @@ class LoadProcess(LoadProcessInterface):
             self.loader.terminate()
             self.update()
 
-
 class MultiprocessAZloader(LoaderInterface):
-
-    # todo: переделать логику работы: сделать удаление процесса - готово - проверить
-
     def __init__(self):
         self.data = DataServer()
         self.lock = Lock()
@@ -262,10 +260,7 @@ class MultiprocessAZloader(LoaderInterface):
         return new_process
 
     def on_end_of_process_handler(self, process:LoadProcess, handler=lambda:None):
-        # print('удаляем процесс загрузки')
-        # print(self.list_of_load_process)
         self.list_of_load_process.remove(process)
-        # print(self.list_of_load_process)
         handler()
 
     def on_update(self):
@@ -275,7 +270,6 @@ class MultiprocessAZloader(LoaderInterface):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
-        # print('Start load:', filedata.url)
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 
@@ -290,14 +284,7 @@ class MultiprocessAZloader(LoaderInterface):
 if __name__ == "__main__":
     import time
     l=MultiprocessAZloader()
-    # ds = DataServer()
     time.sleep(2)
-
-    # for item in ds.data['proxy_domains']:
-    #     print(item)
-
-    # time.sleep(1)
 
     l.on_exit()
 
-    # ds.stop()

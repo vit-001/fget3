@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/video_player_widget.ui'
 #
-# Created: Mon Mar 20 12:09:23 2017
+# Created: Tue Mar 21 10:28:32 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

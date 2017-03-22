@@ -115,6 +115,9 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.set_tab_text(view,text, tooltip)
         self.full.set_tab_text(view,text, tooltip)
 
+    def show_status(self, text: str):
+        self.main.show_status(text)
+
     def on_thumb_tab_url_changed(self, view):
         self.main.on_url_in_tab_changed(view)
 

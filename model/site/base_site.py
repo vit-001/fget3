@@ -98,9 +98,10 @@ class BaseSite(SiteInterface, ParseResult):
         return 1
 
     def goto_url(self, url: URL, **options):
-        print() #todo отладочный вывод
-        print('Goto url:', url)
-
+        if Setting.debug_site:
+            print()
+            print('Goto url:', url)
+        self.model.view_manager.show_status('Goto url: '+ url.get())
 
         self.url=url
         self.start_options=options
@@ -119,7 +120,9 @@ class BaseSite(SiteInterface, ParseResult):
         self.parse_soup(soup, filedata.url)
 
         if self.is_no_result and not self.waiting_data:
-            print('Parsing has no result')
+            if Setting.debug_site:
+                print('Parsing has no result')
+            self.model.view_manager.show_status('Parsing has no result')
 
     def parse_soup(self, soup: BeautifulSoup, url: URL) -> bool:
         return False
@@ -128,7 +131,8 @@ class BaseSite(SiteInterface, ParseResult):
         if self.waiting_data or not self.thumbs:
             return
 
-        print('Parsing time {0:.2f} s'.format(time()-self.start_time))
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time()-self.start_time))
 
         view=self.start_options.get('current_thumb_view', None)
         if not view:
@@ -156,11 +160,12 @@ class BaseSite(SiteInterface, ParseResult):
         view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(thumb_list))
 
         # print statistic for url
-        print()#todo отладочный вывод
-        print('Statistic for',self.url)
-        for domain in statistic:
-            print('  {0:5d} in {1}'.format(statistic[domain], domain))
-        print('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
+        if Setting.site_statistic:
+            print()
+            print('Statistic for',self.url)
+            for domain in statistic:
+                print('  {0:5d} in {1}'.format(statistic[domain], domain))
+            print('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
 
         loader.load_list(thumb_list)
 
@@ -173,7 +178,8 @@ class BaseSite(SiteInterface, ParseResult):
         if self.waiting_data or not self.video_data:
             return
 
-        print('Parsing time {0:.2f} s'.format(time() - self.start_time))
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time() - self.start_time))
 
         view = self.start_options.get('current_full_view', None)
         if not view:
@@ -187,17 +193,19 @@ class BaseSite(SiteInterface, ParseResult):
 
         self.add_controls_to_view(view)
 
-        print()
-        print('Now playback', self.url) # todo сделать отладочный вывод
-        for item in self.video_data:
-            print(item['text'], item['url'])
-        print('Default:', self.video_data[self.video_default_index]['text'])
+        if Setting.debug_site:
+            print()
+            print('Now playback', self.url) # todo сделать отладочный вывод
+            for item in self.video_data:
+                print('  ',item['text'], item['url'])
+            print('  Default:', self.video_data[self.video_default_index]['text'])
 
     def generate_pictures_view(self):
         if self.waiting_data:
             return
 
-        print('Parsing time {0:.2f} s'.format(time() - self.start_time))
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time() - self.start_time))
 
         view = self.start_options.get('current_full_view', None)
         if not view:

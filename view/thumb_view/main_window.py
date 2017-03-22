@@ -25,6 +25,13 @@ class MainWindow(QMainWindow):
         self.view_manager=view_manager
         self.create_widgets()
 
+        pixmap = QPixmap('view/resource/icons_my/icon.png')
+        icon = QIcon()
+        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+
+        self.setWindowTitle('P Browser - thumbnail view')
+        self.setWindowIcon(icon)
+
         self.thumb_views = list()
 
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
@@ -68,6 +75,9 @@ class MainWindow(QMainWindow):
             self.ui.tabWidget.setTabToolTip(index,tooltip)
         except ValueError:
             pass
+
+    def show_status(self, text:str):
+        self.ui.statusbar.showMessage(text,5000)
 
     def create_site_button(self,button):
         self.sites.add_button(button)

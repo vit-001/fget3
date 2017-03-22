@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
-import sys
+import sys, os
 from multiprocessing import freeze_support
 
 from PyQt5.QtWidgets import QApplication

@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from data_format.url import URL
 from common.setting import Setting
-
+from data_format.url import URL
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
 from interface.site_interface import SiteInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
-
+from model.favorites.favorites import Favorites
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
-from model.favorites.favorites import Favorites
-
 from model.site.other.space import Space
 from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
 from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
 from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
+from model.site.video.plus_file.pornbaze import PornbrazeSite
+from model.site.video.plus_file.sexix import SexixSite
+from model.site.video.plus_file.yourporn import YourpornSite
+from model.site.video.script.deviantclip import DeviantclipSite
 from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
 from model.site.video.script.pornoxo import PornoxoSite
@@ -23,28 +24,25 @@ from model.site.video.script.porntrex import PorntrexSite
 from model.site.video.script.realgf import RealGfSite
 from model.site.video.script.redtube import RedtubeSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
+from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.plus_file.yourporn import YourpornSite
-from model.site.video.plus_file.sexix import SexixSite
-from model.site.video.script.tube8 import Tube8Site
-from model.site.video.script.deviantclip import DeviantclipSite
-from model.site.video.script.pornbaze import PornbrazeSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[PornbrazeSite,
+        self._site_models=[
 
                            Space('Classic:'),
-                           YourpornSite, PorntrexSite,SexixSite,
-                           XhamsterSite, CollectionofbestpornSite, PornComSite,
-                           RedtubeSite,PornoxoSite,  V24videoSite,
+                           YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
+                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornbrazeSite,
+                           PornoxoSite,  V24videoSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,
 
                            Space('Amateur:'),

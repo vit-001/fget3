@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
+
 from urllib.parse import urlparse, urlsplit, parse_qs, parse_qsl, urlencode, urlunsplit, SplitResult
 
 def get_href(txt: str, base_url):
@@ -17,6 +18,7 @@ def get_href(txt: str, base_url):
 
 class URL:
     SUFFIXES = ['.html', '.jpg', '.gif', '.JPG', '.mp4', '.flv', 'png']
+    USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.116 Safari/537.36"
 
     def __init__(self,
                  url='',
@@ -37,7 +39,7 @@ class URL:
 
         self.method = method
         self.coockies = coockies
-        self.user_agent = user_agent
+        self._user_agent = user_agent
         self.referer = referer
         self.post_data = post_data
         self.any_data = any_data
@@ -118,11 +120,12 @@ class URL:
         new_query = urlencode(new_qsl)
         self.url = urlunsplit(SplitResult(scheme=split[0], netloc=split[1], path=split[2], query=new_query, fragment=split[4]))
 
-    # def to_save(self):
-    #     if self.no_slash:
-    #         return self.get() + '*'
-    #     else:
-    #         return self.get()
+    @property
+    def user_agent(self)-> str:
+        if self._user_agent:
+            return self._user_agent
+        else:
+            return URL.USER_AGENT
 
     def __repr__(self, *args, **kwargs):
         return '<URL:'+self.get()+'>'

@@ -42,6 +42,9 @@ class ViewManagerFromModelInterface:
     def new_full_view(self)-> FullViewFromModelInterface:
         raise (AbstractMethodError)
 
+    def show_status(self, text:str):
+        print('==Status:', text)
+
     def on_thumb_history_changed(self, history:HistoryFromViewInterface):
         print('thumb history changed')
 
