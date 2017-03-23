@@ -1,19 +1,31 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
-import sys, os
 from multiprocessing import freeze_support
-
-from PyQt5.QtWidgets import QApplication
-
-from common.setting import Setting
-
-from controller.controller import Controller
-from model.model import Model
-from view.view_manager import ViewManager
-
-
 if __name__ == '__main__':
     freeze_support()
+
+    from xutil.install_module import test_module
+
+    test_module('bs4', 'beautifulsoup4')
+    test_module('PyQt5')
+    test_module('requests')
+    test_module('lxml')
+
+    import sys, os
+
+
+
+    from PyQt5.QtWidgets import QApplication
+
+    from common.setting import Setting
+
+    from controller.controller import Controller
+    from model.model import Model
+    from view.view_manager import ViewManager
+
+
+
+
 
     for item in sys.argv[1:]:
         if item.startswith('-compile'):
