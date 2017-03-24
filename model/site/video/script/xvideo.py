@@ -18,11 +18,12 @@ class XvideoSite(BaseSiteParser):
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
-        menu_items=dict(Best_Recent=URL('http://www.pornoxo.com/'),
-                    Most_popular=URL('http://www.pornoxo.com/most-viewed/page1.html?s*'),
-                    Latest=URL('http://www.pornoxo.com/newest/page1.html?s*'),
-                    Top_Rated=URL('http://www.pornoxo.com/top-rated/page1.html?s*'),
-                    Longest=URL('http://www.pornoxo.com/longest/page1.html?s*'))
+        menu_items={'Pornstars':URL('http://www.xvideos.com/pornstars*'),  #http://www.xvideos.com/channels
+                    'Russian Pornstars': URL('http://www.xvideos.com/pornstars/russia*'),
+                    'Pornstars ever': URL('http://www.xvideos.com/pornstars/ever*'),
+                    'Channels': URL('http://www.xvideos.com/channels*'),
+                    'New video': URL('http://www.xvideos.com/'),
+                    }
 
         view.add_start_button(picture_filename='model/site/resource/xvideos.gif',
                               menu_items=menu_items,
@@ -32,8 +33,18 @@ class XvideoSite(BaseSiteParser):
         return 'XV'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-block '})):
-            href=thumbnail.find('a', title=True, href=lambda x: str(x).startswith('/video'))
+        suffix=''
+        if url.contain('/channels'):
+            suffix = '/videos/new/0'
+        elif url.contain('/pornstars'):
+            suffix='/videos/pornstar/0'
+
+        for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-block'})):
+            href=thumbnail.find('a',
+                                title=True,
+                                href=lambda x: str(x).startswith('/video') or str(x).startswith('/prof-video-click/'))
+
+            profiles=thumbnail.find('p',{'class':'profile-name'})
             if href:
                 xref_url = URL(href.attrs['href'], base_url=url)
                 label = href.attrs['title']
@@ -53,11 +64,44 @@ class XvideoSite(BaseSiteParser):
                                        {'text':label, 'align':'bottom center'},
                                        {'text': hd, 'align': 'top left'}])
 
+            if profiles:
+                xref_url = URL(profiles.a.attrs['href'] + suffix, base_url=url)
+                label = str(profiles.a.string).strip()
+
+                script=thumbnail.script.string
+                thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+
+                count = thumbnail.find('p',{'class': 'profile-counts'})
+                videos = '' if count is None else str(count.string).strip()
+
+                flag_span = thumbnail.find('span', {'class': 'flag'})
+                flag = '' if flag_span is None else str(flag_span.attrs['title'])
+
+                self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
+                               labels=[{'text':videos, 'align':'top right'},
+                                       {'text':label, 'align':'bottom center'},
+                                       {'text': flag, 'align': 'top left'}
+                                       ])
+
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        tags_container = soup.find('div', {'class': 'left-menu-box-wrapper'})
+        tags_container = soup.find('div', {'class': 'main-categories'})
         if tags_container is not None:
-            for tag in _iter(tags_container.find_all('a',{'href':lambda x: '/videos/' in x})):
-                self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
+            for tag in _iter(tags_container.find_all('a')):
+                xref=tag.attrs['href']
+                if xref != '/tags':
+                    self.add_tag(collect_string(tag), URL(xref, base_url=url))
+
+    def parse_pagination(self, soup: BeautifulSoup, url: URL):
+        container = self.get_pagination_container(soup)
+        if container:
+            for page in _iter(container.find_all('a', {'href': True})):
+                if page.string and page.string.isdigit():
+                    xref=str(page.attrs['href'])
+                    if xref.startswith('#'):
+                        page_url=URL(xref.strip('#'), base_url=url)
+                    else:
+                        page_url= URL(xref, base_url=url)
+                    self.add_page(page.string, page_url)
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div', {'class': 'pagination'})
@@ -65,36 +109,35 @@ class XvideoSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'id': 'video-player-bg'})
         if video is not None:
-            psp(video.prettify())
             script=video.find('script', text=lambda x: 'HTML5Player' in str(x))
             if script is not None:
-                psp(script.prettify())
-                data = str(script.string).replace(' ', '').replace('\t', '').replace('\n', '')
-                if 'sources:' in data:
-                    sources=quotes(data,'sources:[{','}]').split('},{')
-                    for item in sources:
-                        file = quotes(item, 'file:"', '"')
-                        label=quotes(item,'label:"','"')
-                        self.add_video(label, URL(file, base_url=url))
-                elif "filefallback':" in data:
-                    file=quotes(data,'filefallback\':"','"')
-                    self.add_video('DEFAULT', URL(file, base_url=url))
-
+                lines=str(script.string).split(';')
+                for line in lines:
+                    if line.strip().startswith('html5player.setVideoUrl'):
+                        label=quotes(line,'setVideoUrl','(')
+                        href= URL(quotes(line, "'", "'"))
+                        self.add_video(label, href)
                 self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        # adding "user" to video
-        user = soup.find('div', {'class': 'user-card'})
-        if user is not None:
-            href = user.find('a').attrs['href']
-            username = user.find('span', {'class': 'name'}).string
-            self.add_tag(username, URL(href, base_url=url), style=dict(color='blue'))
+        # adding "user" and "star" to video
+        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
+            uploader=metadata.find('span', {'class','uploader'})
+            if uploader:
+                hlink=uploader.a
+                self.add_tag(str(hlink.string), URL(hlink.attrs['href']+'/videos/new/0', base_url=url), style=dict(color='blue'))
+            if 'Models ' in str(metadata):
+                for href in _iter(metadata.find_all('a', href=lambda x: '/profiles/' in str(x))):
+                    self.add_tag(str(href.string),
+                                 URL(href.attrs['href'] + '/videos/pornstar/0', base_url=url),
+                                 style=dict(color='red'))
 
-        # adding tags to video
-        for item in _iter(soup.find_all('div', {'class': 'content-tags'})):
-            for href in _iter(item.find_all('a')):
-                if href.string is not None:
-                    self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+        # adding "tags" to video
+        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
+            for href in _iter(metadata.find_all('a', href=lambda x: '/tags/' in str(x))):
+                xref=href.attrs['href']
+                if xref != '/tags/':
+                    self.add_tag(str(href.string), URL(xref, base_url=url))
 
 if __name__ == "__main__":
     pass

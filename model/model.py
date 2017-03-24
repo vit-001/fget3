@@ -38,11 +38,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[XvideoSite,
+        self._site_models=[
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
-                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornbrazeSite,
+                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornbrazeSite,XvideoSite,
                            PornoxoSite,  V24videoSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,
 
