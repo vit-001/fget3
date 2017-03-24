@@ -41,7 +41,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.full.show()
 
         self.log=LogViewWindow(self)
-        self.log.show()
+        # self.log.show()
 
         self.configure_viewports()
 

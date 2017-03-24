@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/full_view_window.ui'
 #
-# Created: Thu Mar 23 18:43:06 2017
+# Created: Fri Mar 24 17:59:32 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

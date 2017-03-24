@@ -30,6 +30,7 @@ from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.script.xvideo import XvideoSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -37,7 +38,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[
+        self._site_models=[XvideoSite,
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
