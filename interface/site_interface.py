@@ -28,6 +28,8 @@ class SiteInterface:
     def goto_url(self, url:URL, **options):
         pass
 
+    def log(self, text:str):
+        pass
 
 if __name__ == "__main__":
     pass

@@ -10,7 +10,7 @@ class InterfaceCompiler():
         # self.test_compile = test_compile
 
         self.interfaces = ['main_window', 'scroll_bar_widget', 'full_view_window', 'video_player_widget',
-                           'history_view']
+                           'history_view','log_view']
 
         # self.test_interfaces = ['tst_qpixmap', 'tst', 'video_player']
 

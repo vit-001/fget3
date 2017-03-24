@@ -98,10 +98,8 @@ class BaseSite(SiteInterface, ParseResult):
         return 1
 
     def goto_url(self, url: URL, **options):
-        if Setting.debug_site:
-            print()
-            print('Goto url:', url)
         self.model.view_manager.show_status('Goto url: '+ url.get())
+        self.log('Goto url: '+url.link())
 
         self.url=url
         self.start_options=options
@@ -111,6 +109,11 @@ class BaseSite(SiteInterface, ParseResult):
         filedata=FLData(url,'')
 
         loader.start_load_file(filedata, self.on_load_url)
+
+    def log(self, text: str):
+        if Setting.debug_site:
+            print(text)
+            self.model.view_manager.log_out(text)
 
     def on_load_url(self, filedata:FLData):
         # print(filedata.url, 'loaded')

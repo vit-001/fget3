@@ -127,6 +127,9 @@ class URL:
         else:
             return URL.USER_AGENT
 
+    def link(self):
+        return '<a href="'+ self.get()+'">'+self.get() +'</a>'
+
     def __repr__(self, *args, **kwargs):
         return '<URL:'+self.get()+'>'
 

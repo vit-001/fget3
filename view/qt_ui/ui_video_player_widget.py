@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/video_player_widget.ui'
+# Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/video_player_widget.ui'
 #
-# Created: Tue Mar 21 10:28:32 2017
+# Created: Thu Mar 23 18:43:06 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

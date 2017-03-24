@@ -57,6 +57,9 @@ class ViewManagerFromModelInterface:
     def refresh_thumb_view(self):
         print('refresh thumb view')
 
+    def log_out(self, text:str):
+        pass
+
 class ViewManagerFromControllerInterface:
     def create_main_window(self, controller: ControllerFromViewInterface):
         pass
