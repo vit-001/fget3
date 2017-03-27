@@ -27,6 +27,7 @@ class VideoPlayerWidget(QWidget):
         self.duration=0
         self.urls=list()
         self.default=-1
+        self.url=URL()
         self.saved_position=None
 
         self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
@@ -68,6 +69,7 @@ class VideoPlayerWidget(QWidget):
         self.media_player.play()
 
     def set_url(self, url:URL):
+        self.url=url
         request = QNetworkRequest(QUrl(url.get()))
 
         # todo: сделать добавление cookie и подготовку proxу
