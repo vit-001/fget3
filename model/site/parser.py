@@ -59,8 +59,8 @@ class BaseSiteParser(BaseSite):
                     self.add_page(page.string, URL(page.attrs['href'], base_url=url))
                     # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
 
-    def get_pagination_container(self, soup:BeautifulSoup)->BeautifulSoup:
-        return None
+    def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
+        return soup.find('div', {'class': 'pagination'})
 
     def parse_thumbs_tags(self, soup:BeautifulSoup, url:URL):
         pass

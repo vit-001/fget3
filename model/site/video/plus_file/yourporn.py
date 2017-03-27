@@ -36,32 +36,35 @@ class YourpornSite(BaseSiteParser):
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for post in _iter(soup.find_all('div', {'class':'post_el'})):
-            author=post.find('a',{'class':'span_author_name'})
-            author_str=str(author.span.string).strip()
+            try:
+                author=post.find('a',{'class':'span_author_name'})
+                author_str=str(author.span.string).strip()
 
-            combo=post.find('div',{'class':'combo_post_wrap'})
-            if combo:
-                href = URL(combo.a.attrs['href'], base_url=url)
-                description = combo.a.attrs['title']
-                thumb_url = URL(combo.img.attrs['src'], base_url=url)
+                combo=post.find('div',{'class':'combo_post_wrap'})
+                if combo:
+                    href = URL(combo.a.attrs['href'], base_url=url)
+                    description = combo.a.attrs['title']
+                    thumb_url = URL(combo.img.attrs['src'], base_url=url)
 
-                dur_time = 'Multi'
+                    dur_time = 'Multi'
 
-            else:
-                vid_container = post.find('div', {'class': 'vid_container'})
+                else:
+                    vid_container = post.find('div', {'class': 'vid_container'})
 
-                href = URL(vid_container.a.attrs['href'], base_url=url)
+                    href = URL(vid_container.a.attrs['href'], base_url=url)
 
-                description = vid_container.a.attrs['title']
-                thumb_url = URL(vid_container.img.attrs['src'], base_url=url)
+                    description = vid_container.a.attrs['title']
+                    thumb_url = URL(vid_container.img.attrs['src'], base_url=url)
 
-                duration = post.find('span', {'class': "duration_small"})
-                dur_time = '' if duration is None else str(duration.string)
+                    duration = post.find('span', {'class': "duration_small"})
+                    dur_time = '' if duration is None else str(duration.string)
 
-            self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                           labels=[{'text': dur_time, 'align': 'top right'},
-                                   {'text': author_str, 'align': 'top left'},
-                                   {'text': description, 'align': 'bottom center'}])
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                               labels=[{'text': dur_time, 'align': 'top right'},
+                                       {'text': author_str, 'align': 'top left'},
+                                       {'text': description, 'align': 'bottom center'}])
+            except AttributeError:
+                pass
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         pagination = soup.find('div', {'id': 'center_control'})

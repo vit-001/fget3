@@ -31,14 +31,14 @@ from model.site.video.simple.collectionofbestporn import CollectionofbestpornSit
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.script.xvideo import XvideoSite
-
+from model.site.video.script.pornfun import PornfunSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[
+        self._site_models=[PornfunSite,
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,

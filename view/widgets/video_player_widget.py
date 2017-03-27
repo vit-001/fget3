@@ -40,6 +40,9 @@ class VideoPlayerWidget(QWidget):
         self.media_player.positionChanged.connect(self.positionChanged)
         self.media_player.durationChanged.connect(self.durationChanged)
         self.media_player.mediaStatusChanged.connect(self.media_status_changed)
+        self.media_player.error.connect(self.handleError)
+
+        # self.ui.buffer.hide()
 
         self.ui.bn_play.clicked.connect(self.media_player.play)
         self.ui.bn_pause.clicked.connect(self.media_player.pause)
@@ -124,6 +127,10 @@ class VideoPlayerWidget(QWidget):
 
     def is_muted(self):
         return self.ui.bn_mute.isChecked()
+
+    def handleError(self):
+        print("Error in " + self.url.get() + ': ' + self.media_player.errorString())
+        # self.error_handler('Player error: ' + self.media_player.errorString())
 
     def destroy(self, bool_destroyWindow=True, bool_destroySubWindows=True):
         self.media_player.deleteLater()
