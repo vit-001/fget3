@@ -46,6 +46,43 @@ class RequestLoad(BaseLoadProcedure):
         else:
             return response.content
 
+    def get_redirect_location(self, url: URL) -> URL:
+        try:
+            headers=dict()
+            headers['user-agent']=url.user_agent
+
+            if url.method == 'GET':
+                response = requests.get(url.get(), cookies=url.coockies, proxies=self.proxies,headers=headers,
+                                        stream=True, allow_redirects=False)
+            elif url.method == 'POST':
+                response = requests.post(url.get(), data=url.post_data, proxies=self.proxies,headers=headers,
+                                         stream=True, allow_redirects=False)
+            else:
+                raise LoaderError('Unknown method:' + url.method)
+
+            response.raise_for_status()
+
+        except requests.exceptions.HTTPError as err:
+            raise LoaderError('HTTP error: {0}'.format(err.response.status_code))
+
+        except requests.exceptions.ConnectTimeout:
+            raise LoaderError('Connection timeout')
+
+        except requests.exceptions.ReadTimeout:
+            raise LoaderError('Read timeout')
+
+        except requests.exceptions.ConnectionError:
+            raise LoaderError('Connection error')
+
+        except:
+            raise LoaderError('Unknown error in loader')
+        else:
+            location=response.headers.get('Location', None)
+            if location:
+                return URL(location)
+            else:
+                return None
+
 
 if __name__ == "__main__":
     l = RequestLoad()

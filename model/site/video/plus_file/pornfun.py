@@ -64,7 +64,7 @@ class PornfunSite(BaseSiteParser):
         if categories:
             for thumbnail in _iter(categories.find_all('li', {'class': 'thumb-category'})):
                 # psp(thumbnail.attrs['class'])
-                psp(thumbnail.prettify())
+                # psp(thumbnail.prettify())
 
                 href = URL(thumbnail.a.attrs['href'], base_url=url)
 
@@ -90,8 +90,21 @@ class PornfunSite(BaseSiteParser):
             script = content.find('script', text=lambda x: 'video_url:' in str(x))
             if script is not None:
                 data = str(script.string).replace(' ', '')
-                file = quotes(data, "video_url:'", "'")#.replace('https','http')#.rstrip('/')
-                self.add_video('DEFAULT', URL(file+'*', base_url=url))
+                file = quotes(data, "video_url:'", "'")
+
+                source_file=URL(file+'*', base_url=url)
+                filedata=FLData(source_file,'',find_redirect_location=True)
+
+                self._result_type = 'video'
+                self.model.loader.start_load_file(filedata,self.continue_parse_video)
+
+    def continue_parse_video(self, fldata:FLData):
+        if fldata.redirect_location:
+            self.add_video('default', fldata.redirect_location)
+        else:
+            self.add_video('default', fldata.url)
+        self.generate_video_view()
+
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         user_info= soup.find('div', {'class':'user-info'})

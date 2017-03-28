@@ -124,6 +124,9 @@ class AZloaderMP(BaseLoadProcedure):
         else:
             return self.trick_load.open(url,method)
 
+    def get_redirect_location(self, url: URL) -> URL:
+        return self.request_load.get_redirect_location(url)
+
     def get_load_method(self, url: URL) -> str:
         domain_cash = self.data.get('domain_cash', dict())
         domain = url.domain()

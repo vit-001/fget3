@@ -16,7 +16,15 @@ class BaseLoadProcedure(LoadProcedureInterface):
         'Open a network object denoted by a URL and return his bytes representstive.'
         pass
 
+    def get_redirect_location(self, url:URL)->URL:
+        'Open only response header and return redirect URL if its present, else return None'
+        return None
+
     def load_to_file(self, file: FLData) -> FLData:
+        if file.find_redirect_location:
+            file.redirect_location = self.get_redirect_location(file.url)
+            return file
+
         if file.overwrite or (not os.path.exists(file.filename)):
             result = self.open(file.url)
 

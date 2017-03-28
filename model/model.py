@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from common.setting import Setting
 from data_format.url import URL
 from interface.loader_interface import LoaderInterface
-from interface.model_interface import ModelFromControllerInterface,ModelFromSiteInterface
+from interface.model_interface import ModelFromControllerInterface, ModelFromSiteInterface
 from interface.site_interface import SiteInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.favorites.favorites import Favorites
@@ -14,6 +14,7 @@ from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import Bravoe
 from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
 from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
 from model.site.video.plus_file.pornbaze import PornbrazeSite
+from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.sexix import SexixSite
 from model.site.video.plus_file.yourporn import YourpornSite
 from model.site.video.script.deviantclip import DeviantclipSite
@@ -27,18 +28,18 @@ from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
 from model.site.video.script.xhamster import XhamsterSite
+from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.script.xvideo import XvideoSite
-from model.site.video.script.pornfun import PornfunSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[PornfunSite,
+        self._site_models=[
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
@@ -47,7 +48,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            VeroniccaComSite, HdEasypornSite, Tube8Site,
 
                            Space('Amateur:'),
-                           MotherlessSite, RealGfSite,
+                           MotherlessSite, RealGfSite, PornfunSite,
 
                            Space('Deviant:'),ShockingmoviesSite,DeviantclipSite,
 
