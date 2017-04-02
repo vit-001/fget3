@@ -32,7 +32,9 @@ from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.veronicca import VeroniccaComSite
-
+from model.site.video.simple.pornbozz import PornbozzSite
+from model.site.video.script.beemtube import BeemtubeSite
+from model.site.video.script.vporn import VpornSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -44,11 +46,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornbrazeSite,XvideoSite,
-                           PornoxoSite,  V24videoSite,
-                           VeroniccaComSite, HdEasypornSite, Tube8Site,
+                           PornoxoSite,  V24videoSite,VpornSite,
+                           VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
                            Space('Amateur:'),
-                           MotherlessSite, RealGfSite, PornfunSite,
+                           MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
 
                            Space('Deviant:'),ShockingmoviesSite,DeviantclipSite,
 

@@ -71,8 +71,8 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    url1 = 'http://www.xvideos.com/profiles/asianstreetmeat#_tabVideos,videos-new'
-    url1a = 'https://www.xvideos.com/video19103917/sexy_busty_lucy_li_thinks_this_porn_casting...'
+    url1 = 'https://beemtube.com/most-recent/'
+    url1a = 'https://www.vporn.com/pov/big-tits-round-asses/1727606/?t=1'
     url2 = 'https://pornfun.com/get_file/1/ee2513bd5c65836da1a9bd7c3c5f8fbb/27000/27100/27100.mp4'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
@@ -93,10 +93,10 @@ if __name__ == "__main__":
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2)
     # r = load(url1a, fname1a, proxies=proxies)
-    # r = load(url1a, fname1a)
+    r = load(url1a, fname1a)
     # r = load(url2, fname2)#, proxies=proxies)
 
-    r=get_response(url3, fname2)
+    # r=get_response(url3, fname2)
 
     # r=load('https://assets.porndig.com/assets/porndig/js/bundle.js?ver=1481122807','e:/out/bundle.js')
 

@@ -229,7 +229,10 @@ class BaseSite(SiteInterface, ParseResult):
 
         self.add_controls_to_view(view)
 
-        # print('Now playback', self.url) # todo сделать отладочный вывод
+        if Setting.debug_site:
+            print()
+            print('View' , len(self.pictures) , 'pictures on', self.url) # todo сделать отладочный вывод
+
 
     def add_controls_to_view(self, view):
         for item in self.controls_bottom:
