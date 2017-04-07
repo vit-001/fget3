@@ -17,6 +17,8 @@ class RequestLoad(BaseLoadProcedure):
         try:
             headers=dict()
             headers['user-agent']=url.user_agent
+            if url.referer:
+                headers['Referer']=url.referer.get()
 
             if url.method == 'GET':
                 response = requests.get(url.get(), cookies=url.coockies, proxies=self.proxies,headers=headers)

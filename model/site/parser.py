@@ -55,7 +55,7 @@ class BaseSiteParser(BaseSite):
         container = self.get_pagination_container(soup)
         if container:
             for page in _iter(container.find_all('a', {'href': True})):
-                if page.string and page.string.isdigit():
+                if page.string and str(page.string).strip().isdigit():
                     self.add_page(page.string, URL(page.attrs['href'], base_url=url))
                     # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
 
