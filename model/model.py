@@ -41,6 +41,7 @@ from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.script.spankwire import SpankwireSite
+from model.site.picture.tgp_sites.fuskator import FuskatorSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -48,7 +49,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[
+        self._site_models=[FuskatorSite,
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
