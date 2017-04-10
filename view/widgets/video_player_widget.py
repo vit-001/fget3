@@ -13,6 +13,10 @@ from data_format.url import URL
 
 from view.qt_ui.ui_video_player_widget import Ui_VideoPlayerWidget
 
+class VideoWidget(QVideoWidget):
+    def mouseDoubleClickEvent(self, *args, **kwargs):
+        self.setFullScreen(not self.isFullScreen())
+
 
 class VideoPlayerWidget(QWidget):
     def __init__(self, QWidget_parent=None, Qt_WindowFlags_flags=0):
@@ -32,7 +36,7 @@ class VideoPlayerWidget(QWidget):
 
         self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
 
-        self.media_player_widget = QVideoWidget(self.ui.top_frame)
+        self.media_player_widget = VideoWidget(self.ui.top_frame)
         self.ui.top_frame_layout.addWidget(self.media_player_widget)
         self.media_player.setVideoOutput(self.media_player_widget)
         self.media_player_widget.show()
@@ -130,8 +134,12 @@ class VideoPlayerWidget(QWidget):
     def is_muted(self):
         return self.ui.bn_mute.isChecked()
 
+    def set_error_handler(self, on_error=lambda error_text:None):
+        self.on_error=on_error
+
     def handleError(self):
         print("Error in " + self.url.get() + ': ' + self.media_player.errorString())
+        self.on_error("Error in " + self.url.link() + ': ' + self.media_player.errorString())
         # self.error_handler('Player error: ' + self.media_player.errorString())
 
     def destroy(self, bool_destroyWindow=True, bool_destroySubWindows=True):

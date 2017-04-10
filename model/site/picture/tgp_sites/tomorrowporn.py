@@ -3,14 +3,11 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes, psp
-
 from interface.view_manager_interface import ViewManagerFromModelInterface
+from model.site.picture.base_of_tgp import TgpSite
 
-from model.site.picture.bravoerotica_like_sites.base_of_be import BravoeroticaLikeSite
 
-
-class TomorrowpornSite(BravoeroticaLikeSite):
+class TomorrowpornSite(TgpSite):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
         return url.contain('tomorrowporn.com/')

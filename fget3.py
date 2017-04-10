@@ -28,15 +28,17 @@ if __name__ == '__main__':
             ic.compile_interfaces()
         if item.startswith('-small_window'):
             print('Run in small window mode')
+            Setting.main_window_x0_in_percents = 25
             Setting.main_window_h_in_percents = 45
             Setting.full_window_h_in_percents = 45
-            Setting.full_window_w_gap_in_percents = 25
+            Setting.full_window_w_gap_in_percents = 2
 
     app = QApplication(sys.argv)
 
     view=ViewManager()
     model=Model(view)
     controller=Controller(view,model)
+    Setting.log=view.get_log()
 
     sys.exit(app.exec_())
 

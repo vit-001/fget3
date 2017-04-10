@@ -92,14 +92,14 @@ class BaseSite(SiteInterface, ParseResult):
         ParseResult.__init__(self)
         self.model=model
         self.start_options=dict()
+        self._log=Setting.log
 
     @staticmethod
     def number_of_accepted_dimains() ->int:
         return 1
 
     def goto_url(self, url: URL, **options):
-        self.model.view_manager.show_status('Goto url: '+ url.get())
-        self.log('Goto url: '+url.link())
+        self.log('Goto url:', url)
 
         self.url=url
         self.start_options=options
@@ -110,10 +110,10 @@ class BaseSite(SiteInterface, ParseResult):
 
         loader.start_load_file(filedata, self.on_load_url)
 
-    def log(self, text: str):
+    def log(self, *data, **options):
         if Setting.debug_site:
-            print(text)
-            self.model.view_manager.log_out(text)
+            print(*data, **options)
+            self._log.write(*data, **options)
 
     def on_load_url(self, filedata:FLData):
         # print(filedata.url, 'loaded')
@@ -124,8 +124,7 @@ class BaseSite(SiteInterface, ParseResult):
 
         if self.is_no_result and not self.waiting_data:
             if Setting.debug_site:
-                print('Parsing has no result')
-            self.model.view_manager.show_status('Parsing has no result')
+                self.log('Parsing has no result')
 
     def parse_soup(self, soup: BeautifulSoup, url: URL) -> bool:
         return False
@@ -165,10 +164,10 @@ class BaseSite(SiteInterface, ParseResult):
         # print statistic for url
         if Setting.site_statistic:
             print()
-            print('Statistic for',self.url)
+            self.log('Statistic for',self.url)
             for domain in statistic:
-                print('  {0:5d} in {1}'.format(statistic[domain], domain))
-            print('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
+                self.log('  {0:5d} in {1}'.format(statistic[domain], domain))
+            self.log('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
 
         loader.load_list(thumb_list)
 
@@ -200,8 +199,8 @@ class BaseSite(SiteInterface, ParseResult):
             print()
             print('Now playback', self.url) # todo сделать отладочный вывод
             for item in self.video_data:
-                print('  ',item['text'], item['url'])
-            print('  Default:', self.video_data[self.video_default_index]['text'])
+                self.log('  ',item['text'], item['url'])
+            self.log('  Default:', self.video_data[self.video_default_index]['text'])
 
     def generate_pictures_view(self):
         if self.waiting_data:
@@ -231,7 +230,7 @@ class BaseSite(SiteInterface, ParseResult):
 
         if Setting.debug_site:
             print()
-            print('View' , len(self.pictures) , 'pictures on', self.url) # todo сделать отладочный вывод
+            self.log('View' , len(self.pictures) , 'pictures on', self.url) # todo сделать отладочный вывод
 
 
     def add_controls_to_view(self, view):

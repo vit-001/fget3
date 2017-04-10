@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy
 from data_format.error import AbstractMethodError
 from data_format.url import URL
 
+from common.setting import Setting
+
 from interface.view_interface import ThumbViewFromModelInterface,FullViewFromModelInterface
 from interface.view_manager_interface import ViewManagerFromViewInterface
 
@@ -66,6 +68,9 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
 
     def binding(self):
         pass
+
+    def on_error(self, error_string: str):
+        Setting.log.write(error_string)
 
     def subscribe_to_history_event(self, handler=lambda dict: None):
         self.history_handler=handler

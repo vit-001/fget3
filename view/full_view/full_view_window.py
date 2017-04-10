@@ -41,14 +41,20 @@ class FullViewWindow(QWidget):
         self.view_manager.add_keyboard_shortcut(self, 'Space', lambda: self.little_forvard(30))
         self.view_manager.add_keyboard_shortcut(self, 'Ctrl+Space', lambda: self.little_forvard(180))
 
+        self.set_visible()
+
     def create_widgets(self):
         pass
+
+    def set_visible(self):
+        self.setVisible(bool(self.full_views))
 
     def get_new_full_view(self) -> FullView:
         view = FullView(self.ui.tabWidget,self.view_manager)
         self.full_views.append(view)
         view.mute(self.global_muted)
         view.set_volume(self.global_volume)
+        self.set_visible()
         return view
 
     def get_current_full_view(self)->FullView:
@@ -77,6 +83,7 @@ class FullViewWindow(QWidget):
         self.full_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()
+        self.set_visible()
 
     def change_tab(self,index:int):
         self.do_method_with_all_tab('pause')

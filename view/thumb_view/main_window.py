@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
+import os
 
-from PyQt5.QtWidgets import QMainWindow, QToolButton
+from PyQt5.QtWidgets import QMainWindow, QToolButton,QSizePolicy
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, Qt
 
 from data_format.url import URL
 
 from interface.hystory_interface import HistoryFromViewInterface
 from interface.view_manager_interface import ViewManagerFromViewInterface
+from interface.log_interface import LogViewInterface
 
+from view.log.log_window import LogViewWindow
 from view.history_view.history_view import HistoryView
 from view.thumb_view.thumb_view import ThumbView
 from view.widgets.button_line import ButtonLine
@@ -20,8 +23,10 @@ from view.qt_ui.ui_main_window import Ui_MainWindow
 class MainWindow(QMainWindow):
     def __init__(self, view_manager: ViewManagerFromViewInterface=None):
         QMainWindow.__init__(self, None)
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.view_manager=view_manager
         self.create_widgets()
 
@@ -37,6 +42,7 @@ class MainWindow(QMainWindow):
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.ui.tabWidget.currentChanged.connect(self.on_current_tab_changed)
         self.bn_favorite.clicked.connect(self.view_manager.add_to_favorite)
+        self.log_button.toggled.connect(self.log_button_toggle)
 
     def create_widgets(self):
         self.sites=ButtonLine(self.ui.top_frame,height=50, speed=90, space=5)
@@ -51,8 +57,34 @@ class MainWindow(QMainWindow):
         icon.addPixmap(QPixmap("view/resource/icons/ic_add_box_white_48dp.png"), QIcon.Normal, QIcon.Off)
         self.bn_favorite.setIcon(icon)
         self.bn_favorite.setIconSize(QSize(32, 32))
-        self.bn_favorite.setObjectName("bn_favorite")
         self.ui.controls_frame_layout.addWidget(self.bn_favorite)
+
+        self.log_button = QToolButton()
+        sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Ignored)
+        self.log_button.setSizePolicy(sizePolicy)
+        self.log_button.setMinimumSize(QSize(0, 10))
+        icon = QIcon()
+        icon.addPixmap(QPixmap("view/resource/icons/ic_arrow_drop_up_white_24dp.png"), QIcon.Normal, QIcon.Off)
+        icon.addPixmap(QPixmap("view/resource/icons/ic_arrow_drop_down_white_24dp.png"), QIcon.Normal, QIcon.On)
+        self.log_button.setIcon(icon)
+        self.log_button.setIconSize(QSize(24, 24))
+        self.log_button.setCheckable(True)
+        self.log_button.setAutoRaise(True)
+        self.ui.bottom_frame_layout.addWidget(self.log_button)
+
+        self.log=LogViewWindow(self.view_manager)
+        self.ui.bottom_frame_layout.addWidget(self.log)
+        self.log.setMaximumHeight(70)
+        self.log.hide()
+
+        # self.updateGeometry()
+
+    def log_button_toggle(self):
+        # return
+        if self.log_button.isChecked():
+            self.log.show()
+        else:
+            self.log.hide()
 
     def get_new_thumb_view(self) -> ThumbView:
         tab = self.ui.tabWidget
@@ -68,6 +100,9 @@ class MainWindow(QMainWindow):
         else:
             return None
 
+    def get_log(self)->LogViewInterface:
+        return self.log
+
     def set_tab_text(self, view,text:str, tooltip=''):
         try:
             index=self.thumb_views.index(view)
@@ -75,9 +110,6 @@ class MainWindow(QMainWindow):
             self.ui.tabWidget.setTabToolTip(index,tooltip)
         except ValueError:
             pass
-
-    def show_status(self, text:str):
-        self.ui.statusbar.showMessage(text,5000)
 
     def create_site_button(self,button):
         self.sites.add_button(button)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/log_view.ui'
+# Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/log_view.ui'
 #
-# Created: Mon Mar 27 14:54:47 2017
+# Created: Sun Apr  9 15:43:29 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,10 +17,12 @@ class Ui_LogView(object):
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.text = QtWidgets.QTextEdit(LogView)
+        self.text = QtWidgets.QTextBrowser(LogView)
         self.text.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.text.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
         self.text.setReadOnly(True)
         self.text.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.text.setOpenExternalLinks(True)
         self.text.setObjectName("text")
         self.verticalLayout.addWidget(self.text)
 

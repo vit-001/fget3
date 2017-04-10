@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/repo/fget3/view/qt_design/video_player_widget.ui'
+# Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/video_player_widget.ui'
 #
-# Created: Mon Mar 27 14:54:47 2017
+# Created: Sun Apr  9 15:43:28 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -113,8 +113,8 @@ class Ui_VideoPlayerWidget(object):
         self.bottom_frame_layout.addWidget(self.bn_stop)
         self.bn_mute = QtWidgets.QToolButton(self.bottom_frame)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("../resource/icons/ic_volume_up_black_48dp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         icon3.addPixmap(QtGui.QPixmap("../resource/icons/ic_volume_off_black_48dp.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap("../resource/icons/ic_volume_up_black_48dp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.bn_mute.setIcon(icon3)
         self.bn_mute.setIconSize(QtCore.QSize(32, 32))
         self.bn_mute.setCheckable(True)

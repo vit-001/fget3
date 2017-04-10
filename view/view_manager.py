@@ -17,10 +17,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface, View
 from interface.controller_interface import ControllerFromViewInterface
 from interface.hystory_interface import HistoryFromViewInterface
 from interface.view_interface import FullViewFromModelInterface,ThumbViewFromModelInterface
+from interface.log_interface import LogViewInterface
 
 from view.full_view.full_view_window import FullViewWindow
 from view.thumb_view.main_window import MainWindow
-from view.log.log_window import LogViewWindow
 
 from view.widgets.button_line import ImageButton
 
@@ -38,10 +38,11 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.show()
 
         self.full = FullViewWindow(self)
-        self.full.show()
+        # self.full.show()
 
-        self.log=LogViewWindow(self)
+        # self.log=LogViewWindow(self)
         # self.log.show()
+        self.log=self.main.get_log()
 
         self.configure_viewports()
 
@@ -67,13 +68,13 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
 
         self.full.setGeometry(QRect(full_x_base, full_y_base, full_w, full_h))
 
-        log_x_base = main_x_base + Setting.main_window_w_in_pixels + (Setting.log_window_w_gap_in_percents +
-                      Setting.log_window_x1_in_percents) * desktop.width() // 100
-        log_y_base = Setting.log_window_y0_in_percents * desktop.height() // 100
-        log_w = desktop.width() - log_x_base - Setting.log_window_x1_in_percents * desktop.width() // 100
-        log_h = Setting.log_window_h_in_percents * desktop.height() // 100
-
-        self.log.setGeometry(QRect(log_x_base, log_y_base, log_w, log_h))
+        # log_x_base = main_x_base + Setting.main_window_w_in_pixels + (Setting.log_window_w_gap_in_percents +
+        #               Setting.log_window_x1_in_percents) * desktop.width() // 100
+        # log_y_base = Setting.log_window_y0_in_percents * desktop.height() // 100
+        # log_w = desktop.width() - log_x_base - Setting.log_window_x1_in_percents * desktop.width() // 100
+        # log_h = Setting.log_window_h_in_percents * desktop.height() // 100
+        #
+        # self.log.setGeometry(QRect(log_x_base, log_y_base, log_w, log_h))
 
 
         # self.main.resize(458, 779)
@@ -127,11 +128,8 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.set_tab_text(view,text, tooltip)
         self.full.set_tab_text(view,text, tooltip)
 
-    def show_status(self, text: str):
-        self.main.show_status(text)
-
-    def log_out(self, text: str):
-        self.log.out_text(text)
+    def get_log(self) -> LogViewInterface:
+        return self.log
 
     def on_thumb_tab_url_changed(self, view):
         self.main.on_url_in_tab_changed(view)

@@ -21,6 +21,7 @@ class FullView(BaseFullView):
 
         self.video_player = VideoPlayerWidget(self.frame)
         self.picture=PictureBrowser(self.parent, lambda index:self.progress.set_value('current pix', index+1))
+        self.video_player.set_error_handler(self.on_error)
 
         layout.addWidget(self.video_player)
         self.picture.hide()

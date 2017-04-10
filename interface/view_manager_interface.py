@@ -8,6 +8,7 @@ from data_format.url import URL
 from interface.controller_interface import ControllerFromViewInterface
 from interface.hystory_interface import HistoryFromViewInterface
 from interface.view_interface import ViewFromModelInterface, ThumbViewFromModelInterface, FullViewFromModelInterface
+from interface.log_interface import LogViewInterface
 
 class ViewManagerFromViewInterface:
     def add_keyboard_shortcut(self, window, shortcut='', on_pressed=lambda: None):
@@ -42,9 +43,6 @@ class ViewManagerFromModelInterface:
     def new_full_view(self)-> FullViewFromModelInterface:
         raise (AbstractMethodError)
 
-    def show_status(self, text:str):
-        print('==Status:', text)
-
     def on_thumb_history_changed(self, history:HistoryFromViewInterface):
         print('thumb history changed')
 
@@ -57,7 +55,7 @@ class ViewManagerFromModelInterface:
     def refresh_thumb_view(self):
         print('refresh thumb view')
 
-    def log_out(self, text:str):
+    def get_log(self)->LogViewInterface:
         pass
 
 class ViewManagerFromControllerInterface:

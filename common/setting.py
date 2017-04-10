@@ -19,16 +19,18 @@ class Setting:
     full_window_h_in_percents = 75
     full_window_w_gap_in_percents = 2
 
-    log_window_x1_in_percents = 2
-    log_window_y0_in_percents = 84
-    log_window_h_in_percents = 10
-    log_window_w_gap_in_percents = 2
+    # log_window_x1_in_percents = 2
+    # log_window_y0_in_percents = 84
+    # log_window_h_in_percents = 10
+    # log_window_w_gap_in_percents = 2
 
     debug_site=True
     debug_view=True
     debug_loader=True
 
     site_statistic=True
+
+    log=None
 
 if __name__ == "__main__":
     pass

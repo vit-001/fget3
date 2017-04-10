@@ -3,14 +3,11 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes, psp
-
 from interface.view_manager_interface import ViewManagerFromModelInterface
+from model.site.picture.base_of_tgp import TgpSite
 
-from model.site.picture.bravoerotica_like_sites.base_of_be import BravoeroticaLikeSite
 
-
-class TeenportSite(BravoeroticaLikeSite):
+class TeenportSite(TgpSite):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
         return url.contain('teenport.com/')
@@ -41,7 +38,7 @@ class TeenportSite(BravoeroticaLikeSite):
     # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
     #     return 'TP '+ url.get().partition('teenport.com/')[2].rpartition('.')[0]
 
-    def get_pictures_containers(self, soup: BeautifulSoup) -> list:
+    def get_image_containers(self, soup: BeautifulSoup) -> list:
         return soup.find_all('div',{'class':'thumb_box'})
 
     # def parse_pictures_title(self, soup: BeautifulSoup, url: URL) -> str:

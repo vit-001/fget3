@@ -10,16 +10,22 @@ from model.favorites.favorites import Favorites
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
 from model.site.other.space import Space
-from model.site.picture.bravoerotica_like_sites.sites.bravoerotica import BravoeroticaSite
-from model.site.picture.bravoerotica_like_sites.sites.teenport import TeenportSite
-from model.site.picture.bravoerotica_like_sites.sites.tomorrowporn import TomorrowpornSite
+from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
+from model.site.picture.tgp_sites.teenport import TeenportSite
+from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
+from model.site.picture.tgp_sites.vibraporn import VibrapornSite
+from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
+from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
 from model.site.video.plus_file.sexix import SexixSite
+from model.site.video.plus_file.toseeporn import ToseepornSite
 from model.site.video.plus_file.yourporn import YourpornSite
+from model.site.video.script.beemtube import BeemtubeSite
 from model.site.video.script.deviantclip import DeviantclipSite
 from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
+from model.site.video.script.pornhd import PornhdSite
 from model.site.video.script.pornoxo import PornoxoSite
 from model.site.video.script.porntrex import PorntrexSite
 from model.site.video.script.realgf import RealGfSite
@@ -27,17 +33,14 @@ from model.site.video.script.redtube import RedtubeSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
+from model.site.video.script.vporn import VpornSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
-from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.pornbozz import PornbozzSite
-from model.site.video.script.beemtube import BeemtubeSite
-from model.site.video.script.vporn import VpornSite
-from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
-from model.site.video.plus_file.toseeporn import ToseepornSite
-from model.site.video.script.pornhd import PornhdSite
+from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.script.spankwire import SpankwireSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -51,7 +54,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,
-                           PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,
+                           PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
                            Space('Amateur:'),
@@ -59,13 +62,13 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
                            Space('Deviant:'),ShockingmoviesSite,DeviantclipSite,
 
-                           Space('Short:'),
+                           # Space('Short:'),
 
                            Space('Photo:'),
-                           BravoeroticaSite,TomorrowpornSite,TeenportSite,
-                           Space('Non working:'),
+                           BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,BabesandbitchesSite,
+                           # Space('Non working:'),
 
-                           Space('Info:'),
+                           # Space('Info:'),
 
                            ]
 
