@@ -13,7 +13,7 @@ from model.site.parser import BaseSiteParser
 class TgpSite(BaseSiteParser):
     def parse_picture_thumbs(self, soup:BeautifulSoup, url:URL):
         for thumb_container in _iter(self.get_thumbs_containers(soup)):
-            psp(thumb_container)
+            # psp(thumb_container)
             for thumbnail in _iter(self.get_thumbs_from_container(thumb_container)):
                 self.parse_one_thumb(thumbnail,url)
 

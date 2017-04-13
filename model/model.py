@@ -42,14 +42,14 @@ from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.script.spankwire import SpankwireSite
 from model.site.picture.tgp_sites.fuskator import FuskatorSite
-
+from model.site.video.script.thumbzilla import ThumbzillaSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[FuskatorSite,
+        self._site_models=[ThumbzillaSite,
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
@@ -66,7 +66,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            # Space('Short:'),
 
                            Space('Photo:'),
-                           BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,BabesandbitchesSite,
+                           BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
+                           BabesandbitchesSite,FuskatorSite,
                            # Space('Non working:'),
 
                            # Space('Info:'),

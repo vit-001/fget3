@@ -79,7 +79,7 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'http://her69.net/?orderby=date'
-    url1a = 'http://www.spankwire.com/Teens-pussy-drips-jizz/video9895022/'
+    url1a = 'https://www.thumbzilla.com/video/ph58ebd3e20e675/passion-hd-thick-cock-blasts-tiny-holly-hendrix-tight-asshole'
     url2 = 'https://tv.fakings.com/herramientas/repro_universal/index.php?src=tv&file=1-394-indiana-fox-hd&logo=tv_fakings_logo&logo_position=bottom-right&af=GC1984ppt&ref=indextv'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
@@ -99,8 +99,8 @@ if __name__ == "__main__":
 
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
-    r = load(url1a, fname1a, proxies=proxies)
-    # r = load(url1a, fname1a)
+    # r = load(url1a, fname1a, proxies=proxies)
+    r = load(url1a, fname1a)
     # r = load(url2, fname2)#, proxies=proxies)
 
     # r=get_response(url3, fname2)

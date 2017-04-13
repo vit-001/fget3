@@ -56,6 +56,9 @@ class URL:
             self.no_slash = True
             return
 
+        if url.startswith('//'):
+            url = 'http:' + url
+
         if not (url.startswith('http://') or url.startswith('https://')):
             url = 'http://' + url
 
