@@ -43,18 +43,20 @@ from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.script.spankwire import SpankwireSite
 from model.site.picture.tgp_sites.fuskator import FuskatorSite
 from model.site.video.script.thumbzilla import ThumbzillaSite
+from model.site.video.simple.sextube_nl import SextubeNlSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
-        self._site_models=[ThumbzillaSite,
+        self._site_models=[
 
                            Space('Classic:'),
                            YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
-                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,
-                           PornbrazeSite,XvideoSite,ToseepornSite,
+                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
+                           PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
                            PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
