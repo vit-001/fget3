@@ -119,7 +119,7 @@ class BaseSite(SiteInterface, ParseResult):
         # print(filedata.url, 'loaded')
         self.start_time = time()
 
-        soup=BeautifulSoup(filedata.text, 'lxml')
+        soup=BeautifulSoup(filedata.text, 'html.parser')
         self.parse_soup(soup, filedata.url)
 
         if self.is_no_result and not self.waiting_data:

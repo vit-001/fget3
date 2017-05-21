@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes
+from common.util import _iter, quotes, psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -42,7 +42,7 @@ class RedtubeSite(BaseSiteParser):
         return 'RT'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        thumbnail_containers = soup.find_all('ul', {'class': ['video-listing']})
+        thumbnail_containers = soup.find_all('ul', {'class': ['thumb-list','video-listing']})
         channel_containers = soup.find_all('ul', {'class': ['channels-list']})
         stars_containers = soup.find_all('ul', {'class': ['pornStarsThumbs']})
 
@@ -50,20 +50,24 @@ class RedtubeSite(BaseSiteParser):
             # parce thumbnail page
             for thumbnail_container in thumbnail_containers:
                 for thumbnail in _iter(thumbnail_container.find_all('li')):
-                    href = URL(thumbnail.a.attrs['href'], base_url=url)
-                    thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
-                    label = thumbnail.img.attrs.get('alt', '')
+                    try:
+                        # psp(thumbnail.prettify())
+                        href = URL(thumbnail.a.attrs['href'], base_url=url)
+                        thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
+                        label = thumbnail.img.attrs.get('alt', '')
 
-                    duration = thumbnail.find('span', {'class': 'video-duration'})
-                    dur_time = '' if duration is None else str(duration.string).strip()
+                        duration = thumbnail.find('span', {'class': ['widget-video-duration','video-duration']})
+                        dur_time = '' if duration is None else str(duration.string).strip()
 
-                    hd_span = thumbnail.find('span', {'class': 'hd-video'})
-                    hd = '' if hd_span is None else '  HD'
+                        hd_span = thumbnail.find('span', {'class': ['hd-video-icon','hd-video']})
+                        hd = '' if hd_span is None else '  HD'
 
-                    self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                                   labels=[{'text': dur_time, 'align': 'top right'},
-                                           {'text': label, 'align': 'bottom center'},
-                                           {'text': hd, 'align': 'top left'}])
+                        self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                                       labels=[{'text': dur_time, 'align': 'top right'},
+                                               {'text': label, 'align': 'bottom center'},
+                                               {'text': hd, 'align': 'top left'}])
+                    except KeyError:
+                        pass
 
         elif channel_containers is not None and len(channel_containers) > 0:
             # parce channels page
@@ -131,6 +135,17 @@ class RedtubeSite(BaseSiteParser):
                 num = '' if page.string is None else str(page.string)
                 if num.isdigit():
                     self.add_page(num, URL(page.attrs['href'], base_url=url))
+            return
+
+        pagination_v2=soup.find('ul',{'id':'w_pagination_list'})
+        if pagination_v2:
+            # psp(pagination_v2.prettify())
+            for page in _iter(pagination_v2.find_all('a')):
+                psp(page)
+                num = page.span.string
+                if num.isdigit():
+                    self.add_page(num, URL(page.attrs['href'], base_url=url))
+
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'watch'})
@@ -166,14 +181,15 @@ class RedtubeSite(BaseSiteParser):
                 self.add_tag(username, URL(href, base_url=url), style={'color':'blue'})
         # stars in video adding
         stars_container = video_detail.find('ul', {'class': 'pornstars-in-video'})
-        stars = _iter(stars_container.find_all('li', {'class': None}, recursive=False))
-        for star in stars:
-            href = star.find('a')
-            if href:
-                info = list(star.find('span', {'class': 'pornstar-info'}).stripped_strings)
-                name = info[0] + ' ' + info[1]
-                url = URL(href.attrs['href'], base_url=url)
-                self.add_tag(name, url, style={'color':'magenta'})
+        if stars_container:
+            stars = _iter(stars_container.find_all('li', {'class': None}, recursive=False))
+            for star in stars:
+                href = star.find('a')
+                if href:
+                    info = list(star.find('span', {'class': 'pornstar-info'}).stripped_strings)
+                    name = info[0] + ' ' + info[1]
+                    url = URL(href.attrs['href'], base_url=url)
+                    self.add_tag(name, url, style={'color':'magenta'})
         # other tags
         for links_container in _iter(video_detail.find_all('td', {'class': 'links'})):
             for href in _iter(links_container.find_all('a', {'href': lambda x: 'javascript' not in x})):
