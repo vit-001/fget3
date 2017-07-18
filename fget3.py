@@ -33,6 +33,16 @@ if __name__ == '__main__':
             Setting.full_window_h_in_percents = 45
             Setting.full_window_w_gap_in_percents = 2
 
+
+
+    print('Todo:')
+    print('http://plusone8.com/?filter=date', 'verifyed, simple')
+    print('')
+    print('Thats all')
+    print("Let's go..")
+    print('')
+
+
     app = QApplication(sys.argv)
 
     view=ViewManager()

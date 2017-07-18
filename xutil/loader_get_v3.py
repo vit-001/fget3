@@ -79,8 +79,8 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'http://www.sextube.nl/videos/nieuw'
-    url1a = 'http://www.sextube.nl/video/6044/18-jarige-meid-krijgt-een-militair-triootje-in-het-bos'
-    url2 = 'https://tv.fakings.com/herramientas/repro_universal/index.php?src=tv&file=1-394-indiana-fox-hd&logo=tv_fakings_logo&logo_position=bottom-right&af=GC1984ppt&ref=indextv'
+    url1a = 'http://plusone8.com/2017/07/15/72-exclusive-horny-milfs-love-big-cock/'
+    url2 = 'http://media.plusone8.com/videos/2bydate/28052017/72-Exclusive-Horny MILFs Love Big Cock-Plusone8.com.mp4'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
     fname1 = 'out/1.html'
@@ -95,13 +95,13 @@ if __name__ == "__main__":
 
     # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
 
-    headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
+    # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
 
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a)
-    # r = load(url2, fname2)#, proxies=proxies)
+    # r = load(url1a, fname1a)
+    r = load(url2, fname2)#, proxies=proxies)
 
     # r=get_response(url3, fname2)
 
