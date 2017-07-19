@@ -10,11 +10,12 @@ from model.favorites.favorites import Favorites
 from model.history_model.hystory import HistoryModel
 from model.loader.multiprocess_az_loader import MultiprocessAZloader
 from model.site.other.space import Space
+from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
+from model.site.picture.tgp_sites.fuskator import FuskatorSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
-from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
@@ -27,10 +28,13 @@ from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
 from model.site.video.script.pornhd import PornhdSite
 from model.site.video.script.pornoxo import PornoxoSite
+from model.site.video.script.pornsland import PornslandSite
 from model.site.video.script.porntrex import PorntrexSite
 from model.site.video.script.realgf import RealGfSite
 from model.site.video.script.redtube import RedtubeSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
+from model.site.video.script.spankwire import SpankwireSite
+from model.site.video.script.thumbzilla import ThumbzillaSite
 from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
 from model.site.video.script.vporn import VpornSite
@@ -38,14 +42,11 @@ from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
-from model.site.video.simple.pornbozz import PornbozzSite
-from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.script.spankwire import SpankwireSite
-from model.site.picture.tgp_sites.fuskator import FuskatorSite
-from model.site.video.script.thumbzilla import ThumbzillaSite
-from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.plusone8 import PlusoneSite
-from model.site.video.script.pornsland import PornslandSite
+from model.site.video.simple.pornbozz import PornbozzSite
+from model.site.video.simple.sextube_nl import SextubeNlSite
+from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.xhr.extremetube import ExtremetubeSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -55,11 +56,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
-                           PornslandSite,
+                           ExtremetubeSite,
 
 
                            Space('Classic:'),
-                           YourpornSite, PlusoneSite, PorntrexSite,SexixSite,RedtubeSite,
+                           YourpornSite, PlusoneSite, PornslandSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
                            PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,

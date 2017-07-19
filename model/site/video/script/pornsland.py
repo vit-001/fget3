@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes, psp
+from common.util import _iter, quotes, psp, collect_string
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -18,13 +18,14 @@ class PornslandSite(BaseSiteParser):
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
-        menu_items=dict(Best_Recent=URL('http://www.pornoxo.com/'),
-                    Most_popular=URL('http://www.pornoxo.com/most-viewed/page1.html?s*'),
-                    Latest=URL('http://www.pornoxo.com/newest/page1.html?s*'),
-                    Top_Rated=URL('http://www.pornoxo.com/top-rated/page1.html?s*'),
-                    Longest=URL('http://www.pornoxo.com/longest/page1.html?s*'))
+        menu_items=dict(Channels=URL('http://pornsland.com/video-channels*'),
+                    Pornstars=URL('http://pornsland.com/pornstars*'),
+                    Latest=URL('http://pornsland.com/recent-porns*'),
+                    MostLiked=URL('http://pornsland.com/most-liked-porns*'),
+                    MostViewed=URL('http://pornsland.com/most-viewed-porns*'),
+                    Categories=URL('http://pornsland.com/video-categories*'))
 
-        view.add_start_button(picture_filename='model/site/resource/pornoxo.png',
+        view.add_start_button(picture_filename='model/site/resource/pornsland.png',
                               menu_items=menu_items,
                               url=URL("http://pornsland.com/recent-porns*", test_string='Porns'))
 
@@ -32,22 +33,24 @@ class PornslandSite(BaseSiteParser):
         return 'PL'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumbnail in _iter(soup.find_all('div', {'class': 'video'})):
+        for thumbnail in _iter(soup.find_all('div', {'class': ['video','category','pornstar','serie']})):
             # psp(thumbnail.prettify())
-            href = URL(thumbnail.a.attrs['href'], base_url=url)
-            thumb_url = URL(thumbnail.img.attrs['data-original'], base_url=url)
-            label=thumbnail.img.attrs.get('alt','')
+            xref=thumbnail.find('a')
+            if xref:
+                href = URL(xref.attrs['href'], base_url=url)
+                thumb_url = URL(thumbnail.img.attrs['data-original'], base_url=url)
+                label=thumbnail.img.attrs.get('alt','')
 
-            duration = thumbnail.find('span', {'class': 'fs11 viddata flr'})
-            dur_time = '' if duration is None else str(duration.contents[-1])
+                duration = thumbnail.find('span', {'class': 'duration'})
+                dur_time = '' if duration is None else collect_string(duration)
 
-            hd_span = thumbnail.find('span', {'class': 'text-active bold'})
-            hd = '' if hd_span is None else str(hd_span.string)
+                hd_span = thumbnail.find('span', {'class': 'hd'})
+                hd = '' if hd_span is None else str(hd_span.string).strip()
 
-            self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                           labels=[{'text':dur_time, 'align':'top right'},
-                                   {'text':label, 'align':'bottom center'},
-                                   {'text': hd, 'align': 'top left'}])
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                               labels=[{'text':dur_time, 'align':'top right'},
+                                       {'text':label, 'align':'bottom center'},
+                                       {'text': hd, 'align': 'top left'}])
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'class': 'left-menu-box-wrapper'})
@@ -55,37 +58,34 @@ class PornslandSite(BaseSiteParser):
             for tag in _iter(tags_container.find_all('a',{'href':lambda x: '/videos/' in x})):
                 self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 
-    def parse_pagination(self, soup: BeautifulSoup, url: URL):
-        pagination = soup.find('div', {'class': 'pagination'})
-        if pagination is not None:
-            for page in _iter(pagination.find_all('a',{'class': None})):
-                if page.string.isdigit():
-                    self.add_page(page.string, URL(page.attrs['href'], base_url=url))
+    def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
+        return soup.find('div', {'class': 'my-pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'player'})
         if video is not None:
-            psp(video.prettify())
+            # psp(video.prettify())
             script=video.find('script', text=lambda x: 'playerInstance.setup(' in str(x))
             if script is not None:
                 data = str(script.string).replace(' ', '')#.replace('\t', '').replace('\n', '')
-                psp(data)
+                # psp(data)
                 mp4=quotes(data,"file:'","'")
                 self.add_video('DEFAULT', URL(mp4, base_url=url))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        # adding "user" to video
-        user = soup.find('div', {'class': 'user-card'})
-        if user is not None:
-            href = user.find('a').attrs['href']
-            username = user.find('span', {'class': 'name'}).string
-            self.add_tag(username, URL(href, base_url=url), style=dict(color='blue'))
+        container=soup.find('div',{'class':'extra-detail'})
+        # psp(container.prettify())
 
-        # adding tags to video
-        for item in _iter(soup.find_all('div', {'class': 'content-tags'})):
-            for href in _iter(item.find_all('a')):
-                if href.string is not None:
-                    self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+        for values in _iter(container.find_all('div',{'class':'values'})):
+            for xref in _iter(values.find_all('a')):
+                # psp(xref)
+                href=URL(xref.attrs['href'],base_url=url)
+                if href.contain('/pornstar/'):
+                    style = dict(color='red')
+                else:
+                    style = None
+
+                self.add_tag(str(xref.string),href, style=style)
 
 if __name__ == "__main__":
     pass
