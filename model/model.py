@@ -44,6 +44,8 @@ from model.site.video.script.spankwire import SpankwireSite
 from model.site.picture.tgp_sites.fuskator import FuskatorSite
 from model.site.video.script.thumbzilla import ThumbzillaSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
+from model.site.video.simple.plusone8 import PlusoneSite
+from model.site.video.script.pornsland import PornslandSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -53,8 +55,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
+                           PornslandSite,
+
+
                            Space('Classic:'),
-                           YourpornSite, PorntrexSite,SexixSite,RedtubeSite,
+                           YourpornSite, PlusoneSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
                            PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,
