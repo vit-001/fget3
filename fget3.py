@@ -36,7 +36,8 @@ if __name__ == '__main__':
 
 
     print('Todo:')
-    # print('http://plusone8.com/?filter=date', 'verifyed, simple')
+    print('http://www.xnxx.com/', 'verifyed, script')
+    print('http://pervertslut.com/', 'verifyed, script')
     print('')
     print('Thats all')
     print("Let's go..")

@@ -79,7 +79,7 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'http://www.extremetube.com/videos'
-    url1a = 'http://www.extremetube.com/video/animal-instinct-is-calling-2968571'
+    url1a = 'http://pervertslut.com/videos/134315/insane-anal-insertion-with-a-gigantic-red-sex-toy/?pqr=7:ca02e299655209f5097abfd1528e3e5b:0:134315:1'
     url2 = 'http://im.d9429f9e.d3262fb.public.a4cdn.extremetube.phncdn.com/media/201305/08/2968571/480p_600k_2968571.mp4?s=1500457100&e=1500464300&ri=1953&rs=1000&h=d5379b29a17d424b12fee77c4abe1e5a'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
@@ -97,10 +97,10 @@ if __name__ == "__main__":
 
     # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
 
-    r=load(url1,fname1)#, proxies=proxies)
+    # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
     # r = load(url1a, fname1a, proxies=proxies)
-    # r = load(url1a, fname1a)
+    r = load(url1a, fname1a)
     # r = load(url2, fname2)#, proxies=proxies)
 
     # r=get_response(url3, fname2)

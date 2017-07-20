@@ -20,11 +20,11 @@ class ExtremetubeSite(BaseSiteParser):
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
-        menu_items=dict(Best_Recent=URL('http://www.pornoxo.com/'),
-                    Most_popular=URL('http://www.pornoxo.com/most-viewed/page1.html?s*'),
-                    Latest=URL('http://www.pornoxo.com/newest/page1.html?s*'),
-                    Top_Rated=URL('http://www.pornoxo.com/top-rated/page1.html?s*'),
-                    Longest=URL('http://www.pornoxo.com/longest/page1.html?s*'))
+        menu_items=dict(Longest=URL('http://www.extremetube.com/videos?o=lg*'),
+                    Most_popular=URL('http://www.extremetube.com/videos?o=mv*'),
+                    Latest=URL('http://www.extremetube.com/videos*'),
+                    Top_Rated=URL('http://www.extremetube.com/videos?o=tr*'),
+                    Categories=URL('http://www.extremetube.com/video-categories*'))
 
         view.add_start_button(picture_filename='model/site/resource/extremetube.png',
                               menu_items=menu_items,
@@ -59,7 +59,7 @@ class ExtremetubeSite(BaseSiteParser):
                                                {'text':label, 'align':'bottom center'},
                                                {'text': hd, 'align': 'top left'}])
         else:
-            psp(url.any_data)
+            # psp(url.any_data)
             self.waiting_data=True
             self._result_type = 'thumbs'
 
@@ -71,63 +71,65 @@ class ExtremetubeSite(BaseSiteParser):
 
 
     def parse_thumbs_json(self, fldata:FLData):
-        # psp(fldata.url.any_data)
-        # print('load')
-        # print(fldata.text)
         data=loads(fldata.text)
-        # print(dumps(data,sort_keys=True, indent=4))
-        # for item in data['1']:
-        #     print(item)
+        if type(data)==dict:
+            page=data['1']
+        elif type(data)==list:
+            page=data[0]
+        else:
+            page=None
 
-        items=data['1']['items']
+        try:
+            items=page['items']
+            for item in items:
+                href=URL(item['video_link'],base_url=fldata.url)
+                label=item['title_long']
+                dur_time=item['duration']
+                thumb_url=URL(item['thumb_url'],base_url=fldata.url)
 
-        for item in items:
-            # psp(dumps(item, sort_keys=True, indent=4))
-            # print(dumps(items, sort_keys=True, indent=4))
-            href=URL(item['video_link'],base_url=fldata.url)
-            label=item['title_long']
-            dur_time=item['duration']
-            thumb_url=URL(item['thumb_url'],base_url=fldata.url)
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                               labels=[{'text': dur_time, 'align': 'top right'},
+                                       {'text': label, 'align': 'bottom center'}])
 
-            # psp(label, dur_time, href, thumb_url)
+            # create pagination
+            navigation=page['navigation']
+            last_page=navigation['lastPage']
+            current=navigation['currentPage']
+            pattern=navigation['urlPattern'].replace('[%pageId%]','{0}')
 
-            self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                           labels=[{'text': dur_time, 'align': 'top right'},
-                                   {'text': label, 'align': 'bottom center'}])
+            for page_no in range(current-5,current+5):
 
-        # create pagination
-        navigation=data['1']['navigation']
-        print('Nav=', navigation)
-        last_page=navigation['lastPage']
-        current=navigation['currentPage']
-        pattern=navigation['urlPattern'].replace('[%pageId%]','{0}')
-        # psp(current,last_page,pattern)
+                if page_no==current: continue
+                if page_no<3: continue
+                if page_no>last_page: continue
 
-        for page_no in range(current-5,current+5): #todo сделать перебор страниц
+                page_url=URL(fldata.url.any_data['first_page_url'].get())
+                page_url.any_data=dict(json_file_url=URL(pattern.format(page_no),base_url=fldata.url))
 
-            if page_no==current: continue
-            if page_no<3: continue
-            if page_no>last_page: continue
+                self.add_page(str(page_no), page_url)
 
-            page_url=URL(fldata.url.any_data['first_page_url'].get())
-            page_url.any_data=dict(json_file_url=URL(pattern.format(page_no),base_url=fldata.url))
+            # add last page
+            page_url = URL(fldata.url.any_data['first_page_url'].get())
+            page_url.any_data = dict(json_file_url=URL(pattern.format(last_page), base_url=fldata.url))
 
-            self.add_page(str(page_no), page_url)
+            self.add_page(str(last_page), page_url)
 
-        page_url = URL(fldata.url.any_data['first_page_url'].get())
-        page_url.any_data = dict(json_file_url=URL(pattern.format(last_page), base_url=fldata.url))
-
-        self.add_page(str(last_page), page_url)
+        except TypeError as err:
+            print(dumps(data, sort_keys=True, indent=4))
+            print('Error:', err)
 
         self.waiting_data=False
         self.generate_thumb_view()
 
+    def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+        if url.any_data:
+            label=self.get_thumb_label(url.any_data['json_file_url'])
+            spl=label.partition('?')
+            short= spl[0]+' p'+spl[2].partition('page=')[2]
+            return self.get_shrink_name().strip() + ' ' + short
+        else:
 
-    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        tags_container = soup.find('div', {'class': 'left-menu-box-wrapper'})
-        if tags_container is not None:
-            for tag in _iter(tags_container.find_all('a',{'href':lambda x: '/videos/' in x})):
-                self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
+            return self.get_shrink_name().strip() + ' ' + self.get_thumb_label(url)
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         first_page=URL(url.get())
@@ -135,15 +137,30 @@ class ExtremetubeSite(BaseSiteParser):
 
         next_link=soup.find('link', {'rel':'next'})
         if next_link:
-            psp(next_link.attrs['href'])
-            json_file_href=next_link.attrs['href'].replace('?page=','?format=json&number_pages=1&page=')
+            json_file_href=next_link.attrs['href'].replace('page=','format=json&number_pages=1&page=')
             json_file_url=URL(json_file_href,base_url=url)
             page=json_file_href.rpartition('page=')[2]
-            psp(page)
 
             old_url=copy(url)
             old_url.any_data=dict(json_file_url=json_file_url)
             self.add_page(page, old_url)
+
+    def parse_others(self, soup: BeautifulSoup, url: URL):
+        container=soup.find('div',{'class':'categories-list-thumb'})
+        if container:
+            for xref in _iter(container.find_all('a', href=lambda x: '/category/' in str(x))):
+                href = URL(xref.attrs['href'], base_url=url)
+                thumb_url = URL(xref.img.attrs['src'], base_url=url)
+                label = xref.img.attrs.get('alt', '')
+
+                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                               labels=[{'text': label, 'align': 'bottom center'}])
+
+    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+        tags_container = soup.find('select', {'class': 'js_categoriesSelector'})
+        if tags_container is not None:
+            for tag in _iter(tags_container.find_all('option', value=lambda x: '/category/' in str(x))):
+                self.add_tag(str(tag.string).strip(), URL(tag.attrs['value'], base_url=url))
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'video-container'})

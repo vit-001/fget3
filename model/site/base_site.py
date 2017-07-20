@@ -99,7 +99,10 @@ class BaseSite(SiteInterface, ParseResult):
         return 1
 
     def goto_url(self, url: URL, **options):
-        self.log('Goto url:', url)
+        if url.any_data:
+            self.log('Goto url:', url,'/',url.any_data)
+        else:
+            self.log('Goto url:', url)
 
         self.url=url
         self.start_options=options

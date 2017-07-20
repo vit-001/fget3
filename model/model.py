@@ -47,6 +47,7 @@ from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
+from model.site.video.script.pervertslut import PervertslutSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -56,7 +57,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
-                           ExtremetubeSite,
+                            PervertslutSite,
 
 
                            Space('Classic:'),
@@ -69,7 +70,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            Space('Amateur:'),
                            MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
 
-                           Space('Deviant:'),ShockingmoviesSite,DeviantclipSite,
+                           Space('Deviant:'),
+                           ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,
 
                            # Space('Short:'),
 
