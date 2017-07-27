@@ -55,7 +55,7 @@ class VeroniccaComSite(BaseSiteParser):
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags = soup.find('ul', {'class': 'drop2 hidden-xs'})
-        if tags is not None:
+        if tags:
             for tag in tags.find_all('a'):
                 self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 

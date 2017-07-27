@@ -37,7 +37,6 @@ from model.site.video.script.spankwire import SpankwireSite
 from model.site.video.script.thumbzilla import ThumbzillaSite
 from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
-from model.site.video.script.vporn import VpornSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
@@ -47,6 +46,7 @@ from model.site.video.simple.plusone8 import PlusoneSite
 from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.veronicca import VeroniccaComSite
+from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 
@@ -66,7 +66,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            YourpornSite, PlusoneSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
-                           PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,
+                           PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
                            Space('Amateur:'),
@@ -81,7 +81,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                            BabesandbitchesSite,FuskatorSite,
                            Space('Non working:'),
-                           HeavyRSite,PornslandSite,
+                           HeavyRSite,PornslandSite,V24videoSite,
 
                            # Space('Info:'),
 

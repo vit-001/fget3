@@ -40,6 +40,7 @@ class XvideoSite(BaseSiteParser):
             suffix='/videos/pornstar/0'
 
         for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-block'})):
+            # psp(thumbnail.prettify())
             href=thumbnail.find('a',
                                 title=True,
                                 href=lambda x: str(x).startswith('/video') or str(x).startswith('/prof-video-click/'))
@@ -86,10 +87,18 @@ class XvideoSite(BaseSiteParser):
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'class': 'main-categories'})
         if tags_container is not None:
-            for tag in _iter(tags_container.find_all('a')):
+            for tag in _iter(tags_container.find_all('a',href=True)):
                 xref=tag.attrs['href']
                 if xref != '/tags':
                     self.add_tag(collect_string(tag), URL(xref, base_url=url))
+            script=tags_container.find('script', text=lambda x: 'url' in str(x))
+            if script:
+                temp=quotes(script.text.replace('\\',''),'cats.write([{','}]').split('},{')
+                for item in temp:
+                    href=quotes(item,'"url":"','"')
+                    label=quotes(item,'"label":"','"')
+                    if href and label:
+                        self.add_tag(label,URL(href,base_url=url))
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         container = self.get_pagination_container(soup)

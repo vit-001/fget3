@@ -79,7 +79,7 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'http://www.extremetube.com/videos'
-    url1a = 'http://pornsland.com/video/extra-services-my-babysitters-club-team-skeet'
+    url1a = 'https://www.vporn.com/female/hot-debbie-white-has-sex-in-the-gym/1914922/?t=1'
     url2 = 'http://porn96.xyz/?u=zHufneT3hJUlVfhUr/XrRzrZYuGrNnVWZRfO5FY5Jp5lDwiL3dION8mxURUbg/FCTXtXFzA640sVf6jZLopwaA=='
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 

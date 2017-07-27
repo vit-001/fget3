@@ -2,7 +2,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes
+from common.util import _iter, quotes,psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -54,6 +54,7 @@ class V24videoSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         content = soup.find('div', {'class': 'player'})
         if content is not None:
+            psp(content.prettify())
             script =content.find('script', text=lambda x: 'flashvars' in str(x))
             if script is not None:
                 data = str(script.string).replace(' ', '').replace('\n', '').replace('\t', '')
@@ -73,7 +74,7 @@ class V24videoSite(BaseSiteParser):
                 print("=======================didn't work?")
 
                 for key in sorted(files.keys(), reverse=True):
-                    self.add_video(key, URL(files[key]))
+                    self.add_video(key, URL(files[key],referer=url))
 
     # def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
     #     return url.get().strip('/').rpartition('/')[2]

@@ -33,7 +33,8 @@ class VpornSite(BaseSiteParser):
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         contents=soup.find('div', {'class','thumblist'})
         if contents:
-            for thumbnail in _iter(contents.find_all('div', {'class': 'bx'})):
+            # psp(contents.prettify())
+            for thumbnail in _iter(contents.find_all('div', {'class': 'video'})):
                 # psp(thumbnail.prettify())
                 xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
@@ -52,40 +53,36 @@ class VpornSite(BaseSiteParser):
                                        {'text':label, 'align':'bottom center'},
                                        {'text': hd, 'align': 'top left'}])
 
+    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+        container=soup.find('div',{'class':'categories-list'})
+        if container:
+            # psp(container.prettify())
+            for tag in container.find_all('a'):
+                self.add_tag(tag.attrs['title'], URL(tag.attrs['href'], base_url=url))
+
+
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pagerwrap'})
+        return soup.find('div',{'class':'pages'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'class': 'video_panel'})
+        video = soup.find('video', {'class': 'video-js'})
         if video is not None:
-            script=video.find('script', text=lambda x: 'var flashvars' in str(x))
-            if script is not None:
-                script=str(script.string).partition('flashvars.')[2]
-                while script:
-                    parts=script.partition(';')
-                    pair=parts[0].partition('=')
-                    script=script.partition('flashvars.')[2]
-
-                    if pair[0].startswith('videoUrl'):
-                        label=pair[0].partition('videoUrl')[2]
-                        href=pair[2].strip('" ')
-
-                        if href.startswith('http://') or href.startswith('https://'):
-                            self.add_video(label, URL(href))
-                self.set_default_video(-1)
+            for source in _iter(video.find_all('source')):
+                if 'http' in source.attrs.get('src',''):
+                    self.add_video(source.attrs['label'], URL(source.attrs['src']))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        details=soup.find('div',{'class':'video-details'})
-        if details:
-            for xref in _iter(details.find_all('a',  {'class':['cwrap','tags']}, href=True)):
-                # psp(xref)
-                href=str(xref.attrs['href'])
-                color = None
+        info=soup.find('div',{'class':'video-info'})
+        if info:
+            # psp(info.prettify())
+            for xref in _iter(info.find_all('a',href=lambda x: not 'javascript' in str(x))):
+                psp(xref)
+                href=xref.attrs['href']
                 if '/user/' in href:
-                    href=href.replace('/user/','/submitted/')
-                    color = 'blue'
+                    self.add_tag(quotes(href,'/user/','/'),URL(href.replace('/user/','/submitted/'),base_url=url), style={'color':'blue'})
+                else:
+                    self.add_tag(collect_string(xref), URL(href, base_url=url))
 
-                self.add_tag(xref.string, URL(href,base_url=url), style=dict(color=color))
 
 if __name__ == "__main__":
     pass
