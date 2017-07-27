@@ -42,12 +42,13 @@ from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xvideo import XvideoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
+from model.site.video.simple.heavy_r import HeavyRSite
 from model.site.video.simple.plusone8 import PlusoneSite
 from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
-from model.site.video.script.pervertslut import PervertslutSite
+from model.site.video.xhr.pervertslut import PervertslutSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -57,11 +58,12 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
-                            PervertslutSite,
+
+
 
 
                            Space('Classic:'),
-                           YourpornSite, PlusoneSite, PornslandSite, PorntrexSite,SexixSite,RedtubeSite,
+                           YourpornSite, PlusoneSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
                            PornoxoSite,  V24videoSite,VpornSite,DonfreepornSite,SpankwireSite,
@@ -71,14 +73,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
 
                            Space('Deviant:'),
-                           ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,
+                           ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,PervertslutSite,
 
                            # Space('Short:'),
 
                            Space('Photo:'),
                            BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                            BabesandbitchesSite,FuskatorSite,
-                           # Space('Non working:'),
+                           Space('Non working:'),
+                           HeavyRSite,PornslandSite,
 
                            # Space('Info:'),
 

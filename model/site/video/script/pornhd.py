@@ -119,11 +119,13 @@ class PornhdSite(BaseSiteParser):
         if container:
             script = str(container.find('script', text=lambda x: 'players.push(' in str(x)).string)
             if script:
-                sources=quotes(script.replace(' ',''), "'sources':{", '}' ).split(',')
+                # psp(script.replace(' ',''))
+                sources=quotes(script.replace(' ','').replace('\\',''), "sources:{", '}' ).split(',')
                 for source in sources:
+                    # psp(source)
                     split=source.partition(':')
-                    label=split[0].strip("'")
-                    file=split[2].strip("' ")
+                    label=split[0].strip("'\"")
+                    file=split[2].strip("'\" ")
                     if file:
                         self.add_video(label, URL(file, base_url=url))
                 self.set_default_video(-1)

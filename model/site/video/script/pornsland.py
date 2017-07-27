@@ -64,7 +64,7 @@ class PornslandSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'player'})
         if video is not None:
-            # psp(video.prettify())
+            psp(video.prettify())
             script=video.find('script', text=lambda x: 'playerInstance.setup(' in str(x))
             if script is not None:
                 data = str(script.string).replace(' ', '')#.replace('\t', '').replace('\n', '')

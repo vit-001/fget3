@@ -1,5 +1,6 @@
 __author__ = 'Vit'
 from bs4 import BeautifulSoup
+from urllib.parse import unquote
 
 from data_format.url import URL
 from data_format.fl_data import FLData
@@ -56,7 +57,8 @@ class SexixSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video_container=soup.find('div',{'class':'videoContainer'})
         if video_container:
-            source_file=URL(video_container.iframe.attrs['src'], base_url=url)
+            # psp(video_container)
+            source_file=URL(video_container.iframe.attrs['src'], base_url=url,referer=url)
             filedata=FLData(source_file,'')
 
             self._result_type = 'video'
@@ -68,11 +70,13 @@ class SexixSite(BaseSiteParser):
         self.model.loader.start_load_file(filedata, self.continue_parse_video2)
 
     def continue_parse_video2(self, fldata:FLData):
-        playlist=BeautifulSoup(fldata.text, "html.parser")
-        for item in playlist.find_all('jwplayer:source'):
-            video_url=URL(item.attrs['file'])
-            label=item.attrs['label']
-            self.add_video(label,video_url)
+        playlist=BeautifulSoup(fldata.text.replace('jwplayer:source','jjj'), "html.parser")
+        for item in playlist.find_all('jjj'):
+            # psp(unquote(str(item)))
+            if item.attrs.get('file',''):
+                video_url=URL(unquote(str(item.attrs['file'])))
+                label=item.attrs['label']
+                self.add_video(label,video_url)
         self.generate_video_view()
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):

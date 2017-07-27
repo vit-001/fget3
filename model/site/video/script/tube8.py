@@ -11,7 +11,7 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class Tube8Site(BaseSiteParser):
+class Tube8Site(BaseSiteParser): #todo исправить TUBE8
     @staticmethod
     def can_accept_url(url: URL) -> bool:
         return url.contain('tube8.com/')
@@ -66,13 +66,14 @@ class Tube8Site(BaseSiteParser):
         if player_container:
             script=player_container.find('script', text=lambda x: 'flashvars' in str(x))
             flashvars=quotes(script.string.replace('\\', '').replace(' ',''),'flashvars={','};')
+            print(flashvars)
             while '"quality_' in flashvars:
                 nxt = flashvars.partition('"quality_')[2]
 
                 t = nxt.partition('":"')
                 label = t[0]
                 file = t[2].partition('",')[0]
-                if file.startswith('http://'):
+                if file.startswith('http://') or file.startswith('https://'):
                     self.add_video(label,URL(file+'*'))
                 flashvars = nxt
             self.set_default_video(-1)

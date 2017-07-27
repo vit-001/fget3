@@ -75,8 +75,15 @@ class VideoPlayerWidget(QWidget):
     def set_url(self, url:URL):
         self.url=url
         request = QNetworkRequest(QUrl(url.get()))
+        request.setHeader(QNetworkRequest.UserAgentHeader,url.user_agent)
+        if url.referer:
+            request.setRawHeader('Referer',url.referer.get())
 
         # todo: сделать добавление cookie и подготовку proxу
+
+        # print(request.rawHeaderList())
+        # print(request.rawHeader('User-Agent'))
+        # print(request.rawHeader('Referer'))
 
         self.media_player.setMedia(QMediaContent(request))
 
@@ -138,6 +145,7 @@ class VideoPlayerWidget(QWidget):
         self.on_error=on_error
 
     def handleError(self):
+        # print(self.media_player.error())
         print("Error in " + self.url.get() + ': ' + self.media_player.errorString())
         self.on_error("Error in " + self.url.link() + ': ' + self.media_player.errorString())
         # self.error_handler('Player error: ' + self.media_player.errorString())

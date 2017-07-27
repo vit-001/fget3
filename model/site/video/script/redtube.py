@@ -141,26 +141,29 @@ class RedtubeSite(BaseSiteParser):
         if pagination_v2:
             # psp(pagination_v2.prettify())
             for page in _iter(pagination_v2.find_all('a')):
-                psp(page)
+                # psp(page)
                 num = page.span.string
                 if num.isdigit():
                     self.add_page(num, URL(page.attrs['href'], base_url=url))
 
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
+        psp(soup)
         video = soup.find('div', {'class': 'watch'})
         if video:
             script = video.find('script', text=lambda x: 'redtube_flv_player' in str(x))
             if script:
                 data = str(script.string).replace(' ', '').replace('\\', '')
-                sources = quotes(data, 'sources:{', '}').split(',')
+                psp(data)
+                sources = quotes(data, 'mediaDefinition:[', ']').split('},{')
                 for item in sources:
-                    file = quotes(item, '":"', '"')
-                    label = quotes(item, '"', '"')
-                    self.add_video(label, URL(file, base_url=url))
+                    file = quotes(item, 'videoUrl":"', '"')
+                    label = quotes(item, 'quality":"', '"')
+                    if file:
+                        self.add_video(label, URL(file, base_url=url))
 
-                self.sort_video()
-                self.set_default_video(-1)
+                        # self.sort_video()
+                        # self.set_default_video(-1)
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         title=soup.find('h1',{'class':'videoTitle'})
