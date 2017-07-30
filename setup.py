@@ -18,5 +18,5 @@ base = 'Win32GUI' if sys.platform=='win32' else None
 setup(name='p_browser',
       version = '0.3.1',
       description = '',
-      options = dict(build_exe = buildOptions),
-        )
+      options = dict(build_exe = buildOptions, requires=['beautifulsoup4'])
+      )

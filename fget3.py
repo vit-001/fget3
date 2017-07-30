@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 
     print('Todo:')
-    print('http://www.xnxx.com/', 'verifyed, script')
+    # print('http://www.xnxx.com/', 'verifyed, script')
     print('http://www.shameless.com/', 'verifyed, script')
     print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
     print('https://www.pornfreeze.com/','verifyed, simple')

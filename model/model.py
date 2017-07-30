@@ -49,6 +49,8 @@ from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
+from model.site.video.script.xnxx import XnxxSite
+from model.site.video.simple.tnaflix import TnaflixSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -58,15 +60,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
-
+                            TnaflixSite,
 
 
 
                            Space('Classic:'),
-                           YourpornSite, PlusoneSite, PorntrexSite,SexixSite,RedtubeSite,
+                           YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
-                           PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,
+                           PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
                            Space('Amateur:'),
