@@ -60,8 +60,6 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
-                            TnaflixSite,
-
 
 
                            Space('Classic:'),

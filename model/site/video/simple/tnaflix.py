@@ -42,7 +42,7 @@ class TnaflixSite(BaseSiteParser):
                 xref=thumbnail.find('a')
                 if xref:
                     href = URL(xref.attrs['href'], base_url=url)
-                    description = xref.img.attrs['alt']
+                    description = xref.img.attrs['alt'].strip()
                     thumb_addr=thumbnail.img.attrs.get('data-original',thumbnail.img.attrs['src'])
                     thumb_url = URL(thumb_addr, base_url=url)
 
