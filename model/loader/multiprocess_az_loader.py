@@ -5,16 +5,21 @@ import datetime
 import json
 import os
 import re
-from io import StringIO
+import requests
 from multiprocessing import Manager, Queue, Process, Lock
 
-import requests
-
-from common.url import URL
 from common.setting import Setting
-from model.loader.base_loader import BaseLoader, BaseLoadProcess, LoaderError, FLData, BaseLoadProcedure
+
+from data_format.fl_data import FLData
+from data_format.url import URL
+from data_format.loader_error import LoaderError
+
+from interface.loader_interface import LoadProcessInterface, LoaderInterface
+
+from model.loader.base_loader import BaseLoadProcedure
 from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
+
 
 class DataServer:
     def __init__(self):
@@ -39,12 +44,11 @@ class DataServer:
 
     def read_proxy_pac(self, pac_url):
         if self.last_load_proxy_pack:
-            print(datetime.datetime.now() - self.last_load_proxy_pack)
             if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(hours=2):
                 return
         try:
-            print('loading', pac_url)
-            pac = RequestLoad().open(pac_url).decode()
+            print('Loading', pac_url)
+            pac = RequestLoad().open(pac_url).decode(errors='ignore')
 
             r = re.search('\"PROXY (.*); DIRECT', pac)
             if r:
@@ -120,6 +124,9 @@ class AZloaderMP(BaseLoadProcedure):
         else:
             return self.trick_load.open(url,method)
 
+    def get_redirect_location(self, url: URL) -> URL:
+        return self.request_load.get_redirect_location(url)
+
     def get_load_method(self, url: URL) -> str:
         domain_cash = self.data.get('domain_cash', dict())
         domain = url.domain()
@@ -130,9 +137,11 @@ class AZloaderMP(BaseLoadProcedure):
         if url.test_string is None:
             return 'plain'
 
-        print('Testing domain:', domain, '... ')
+        if Setting.debug_loader:
+            print('Testing domain:', domain, '... ')
         method = self._inspect_availability(url)
-        print('            ...', method)
+        if Setting.debug_loader:
+            print('            ...', method)
 
         # self.lock.acquire()
         domain_cash = self.data.get('domain_cash', dict())
@@ -148,7 +157,7 @@ class AZloaderMP(BaseLoadProcedure):
     def _inspect_availability(self, url: URL) -> str:
         self.request_load.proxies = None
         try:
-            string = self.request_load.open(url).decode()
+            string = self.request_load.open(url).decode(errors='ignore')
 
             if url.test_string in string:
                 return 'plain'
@@ -157,7 +166,7 @@ class AZloaderMP(BaseLoadProcedure):
 
         try:
             self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
-            string = self.request_load.open(url).decode()
+            string = self.request_load.open(url).decode(errors='ignore')
 
             if url.test_string in string:
                 return 'proxy'
@@ -166,7 +175,7 @@ class AZloaderMP(BaseLoadProcedure):
 
         for method_name in self.trick_load.trick_headers:
             # print(method_name)
-            string = self.trick_load.open(url,trick=method_name).decode()
+            string = self.trick_load.open(url,trick=method_name).decode(errors='ignore')
             # print(string)
             if url.test_string in string:
                 return method_name
@@ -205,7 +214,7 @@ class LoadServer(Process):
         self.events.put(LoadProcessEvent('done'))
 
 
-class LoadProcess(BaseLoadProcess):
+class LoadProcess(LoadProcessInterface):
     def __init__(self, data_server: DataServer, lock: Lock):
         self.loader = None
         self.events_queue = Queue()
@@ -236,11 +245,7 @@ class LoadProcess(BaseLoadProcess):
             self.loader.terminate()
             self.update()
 
-
-class MultiprocessAZloader(BaseLoader):
-
-    # todo: переделать логику работы: сделать удаление процесса - готово - проверить
-
+class MultiprocessAZloader(LoaderInterface):
     def __init__(self):
         self.data = DataServer()
         self.lock = Lock()
@@ -248,7 +253,7 @@ class MultiprocessAZloader(BaseLoader):
         self.single_file_loader = None
 
     def get_new_load_process(self, on_load_handler=lambda filedata: None,
-                             on_end_handler=lambda: None) -> BaseLoadProcess:
+                             on_end_handler=lambda: None) -> LoadProcessInterface:
 
         new_process = LoadProcess(data_server=self.data,
                                   lock=self.lock)
@@ -258,10 +263,7 @@ class MultiprocessAZloader(BaseLoader):
         return new_process
 
     def on_end_of_process_handler(self, process:LoadProcess, handler=lambda:None):
-        # print('удаляем процесс загрузки')
-        # print(self.list_of_load_process)
         self.list_of_load_process.remove(process)
-        # print(self.list_of_load_process)
         handler()
 
     def on_update(self):
@@ -271,7 +273,6 @@ class MultiprocessAZloader(BaseLoader):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
-        # print('Start load:', filedata.url)
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 
@@ -286,14 +287,7 @@ class MultiprocessAZloader(BaseLoader):
 if __name__ == "__main__":
     import time
     l=MultiprocessAZloader()
-    # ds = DataServer()
     time.sleep(2)
-
-    # for item in ds.data['proxy_domains']:
-    #     print(item)
-
-    # time.sleep(1)
 
     l.on_exit()
 
-    # ds.stop()

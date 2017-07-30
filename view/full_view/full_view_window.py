@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QWidget, QSizePolicy
-from PyQt5.QtGui import QBrush,QColor,QPalette
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QIcon, QPixmap
 
-from common.url import URL
+from interface.view_interface import ViewFromModelInterface
+from interface.view_manager_interface import ViewManagerFromViewInterface
 
-from view.qt_ui.ui_full_view_window import Ui_FullViewWindow
-from view.widgets.thumb_widget import ThumbWidgetVS
-from view.widgets.button_line import ButtonLine,TextButton,ImageButton
-from view.widgets.video_player_widget import VideoPlayerWidget
 from view.full_view.full_view import FullView
-
-from controller.controller import ControllerFromViewInterface
-from view.view_manager_interface import ViewManagerFromViewInterface
-from view.view_interface import FullViewFromModelInterface
+from view.qt_ui.ui_full_view_window import Ui_FullViewWindow
 
 
 class FullViewWindow(QWidget):
@@ -26,6 +19,15 @@ class FullViewWindow(QWidget):
         self.ui.setupUi(self)
 
         self.create_widgets()
+
+        pixmap = QPixmap('view/resource/icons_my/icon.png')
+        icon = QIcon()
+        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+
+        self.setWindowTitle('P Browser - thumbnail view')
+        self.setWindowIcon(icon)
+
+
         # define variables
         self.full_views=list()
         self.global_muted=True
@@ -39,14 +41,20 @@ class FullViewWindow(QWidget):
         self.view_manager.add_keyboard_shortcut(self, 'Space', lambda: self.little_forvard(30))
         self.view_manager.add_keyboard_shortcut(self, 'Ctrl+Space', lambda: self.little_forvard(180))
 
+        self.set_visible()
+
     def create_widgets(self):
         pass
+
+    def set_visible(self):
+        self.setVisible(bool(self.full_views))
 
     def get_new_full_view(self) -> FullView:
         view = FullView(self.ui.tabWidget,self.view_manager)
         self.full_views.append(view)
         view.mute(self.global_muted)
         view.set_volume(self.global_volume)
+        self.set_visible()
         return view
 
     def get_current_full_view(self)->FullView:
@@ -66,13 +74,16 @@ class FullViewWindow(QWidget):
 
     def close_tab(self,index:int):
         view=self.full_views[index]
+        view.prepare_to_close()
         if index == self.ui.tabWidget.currentIndex(): #Close active tab
             self.global_muted=view.is_muted()
             self.global_volume=view.get_volume()
         view.destroy()
+
         self.full_views.pop(index)
         self.ui.tabWidget.removeTab(index)
         self.update()
+        self.set_visible()
 
     def change_tab(self,index:int):
         self.do_method_with_all_tab('pause')
@@ -82,7 +93,7 @@ class FullViewWindow(QWidget):
         self.global_muted = self.full_views[self.ui.tabWidget.currentIndex()].is_muted()
         self.global_volume= self.full_views[self.ui.tabWidget.currentIndex()].get_volume()
 
-    def is_tab_active(self,full_view: FullViewFromModelInterface):
+    def is_tab_active(self,full_view: ViewFromModelInterface):
         index=self.full_views.index(full_view)
         return index == self.ui.tabWidget.currentIndex()
 
@@ -95,6 +106,10 @@ class FullViewWindow(QWidget):
         self.do_method_with_current_tab('pause')
         self.showMinimized()
 
+    def on_exit(self):
+        for view in self.full_views:
+            view.destroy()
+
     def do_method_with_all_tab(self, method_name:str, *args, **options):
         for view in self.full_views:
             view.__getattribute__(method_name)(*args,**options)
@@ -104,6 +119,10 @@ class FullViewWindow(QWidget):
         if current_tab_index>=0 and len(self.full_views)>0:
             self.full_views[current_tab_index].__getattribute__(method_name)(*args,**options)
 
+    def resizeEvent(self, QResizeEvent):
+        super().resizeEvent(QResizeEvent)
+        for view in self.full_views:
+            view.resize_event()
 
 if __name__ == "__main__":
     pass

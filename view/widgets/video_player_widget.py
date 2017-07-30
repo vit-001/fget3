@@ -2,17 +2,20 @@
 __author__ = 'Vit'
 import os
 
-from PyQt5.QtCore import QUrl, QPoint, QRect, QSize, Qt, QEventLoop
-from PyQt5.QtNetwork import QNetworkRequest, QNetworkProxy
-from PyQt5.QtGui import QPixmap, QIcon, QPalette
-from PyQt5.QtWidgets import QWidget, QSizePolicy, QMenu, QAction
+from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtNetwork import QNetworkRequest
+from PyQt5.QtWidgets import QWidget, QMenu, QAction
 
-from common.url import URL
 from common.util import get_menu_handler
+from data_format.url import URL
 
 from view.qt_ui.ui_video_player_widget import Ui_VideoPlayerWidget
+
+class VideoWidget(QVideoWidget):
+    def mouseDoubleClickEvent(self, *args, **kwargs):
+        self.setFullScreen(not self.isFullScreen())
 
 
 class VideoPlayerWidget(QWidget):
@@ -28,11 +31,12 @@ class VideoPlayerWidget(QWidget):
         self.duration=0
         self.urls=list()
         self.default=-1
+        self.url=URL()
         self.saved_position=None
 
         self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
 
-        self.media_player_widget = QVideoWidget(self.ui.top_frame)
+        self.media_player_widget = VideoWidget(self.ui.top_frame)
         self.ui.top_frame_layout.addWidget(self.media_player_widget)
         self.media_player.setVideoOutput(self.media_player_widget)
         self.media_player_widget.show()
@@ -41,10 +45,13 @@ class VideoPlayerWidget(QWidget):
         self.media_player.positionChanged.connect(self.positionChanged)
         self.media_player.durationChanged.connect(self.durationChanged)
         self.media_player.mediaStatusChanged.connect(self.media_status_changed)
+        self.media_player.error.connect(self.handleError)
+
+        # self.ui.buffer.hide()
 
         self.ui.bn_play.clicked.connect(self.media_player.play)
         self.ui.bn_pause.clicked.connect(self.media_player.pause)
-        self.ui.bn_stop.clicked.connect(self.media_player.stop)
+        self.ui.bn_stop.clicked.connect(self.stop)
         self.ui.bn_mute.clicked.connect(self.media_player.setMuted)
         self.ui.progress.sliderMoved.connect(self.media_player.setPosition)
         self.ui.volume.valueChanged.connect(self.media_player.setVolume)
@@ -66,9 +73,17 @@ class VideoPlayerWidget(QWidget):
         self.media_player.play()
 
     def set_url(self, url:URL):
+        self.url=url
         request = QNetworkRequest(QUrl(url.get()))
+        request.setHeader(QNetworkRequest.UserAgentHeader,url.user_agent)
+        if url.referer:
+            request.setRawHeader('Referer',url.referer.get())
 
         # todo: сделать добавление cookie и подготовку proxу
+
+        # print(request.rawHeaderList())
+        # print(request.rawHeader('User-Agent'))
+        # print(request.rawHeader('Referer'))
 
         self.media_player.setMedia(QMediaContent(request))
 
@@ -83,9 +98,13 @@ class VideoPlayerWidget(QWidget):
     def positionChanged(self, position):
         def time_format(ms):
             dur = ms // 1000
-            minutes = dur // 60
-            secundes = dur - minutes * 60
-            return '%d:%02d' % (minutes, secundes)
+            hours=dur // 3600
+            minutes =  dur // 60 - hours*60
+            secundes = dur - minutes * 60- hours*3600
+            if hours==0:
+                return '%2d:%02d' % (minutes, secundes)
+            else:
+                return '%d:%02d:%02d' % (hours, minutes, secundes)
         self.ui.progress.setValue(position)
         self.ui.lb_time.setText(time_format(position) + ' / ' + time_format(self.duration))
 
@@ -101,6 +120,9 @@ class VideoPlayerWidget(QWidget):
 
     def play(self):
         self.media_player.play()
+
+    def stop(self):
+        self.media_player.stop()
 
     def pause(self):
         self.media_player.pause()
@@ -118,6 +140,15 @@ class VideoPlayerWidget(QWidget):
 
     def is_muted(self):
         return self.ui.bn_mute.isChecked()
+
+    def set_error_handler(self, on_error=lambda error_text:None):
+        self.on_error=on_error
+
+    def handleError(self):
+        # print(self.media_player.error())
+        print("Error in " + self.url.get() + ': ' + self.media_player.errorString())
+        self.on_error("Error in " + self.url.link() + ': ' + self.media_player.errorString())
+        # self.error_handler('Player error: ' + self.media_player.errorString())
 
     def destroy(self, bool_destroyWindow=True, bool_destroySubWindows=True):
         self.media_player.deleteLater()

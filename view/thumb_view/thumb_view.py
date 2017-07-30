@@ -1,57 +1,34 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Nikitin'
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QWidget
+from PyQt5.QtCore import Qt
 
-from common.url import URL
-from view.view_manager_interface import ViewManagerFromViewInterface
-from view.view_interface import ThumbViewFromModelInterface
+from data_format.url import URL
+from data_format.history_data import HistoryData
 
+from view.base_view import BaseView
 from view.widgets.thumb_widget import ThumbWidgetVS
-from view.widgets.button_line import ButtonLine, TextButton
-
-class ThumbView(ThumbViewFromModelInterface):
-    def __init__(self, parent:QtWidgets.QWidget, view_manager:ViewManagerFromViewInterface):
-
-        self.view_manager=view_manager
-        self.title=''
-        self.parent=parent
-
-        self.tab = QtWidgets.QWidget()
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.tab)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.parent.addTab(self.tab, self.title)
-
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.top_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.top_line)
-        self.top_line.hide()
 
 
-        self.thumbs=ThumbWidgetVS(self.tab)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.thumbs.sizePolicy().hasHeightForWidth())
-        self.thumbs.setSizePolicy(sizePolicy)
-        self.verticalLayout.addWidget(self.thumbs)
+class ThumbView(BaseView):
+    def get_main_content(self, parent:QWidget)->QWidget:
+        self.thumbs=ThumbWidgetVS(parent)
+        return self.thumbs
 
-        self.mid_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.mid_line)
-        self.mid_line.hide()
-
-        self.bottom_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.bottom_line)
-        self.bottom_line.hide()
-
-    def clear(self):
+    def prepare_content(self):
         self.thumbs.clear()
-        self.top_line.clear()
-        self.mid_line.clear()
-        self.bottom_line.clear()
+        if self.flags:
+            self.thumbs.context=self.flags.get('context', None)
+        self.progress.add_progress('thumbs',Qt.darkBlue)
+        self.progress.set_autohide_bar_name('thumbs')
+
+    def prepare_content_to_close(self):
+        self.thumbs.clear()
+
+    def set_url(self, url: URL):
+        super().set_url(url)
+        self.view_manager.on_thumb_tab_url_changed(self)
 
     def set_title(self, title: str, tooltip=''):
         index=self.parent.indexOf(self.tab)
@@ -59,29 +36,12 @@ class ThumbView(ThumbViewFromModelInterface):
         self.parent.setTabToolTip(index, tooltip)
 
     def add_thumb(self, picture_filename: str, href: URL, popup: str = '', labels=list):
-        # print('Thumb filename:', picture_filename, 'added')
-        # print('           url:', href)
-        # print('         popup:', popup)
-        # print('        labels:', labels)
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
+        self.progress.set_value('thumbs',self.thumbs.count)
 
-    def add_to_bottom_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.bottom_line.add_button(button)
-
-    def add_to_mid_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.mid_line.add_button(button)
-
-    def add_to_top_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.top_line.add_button(button)
+    def history_event(self):
+        history_data = HistoryData(self.url,self.thumbs.context)
+        self.history_handler(history_data)
 
 if __name__ == "__main__":
     pass

@@ -1,51 +1,48 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFrame, QSizePolicy
-from PyQt5.QtGui import QPalette
+from PyQt5.QtWidgets import QWidget, QLabel, QFrame, QHBoxLayout, QToolButton, QSizePolicy
+from PyQt5.QtGui import QPixmap, QPicture, QIcon
 from PyQt5.QtCore import Qt
 
-from common.url import URL
+from data_format.history_data import HistoryData
 
-from view.view_manager_interface import ViewManagerFromViewInterface
-from view.view_interface import FullViewFromModelInterface
-from view.widgets.button_line import ButtonLine, TextButton
+from view.full_view.base_full_view import BaseFullView
 from view.widgets.video_player_widget import VideoPlayerWidget
+from view.widgets.picture_browser import PictureBrowser
 
 
-class FullView(FullViewFromModelInterface):
-    def __init__(self, parent:QWidget, view_manager:ViewManagerFromViewInterface):
-
-        self.view_manager=view_manager
-        self.title=''
+class FullView(BaseFullView):
+    def get_main_content(self, parent: QWidget) -> QWidget:
         self.parent=parent
-        self.current=False
+        self.frame=QFrame(self.parent)
 
-        self.tab = QWidget()
-        self.verticalLayout = QVBoxLayout(self.tab)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.parent.addTab(self.tab, self.title)
+        layout=QHBoxLayout(self.frame)
+        # layout.setAlignment(Qt.AlignCenter)
 
-        self.create_widgets()
+        self.video_player = VideoPlayerWidget(self.frame)
+        self.picture=PictureBrowser(self.parent, lambda index:self.progress.set_value('current pix', index+1))
+        self.video_player.set_error_handler(self.on_error)
 
-        self.little_forward=self.video_player.little_forward
-
-    def create_widgets(self):
-        self.top_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.top_line)
-        self.top_line.hide()
-
-        self.video_player = VideoPlayerWidget(self.tab)
-        self.verticalLayout.addWidget(self.video_player)
+        layout.addWidget(self.video_player)
+        self.picture.hide()
         self.video_player.hide()
+        return self.frame
 
-        self.mid_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.mid_line)
-        self.mid_line.hide()
+    def binding(self):
+        self.little_forward = self.video_player.little_forward
 
-        self.bottom_line=ButtonLine(self.tab)
-        self.verticalLayout.addWidget(self.bottom_line)
-        self.bottom_line.hide()
+    def prepare_content(self):
+        self.picture.re_init()
+        self.video_player.stop()
+        self.video_player.hide()
+        self.picture.hide()
+        self.progress.add_progress('loaded pix',Qt.darkBlue)
+        self.progress.add_progress('current pix', Qt.red)
+        self.progress.set_autohide_bar_name('loaded pix')
+
+    def prepare_content_to_close(self):
+        self.picture.re_init()
+        self.video_player.stop()
 
     def set_title(self, title:str, tooltip=''):
         self.view_manager.set_tab_text(self,title,tooltip)
@@ -56,26 +53,11 @@ class FullView(FullViewFromModelInterface):
         if self.view_manager.is_full_view_tab_active(self):
             self.video_player.play()
 
-    def add_to_bottom_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.bottom_line.add_button(button)
-
-    def add_to_mid_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.mid_line.add_button(button)
-
-    def add_to_top_line(self, text:str, href:URL, tooltip:str= '', menu=None, style:dict=None):
-        button=TextButton(text,tooltip,lambda : self.view_manager.goto_url(href))
-        button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
-        button.set_button_style(style)
-        self.top_line.add_button(button)
-
-    def get_rot_widget(self) -> QWidget:
-        return self.tab
+    def add_picture(self, filename):
+        self.picture.show()
+        self.picture.add_picture(filename)
+        self.resize_event()
+        self.progress.set_value('loaded pix', self.picture.count)
 
     def mute(self, on:bool):
         self.video_player.mute(on)
@@ -97,7 +79,16 @@ class FullView(FullViewFromModelInterface):
         self.video_player.mute(muted)
         self.video_player.set_volume(volume)
 
+    def history_event(self):
+        history_data=HistoryData(self.url)
+        self.history_handler(history_data)
+
+    def resize_event(self):
+        self.picture.setFixedSize(self.frame.size())
+        self.picture.show_current_picture()
+
     def destroy(self):
+        self.history_event()
         self.video_player.destroy()
         self.bottom_line.destroy()
         self.tab.destroy()

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/main_window.ui'
+# Form implementation generated from reading ui file 'D:/repo/fget3/view/qt_design/main_window.ui'
 #
-# Created: Sun Mar  5 22:53:35 2017
+# Created: Thu Jul 20 16:45:55 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         self.base = QtWidgets.QWidget(MainWindow)
         self.base.setObjectName("base")
         self.base_layout = QtWidgets.QVBoxLayout(self.base)
-        self.base_layout.setSpacing(3)
+        self.base_layout.setSpacing(0)
         self.base_layout.setContentsMargins(4, 0, 4, 0)
         self.base_layout.setObjectName("base_layout")
         self.top_frame = QtWidgets.QFrame(self.base)
@@ -59,9 +59,9 @@ class Ui_MainWindow(object):
         self.top_frame_layout.setObjectName("top_frame_layout")
         self.base_layout.addWidget(self.top_frame)
         self.mid_frame = QtWidgets.QFrame(self.base)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.mid_frame.sizePolicy().hasHeightForWidth())
         self.mid_frame.setSizePolicy(sizePolicy)
         self.mid_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -83,6 +83,8 @@ class Ui_MainWindow(object):
         self.tabWidget.setAutoFillBackground(False)
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.West)
         self.tabWidget.setTabShape(QtWidgets.QTabWidget.Triangular)
+        self.tabWidget.setIconSize(QtCore.QSize(16, 16))
+        self.tabWidget.setElideMode(QtCore.Qt.ElideNone)
         self.tabWidget.setDocumentMode(False)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.setMovable(False)
@@ -90,7 +92,26 @@ class Ui_MainWindow(object):
         self.tabWidget.setObjectName("tabWidget")
         self.mid_frame_layout.addWidget(self.tabWidget)
         self.base_layout.addWidget(self.mid_frame)
+        self.controls_frame = QtWidgets.QFrame(self.base)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.controls_frame.sizePolicy().hasHeightForWidth())
+        self.controls_frame.setSizePolicy(sizePolicy)
+        self.controls_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.controls_frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.controls_frame.setObjectName("controls_frame")
+        self.controls_frame_layout = QtWidgets.QHBoxLayout(self.controls_frame)
+        self.controls_frame_layout.setSpacing(2)
+        self.controls_frame_layout.setContentsMargins(0, 0, 0, 0)
+        self.controls_frame_layout.setObjectName("controls_frame_layout")
+        self.base_layout.addWidget(self.controls_frame)
         self.bottom_frame = QtWidgets.QFrame(self.base)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.bottom_frame.sizePolicy().hasHeightForWidth())
+        self.bottom_frame.setSizePolicy(sizePolicy)
         self.bottom_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.bottom_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.bottom_frame.setObjectName("bottom_frame")
@@ -100,9 +121,6 @@ class Ui_MainWindow(object):
         self.bottom_frame_layout.setObjectName("bottom_frame_layout")
         self.base_layout.addWidget(self.bottom_frame)
         MainWindow.setCentralWidget(self.base)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(-1)

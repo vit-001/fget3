@@ -1,28 +1,35 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from common.url import URL
-from common.util import _iter
+from bs4 import BeautifulSoup
 
-from model.site.base_site import BaseSiteParser,ViewManagerFromModelInterface, BeautifulSoup
+from data_format.url import URL
+from common.util import _iter, quotes
+
+from interface.view_manager_interface import ViewManagerFromModelInterface
+
+from model.site.parser import BaseSiteParser
+
 
 class CollectionofbestpornSite(BaseSiteParser):
+
     @staticmethod
     def can_accept_url(url: URL) -> bool:
         return url.contain('collectionofbestporn.com/')
-
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
         menu_items=dict(HD=URL('http://collectionofbestporn.com/tag/hd-porn*'),
-                    Latest=URL('http://collectionofbestporn.com/most-recent*'),
-                    TopRated=URL('http://collectionofbestporn.com/top-rated*'),
-                    MostViewed=URL('http://collectionofbestporn.com/most-viewed*'),
-                    Categories=URL('http://collectionofbestporn.com/channels/'),
-                    Longest=URL('http://collectionofbestporn.com/longest*'))
+                        Latest=URL('http://collectionofbestporn.com/most-recent*'),
+                        TopRated=URL('http://collectionofbestporn.com/top-rated*'),
+                        MostViewed=URL('http://collectionofbestporn.com/most-viewed*'),
+                        Categories=URL('http://collectionofbestporn.com/channels/'),
+                        Longest=URL('http://collectionofbestporn.com/longest*'))
 
-        view.add_start_button(name='Collectionofbestporn',
-                              picture_filename='model/site/resource/collectionofbestporn.png',
+        view.add_start_button(picture_filename='model/site/resource/collectionofbestporn.png',
                               menu_items=menu_items,
                               url=URL("http://collectionofbestporn.com/most-recent*", test_string='Collection'))
+
+    def get_shrink_name(self):
+        return 'CBP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'video-thumb'})):
@@ -37,9 +44,9 @@ class CollectionofbestpornSite(BaseSiteParser):
             qual = '' if quality is None else str(quality.string)
 
             self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                                       labels=[{'text': dur_time, 'align': 'top right'},
-                                               {'text': description, 'align': 'bottom center'},
-                                               {'text': qual, 'align': 'top left', 'bold': True}])
+                           labels=[{'text': dur_time, 'align': 'top right'},
+                                   {'text': description, 'align': 'bottom center'},
+                                   {'text': qual, 'align': 'top left', 'bold': True}])
 
     def get_pagination_container(self, soup: BeautifulSoup):
         return soup.find('ul', {'class': 'pagination'})

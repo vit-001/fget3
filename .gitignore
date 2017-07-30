@@ -135,3 +135,5 @@ ENV/
 .idea/workspace.xml
 .idea/FGet.iml
 .idea/vcs.xml
+*.iml
+.idea/misc.xml

@@ -3,50 +3,33 @@ __author__ = 'Vit'
 
 import io
 import os
-import urllib.parse as up
 
-from common.url import URL
+from data_format.fl_data import FLData
+from data_format.url import URL
 
-class FLData:
-    def __init__(self, url: URL, filename: str, overwrite=True):
-        self._url = url
-        self._filename = filename
-        self.overwrite = overwrite
-        self.text=''
-
-    @property
-    def url(self):
-        return self._url
-
-    @property
-    def filename(self):
-        return self._filename
-
-class LoaderError(RuntimeError):
-    def __init__(self, description):
-        self.txt = description
-
-    def __str__(self):
-        return self.txt
+from data_format.loader_error import LoaderError
+from interface.loader_interface import LoadProcedureInterface
 
 
-class BaseLoadProcedure:
+class BaseLoadProcedure(LoadProcedureInterface):
     def open(self, url: URL) -> bytes:
         'Open a network object denoted by a URL and return his bytes representstive.'
         pass
 
+    def get_redirect_location(self, url:URL)->URL:
+        'Open only response header and return redirect URL if its present, else return None'
+        return None
+
     def load_to_file(self, file: FLData) -> FLData:
-        """
-        Load a network object denoted by a URL to a local file.
-        :param file - url and local file name:
-        :return same object, but if file.get_filendme() is '' or None file don't write and
-                in file.text will returned decoded neteork object:
-        """
+        if file.find_redirect_location:
+            file.redirect_location = self.get_redirect_location(file.url)
+            return file
+
         if file.overwrite or (not os.path.exists(file.filename)):
             result = self.open(file.url)
 
             if file.filename is None or file.filename is '':
-                file.text = result.decode()
+                file.text = result.decode(errors='ignore')
                 return file
 
             path = os.path.dirname(file.filename)
@@ -55,37 +38,16 @@ class BaseLoadProcedure:
                 os.makedirs(path)
 
             buf = io.BytesIO(result)
-            with open(file.filename, 'wb') as fd:
-                chunk = buf.read(256)
-                while len(chunk) > 0:
-                    fd.write(chunk)
+            try:
+                with open(file.filename, 'wb') as fd:
                     chunk = buf.read(256)
+                    while len(chunk) > 0:
+                        fd.write(chunk)
+                        chunk = buf.read(256)
+            except FileNotFoundError as err:
+                print(err)
+
         return file
-
-
-class BaseLoadProcess:
-    def load_list(self, fldata_list: list):
-        pass
-
-    def abort(self):
-        pass
-
-    def update(self):
-        pass
-
-
-class BaseLoader:
-    def get_new_load_process(self, on_load_handler=lambda x: None, on_end_handler=lambda: None) -> BaseLoadProcess:
-        pass
-
-    def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
-        pass
-
-    def on_update(self):
-        pass
-
-    def on_exit(self):
-        pass
 
 
 if __name__ == "__main__":

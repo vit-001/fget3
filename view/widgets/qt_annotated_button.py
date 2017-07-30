@@ -27,7 +27,7 @@ class QAnnotatedButton(QToolButton):
         for item in labels:
             label=QLabel(self)
             text=item.get('text','')
-            lenght=item.get('lenght',31)
+            lenght=item.get('lenght',29)
             if len(text)>lenght-3:
                 text=text[:lenght-3]+'...'
             label.setText(text)

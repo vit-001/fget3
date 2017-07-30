@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:/Repository/PyWork/fget3/view/qt_design/scroll_bar_widget.ui'
+# Form implementation generated from reading ui file 'D:/repo/fget3/view/qt_design/scroll_bar_widget.ui'
 #
-# Created: Sun Mar  5 22:53:35 2017
+# Created: Thu Jul 20 16:45:55 2017
 #      by: PyQt5 UI code generator 5.4
 #
 # WARNING! All changes made in this file will be lost!

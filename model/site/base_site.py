@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from abc import abstractmethod, ABCMeta
-
 __author__ = 'Vit'
 
 from bs4 import BeautifulSoup
+from time import time
 
-from common.url import URL
 from common.setting import Setting
-from model.loader.base_loader import FLData
-from model.base_model import ModelFromSiteInterface
-from view.view_manager_interface import ViewManagerFromModelInterface
-from view.view_interface import ThumbViewFromModelInterface
+from common.util import get_menu_handler
+from data_format.fl_data import FLData
+from data_format.url import URL
+from interface.model_interface import ModelFromSiteInterface
+from interface.site_interface import SiteInterface
 
 
 class ThumbData(FLData):
@@ -20,29 +19,21 @@ class ThumbData(FLData):
         self.popup=popup
         self.labels=labels
 
-class SiteInterface:
-    @staticmethod
-    def create_start_button(view:ViewManagerFromModelInterface):
-        pass
-
-    @staticmethod
-    def can_accept_url(url:URL)->bool:
-        return False
-
-    def goto_url(self, url:URL, **options):
-        pass
-
 class ParseResult:
     def __init__(self):
         self.url=URL()
 
         self._result_type= 'none'
-        self.title='Title'
+        self.title='No title'
+
+        self.waiting_data=False
 
         self.thumbs=[]
 
         self.video_data = []
         self.video_default_index=0
+
+        self.pictures=[]
 
         self.controls_top = []
         self.controls_bottom = []
@@ -52,6 +43,10 @@ class ParseResult:
         self._result_type= 'thumbs'
         thumb={'url':thumb_url,'href':href,'popup':popup,'labels':labels}
         self.thumbs.append(thumb)
+
+    def add_fav(self,text: str, href: URL, menu=None, style: dict = None):
+        control={'text':text,'href':href,'menu':menu,'style':style}
+        self.controls_top.append(control)
 
     def add_page(self,text: str, href: URL, menu=None, style: dict = None):
         control={'text':text,'href':href,'menu':menu,'style':style}
@@ -64,6 +59,10 @@ class ParseResult:
     def add_video(self, caption:str, url:URL):
         self._result_type='video'
         self.video_data.append(dict(text=caption, url=url))
+
+    def add_picture(self, filename:str, url:URL):
+        self._result_type='pictures'
+        self.pictures.append(dict(file=filename, url=url))
 
     def sort_video(self):
         self.video_data.sort(key=lambda x:int(x['text']))
@@ -93,9 +92,17 @@ class BaseSite(SiteInterface, ParseResult):
         ParseResult.__init__(self)
         self.model=model
         self.start_options=dict()
+        self._log=Setting.log
+
+    @staticmethod
+    def number_of_accepted_dimains() ->int:
+        return 1
 
     def goto_url(self, url: URL, **options):
-        print('Goto url:', url)
+        if url.any_data:
+            self.log('Goto url:', url,'/',url.any_data)
+        else:
+            self.log('Goto url:', url)
 
         self.url=url
         self.start_options=options
@@ -106,50 +113,128 @@ class BaseSite(SiteInterface, ParseResult):
 
         loader.start_load_file(filedata, self.on_load_url)
 
+    def log(self, *data, **options):
+        if Setting.debug_site:
+            print(*data, **options)
+            self._log.write(*data, **options)
+
     def on_load_url(self, filedata:FLData):
         # print(filedata.url, 'loaded')
-        soup=BeautifulSoup(filedata.text,'html.parser')
+        self.start_time = time()
+
+        soup=BeautifulSoup(filedata.text, 'html.parser')
         self.parse_soup(soup, filedata.url)
-        if self.is_no_result:
-            print('Parsing has no result')
+
+        if self.is_no_result and not self.waiting_data:
+            if Setting.debug_site:
+                self.log('Parsing has no result')
 
     def parse_soup(self, soup: BeautifulSoup, url: URL) -> bool:
         return False
 
     def generate_thumb_view(self):
+        if self.waiting_data or not self.thumbs:
+            return
+
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time()-self.start_time))
+
         view=self.start_options.get('current_thumb_view', None)
         if not view:
-            view=self.model.view_manager.prepare_thumb_view()
-        else:
-            view.clear()
+            view=self.model.view_manager.new_thumb_view()
+            view.subscribe_to_history_event(self.model.thumb_history.add)
 
-        view.set_title(self.title, tooltip=self.url.get())
+        flags=self.start_options.get('flags')
         loader=self.model.loader.get_new_load_process(
             on_load_handler=lambda tumbdata:view.add_thumb(tumbdata.filename,tumbdata.href,tumbdata.popup,tumbdata.labels))
 
         thumb_list=list()
+        statistic=dict()
+        accepted=0
+        rejected=0
         for thumb in self.thumbs:
-            filename=thumb['url'].get_short_filename(base=Setting.cache_path)
-            thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
+            domain=thumb['href'].domain()
+            statistic[domain]=statistic.get(domain,0)+1
+            if self.model.can_accept_url(thumb['href']):
+                accepted+=1
+                filename=thumb['url'].get_short_filename(base=Setting.thumbs_cache_path)
+                thumb_list.append(ThumbData(thumb['url'],filename,thumb['href'],thumb['popup'], thumb['labels']))
+            else:
+                rejected+=1
+
+        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(thumb_list))
+
+        # print statistic for url
+        if Setting.site_statistic:
+            print()
+            self.log('Statistic for',self.url)
+            for domain in statistic:
+                self.log('  {0:5d} in {1}'.format(statistic[domain], domain))
+            self.log('Total {0}, accepted {1}, rejected {2}'.format(accepted+rejected,accepted,rejected))
+
         loader.load_list(thumb_list)
+
+        for item in self.model.get_favorite_items(self):
+            self.add_fav(item['label'], item['url'], style=dict(on_remove=get_menu_handler(self.model.remove_favorite,item['url'])))
 
         self.add_controls_to_view(view)
 
     def generate_video_view(self):
+        if self.waiting_data or not self.video_data:
+            return
+
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time() - self.start_time))
+
         view = self.start_options.get('current_full_view', None)
         if not view:
-            view = self.model.view_manager.prepare_full_view()
+            view = self.model.view_manager.new_full_view()
+            view.subscribe_to_history_event(self.model.full_history.add)
 
-        view.set_title(self.title, tooltip=self.url.get())
+        flags = self.start_options.get('flags')
+        view.prepare(url=self.url,title=self.title, tooltip=self.url.get(),flags=flags)
 
         view.set_video_list(self.video_data, self.video_default_index)
 
         self.add_controls_to_view(view)
 
-        print('Now playback', self.url) # todo сделать отладочный вывод
-        for item in self.video_data:
-            print(item['text'], item['url'])
-        print('Default:', self.video_data[self.video_default_index]['text'])
+        if Setting.debug_site:
+            print()
+            print('Now playback', self.url) # todo сделать отладочный вывод
+            for item in self.video_data:
+                self.log('  ',item['text'], item['url'])
+            self.log('  Default:', self.video_data[self.video_default_index]['text'])
+
+    def generate_pictures_view(self):
+        if self.waiting_data:
+            return
+
+        if Setting.debug_site:
+            print('Parsing time {0:.2f} s'.format(time() - self.start_time))
+
+        view = self.start_options.get('current_full_view', None)
+        if not view:
+            view = self.model.view_manager.new_full_view()
+            view.subscribe_to_history_event(self.model.full_history.add)
+
+        flags = self.start_options.get('flags')
+        loader=self.model.loader.get_new_load_process(
+            on_load_handler=lambda fl_data:view.add_picture(fl_data.filename))
+        view.prepare(url=self.url, title=self.title, tooltip=self.url.get(),on_stop=loader.abort, flags=flags,max_progress=len(self.pictures))
+
+        pictures_list=list()
+        for picture in self.pictures:
+            filename=Setting.pictures_path+picture['file'].strip('/')
+            pictures_list.append(FLData(picture['url'],filename,overwrite=False))
+
+        loader.load_list(pictures_list)
+
+        self.add_controls_to_view(view)
+
+        if Setting.debug_site:
+            print()
+            self.log('View' , len(self.pictures) , 'pictures on', self.url) # todo сделать отладочный вывод
+
 
     def add_controls_to_view(self, view):
         for item in self.controls_bottom:
@@ -161,64 +246,6 @@ class BaseSite(SiteInterface, ParseResult):
         for item in self.controls_top:
             view.add_to_top_line(item['text'], item['href'], item['href'].get(), item['menu'], item['style'])
 
-class BaseSiteParser(BaseSite):
-    def parse_soup(self, soup:BeautifulSoup, url:URL):
-        self.parse_video(soup, url)
-        if self.is_video:
-            self.parse_video_tags(soup, url)
-            self.title=self.parse_video_title(soup,url)
-            self.generate_video_view()
-            return
-        self.parse_pictures(soup, url)
-        if self.is_pictures:
-            self.parse_pictures_tags(soup, url)
-            return
-        self.parse_thumbs(soup, url)
-        if self.is_no_result:
-            self.parse_others(soup, url)
-        if self.is_thumbs:
-            self.parse_thumbs_tags(soup, url)
-            self.parse_pagination(soup, url)
-            self.title=self.parse_thumb_title(soup,url)
-            self.generate_thumb_view()
-
-    def parse_thumbs(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_video(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_pictures(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_others(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_pagination(self, soup: BeautifulSoup, url: URL):
-        container = self.get_pagination_container(soup)
-        if container is not None:
-            for page in container.find_all('a', {'href': True}):
-                if page.string is not None and page.string.isdigit():
-                    self.add_page(page.string, URL(page.attrs['href'], base_url=url))
-                    # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
-
-    def get_pagination_container(self, soup:BeautifulSoup)->BeautifulSoup:
-        return None
-
-    def parse_thumbs_tags(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_video_tags(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_video_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'Title'
-
-    def parse_pictures_tags(self, soup:BeautifulSoup, url:URL):
-        pass
-
-    def parse_thumb_title(self, soup:BeautifulSoup, url:URL)->str:
-        return 'Title'
 
 if __name__ == "__main__":
     pass
