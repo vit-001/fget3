@@ -29,5 +29,8 @@ def psp(*arguments, **keywords):
     print(*arguments, **keywords)
     sp()
 
+def pretty(soup):
+    psp(soup.prettify())
+
 if __name__ == "__main__":
     pass

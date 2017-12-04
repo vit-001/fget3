@@ -16,6 +16,7 @@ from model.site.picture.tgp_sites.fuskator import FuskatorSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
+from model.site.picture.tgp_sites.girlstop import GirlstopSite
 from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
@@ -51,6 +52,7 @@ from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 from model.site.video.script.xnxx import XnxxSite
 from model.site.video.simple.tnaflix import TnaflixSite
+from model.site.video.simple.laidhub import LaidhubSite
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -59,6 +61,9 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
         self._site_models=[
+                            LaidhubSite,
+
+                            # GirlstopSite,
 
 
 

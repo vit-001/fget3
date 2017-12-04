@@ -40,10 +40,11 @@ if __name__ == '__main__':
     print('http://www.shameless.com/', 'verifyed, script')
     print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
     print('https://www.pornfreeze.com/','verifyed, simple')
-    print('https://www.tnaflix.com/', 'simple but ajax')
+    # print('https://www.tnaflix.com/', 'simple but ajax')
     print('http://www.txxx.com/  script')
     print('https://faapy.com/', 'jwplayer script')
     print('')
+    print('http://www.girlstop.info/','photo')
 
     # print('Исправить TUBE8')
     print('Thats all')
