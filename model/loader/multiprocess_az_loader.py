@@ -19,6 +19,7 @@ from interface.loader_interface import LoadProcessInterface, LoaderInterface
 from model.loader.base_loader import BaseLoadProcedure
 from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
+from model.loader.selenium_load import SeleniumLoad
 
 
 class DataServer:
@@ -106,6 +107,7 @@ class AZloaderMP(BaseLoadProcedure):
         self.lock = lock
         self.request_load = RequestLoad()
         self.trick_load = TrickLoad()
+        self.selenium_load=SeleniumLoad()
 
     def open(self, url: URL) -> bytes:
         self.lock.acquire()
@@ -121,6 +123,8 @@ class AZloaderMP(BaseLoadProcedure):
         elif method == 'proxy':
             self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
             return self.request_load.open(url)
+        elif method == 'selenium':
+            return self.selenium_load.open(url)
         else:
             return self.trick_load.open(url,method)
 
@@ -128,6 +132,10 @@ class AZloaderMP(BaseLoadProcedure):
         return self.request_load.get_redirect_location(url)
 
     def get_load_method(self, url: URL) -> str:
+
+        if url.load_method=='SELENIUM':
+            return 'selenium'
+
         domain_cash = self.data.get('domain_cash', dict())
         domain = url.domain()
         for item in domain_cash:

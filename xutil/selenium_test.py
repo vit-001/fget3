@@ -38,15 +38,15 @@ if __name__ == "__main__":
 
     start = time()
 
-    # driver.get("https://www.porntube.com/videos/via-lasciva-dp-trio-painters_7282989")
+    driver.get("http://www.pornfapr.com/videos/15243/hot-single-mom-with-big-boobs-reagan-foxx-had-a-wild-sex-action-with-two-young-guys/")
 
     # assert "Python" in driver.title
 
     # elem=driver.fi
-    # elem = driver.find_element_by_tag_name("video")
-    # print(elem.get_attribute('src'))
+    elem = driver.find_element_by_tag_name("video")
+    print(elem.get_attribute('src'))
 
-    # print('Parsing time {0:.2f} s'.format(time() - start))
+    print('Parsing time {0:.2f} s'.format(time() - start))
 
 
 
