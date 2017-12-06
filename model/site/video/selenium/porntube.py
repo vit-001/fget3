@@ -38,7 +38,7 @@ class PorntubeSite(BaseSiteParser):
             i+=1
             for thumbnail in _iter(containrer.find_all('div', {'class': 'thumb_video'})):
                 # pretty(thumbnail)
-                href = URL(thumbnail.a.attrs['href'], base_url=url, load_method='SELENIUM_SERVER')
+                href = URL(thumbnail.a.attrs['href'], base_url=url, load_method='SELENIUM')
                 description = thumbnail.a.img.attrs['alt']
                 thumb_url = URL(thumbnail.img.attrs['data-master'], base_url=url)
 

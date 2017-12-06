@@ -14,7 +14,7 @@ from data_format.loader_error import LoaderError
 from model.loader.base_loader import BaseLoadProcedure
 
 
-class SeleniumServerLoad(BaseLoadProcedure):
+class SeleniumHiddenFirefoxLoad(BaseLoadProcedure):
 
 
     def __init__(self, proxies=None):
@@ -22,21 +22,14 @@ class SeleniumServerLoad(BaseLoadProcedure):
         self.driver = None
 
     def open(self, url: URL) -> bytes:
-        # print(self.driver)
         if not self.driver:
             os.environ['MOZ_HEADLESS'] = '1'
             binary = FirefoxBinary('C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe', log_file=sys.stdout)
-            self.driver = driver = webdriver.Firefox(firefox_binary=binary)
-            # self.driver.minimize_window()
+            self.driver = webdriver.Firefox(firefox_binary=binary)
 
         try:
             if url.method == 'GET':
                 self.driver.get(url.get())
-            #
-            # elif url.method == 'POST':
-            #     # print('Loading POST')
-            #     # print(url.get(), url.post_data)
-            #     response = requests.post(url.get(), data=url.post_data, proxies=self.proxies,headers=headers)
             else:
                 raise LoaderError('Unknown method:' + url.method)
 
@@ -53,6 +46,6 @@ class SeleniumServerLoad(BaseLoadProcedure):
 
 
 if __name__ == "__main__":
-    l = SeleniumServerLoad()
+    l = SeleniumHiddenFirefoxLoad()
     url = URL('https://www.porntube.com/videos/via-lasciva-dp-trio-painters_7282989')
     print(l.open(url).decode(errors='ignore'))

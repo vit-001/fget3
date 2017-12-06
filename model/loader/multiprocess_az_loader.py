@@ -20,7 +20,7 @@ from model.loader.base_loader import BaseLoadProcedure
 from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
 from model.loader.selenium_load import SeleniumLoad
-from model.loader.selenium_server_load import SeleniumServerLoad
+from model.loader.selenium_hidden_firefox_load import SeleniumHiddenFirefoxLoad
 
 class DataServer:
     def __init__(self):
@@ -108,7 +108,7 @@ class AZloaderMP(BaseLoadProcedure):
         self.request_load = RequestLoad()
         self.trick_load = TrickLoad()
         self.selenium_load=SeleniumLoad()
-        self.selenium_server_load=SeleniumServerLoad()
+        self.selenium_hidden_load=SeleniumHiddenFirefoxLoad()
 
     def open(self, url: URL) -> bytes:
         self.lock.acquire()
@@ -124,10 +124,10 @@ class AZloaderMP(BaseLoadProcedure):
         elif method == 'proxy':
             self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
             return self.request_load.open(url)
-        elif method == 'selenium':
+        elif method == 'selenium_ie':
             return self.selenium_load.open(url)
-        elif method == 'selenium_server':
-            return self.selenium_server_load.open(url)
+        elif method == 'selenium':
+            return self.selenium_hidden_load.open(url)
 
         else:
             return self.trick_load.open(url,method)
@@ -140,8 +140,8 @@ class AZloaderMP(BaseLoadProcedure):
         if url.load_method=='SELENIUM':
             return 'selenium'
 
-        if url.load_method == 'SELENIUM_SERVER':
-            return 'selenium_server'
+        if url.load_method == 'SELENIUM_IE':
+            return 'selenium_ie'
 
         domain_cash = self.data.get('domain_cash', dict())
         domain = url.domain()
