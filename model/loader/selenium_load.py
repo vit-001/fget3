@@ -15,28 +15,23 @@ class SeleniumLoad(BaseLoadProcedure):
     driver=None
 
     def __init__(self, proxies=None):
-        self.proxies = proxies
+        # self.proxies = proxies
+        self.driver = None
 
 
     def open(self, url: URL) -> bytes:
-        print(SeleniumLoad.driver)
-        if not SeleniumLoad.driver:
-            SeleniumLoad.driver=webdriver.Ie()
-            SeleniumLoad.driver.minimize_window()
+        if not self.driver:
+            self.driver=webdriver.Ie()
+            self.driver.minimize_window()
 
         try:
             if url.method == 'GET':
-                SeleniumLoad.driver.get(url.get())
-            #
-            # elif url.method == 'POST':
-            #     # print('Loading POST')
-            #     # print(url.get(), url.post_data)
-            #     response = requests.post(url.get(), data=url.post_data, proxies=self.proxies,headers=headers)
+                self.driver.get(url.get())
             else:
                 raise LoaderError('Unknown method:' + url.method)
 
-            data=SeleniumLoad.driver.page_source.encode(encoding='utf-8', errors='strict')
-            SeleniumLoad.driver.close()
+            data=self.driver.page_source.encode(encoding='utf-8', errors='strict')
+            self.driver.close()
 
         except None:
             raise LoaderError('Unknown error in loader')
