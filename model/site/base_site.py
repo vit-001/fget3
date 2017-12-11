@@ -111,6 +111,7 @@ class BaseSite(SiteInterface, ParseResult):
         loader=self.model.loader
         filedata=FLData(url,'')
 
+        self.goto_time = time()
         loader.start_load_file(filedata, self.on_load_url)
 
     def log(self, *data, **options):
@@ -120,6 +121,7 @@ class BaseSite(SiteInterface, ParseResult):
 
     def on_load_url(self, filedata:FLData):
         # print(filedata.url, 'loaded')
+        print('Loading time {0:.2f} s'.format(time() - self.goto_time))
         self.start_time = time()
 
         soup=BeautifulSoup(filedata.text, 'html.parser')

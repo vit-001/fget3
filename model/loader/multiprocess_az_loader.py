@@ -21,6 +21,7 @@ from model.loader.request_load import RequestLoad
 from model.loader.trick_load import TrickLoad
 from model.loader.selenium_load import SeleniumLoad
 from model.loader.selenium_hidden_firefox_load import SeleniumHiddenFirefoxLoad
+from model.loader.selenium_load_server import SeleniumLoadServer
 
 class DataServer:
     def __init__(self):
@@ -128,6 +129,8 @@ class AZloaderMP(BaseLoadProcedure):
             return self.selenium_load.open(url)
         elif method == 'selenium':
             return self.selenium_hidden_load.open(url)
+        elif method == 'no_load':
+            return b''
 
         else:
             return self.trick_load.open(url,method)
@@ -136,6 +139,9 @@ class AZloaderMP(BaseLoadProcedure):
         return self.request_load.get_redirect_location(url)
 
     def get_load_method(self, url: URL) -> str:
+
+        if url.load_method=='NO_LOAD':
+            return 'no_load'
 
         if url.load_method=='SELENIUM':
             return 'selenium'
@@ -228,7 +234,6 @@ class LoadServer(Process):
                 print(filedata.url.get() + ' not loaded: ', Error)
         self.events.put(LoadProcessEvent('done'))
 
-
 class LoadProcess(LoadProcessInterface):
     def __init__(self, data_server: DataServer, lock: Lock):
         self.loader = None
@@ -257,6 +262,7 @@ class LoadProcess(LoadProcessInterface):
 
     def abort(self):
         if self.loader is not None:
+
             self.loader.terminate()
             self.update()
 
@@ -266,6 +272,8 @@ class MultiprocessAZloader(LoaderInterface):
         self.lock = Lock()
         self.list_of_load_process = list()
         self.single_file_loader = None
+        self.selenium_server=SeleniumLoadServer()
+        self.selenium_server.start()
 
     def get_new_load_process(self, on_load_handler=lambda filedata: None,
                              on_end_handler=lambda: None) -> LoadProcessInterface:
@@ -294,6 +302,7 @@ class MultiprocessAZloader(LoaderInterface):
         self.single_file_loader.load_list([filedata])
 
     def on_exit(self):
+        self.selenium_server.abort()
         self.data.stop()
         for load_process in self.list_of_load_process:
             load_process.abort()

@@ -24,7 +24,7 @@ class PorntubeSite(BaseSiteParser):
                         Categories=URL('http://collectionofbestporn.com/channels/'),
                         Longest=URL('http://collectionofbestporn.com/longest*'))
 
-        view.add_start_button(picture_filename='model/site/resource/collectionofbestporn.png',
+        view.add_start_button(picture_filename='model/site/resource/porntube.png',
                               menu_items=menu_items,
                               url=URL("https://www.porntube.com/videos?sort=date*", test_string='Movies'))
 
@@ -32,20 +32,18 @@ class PorntubeSite(BaseSiteParser):
         return 'PT'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        i=0
-        for containrer in _iter(soup.find_all('div',{'class':'video_list'})):
-
-            i+=1
+        for containrer in _iter(soup.find_all('div',{'id':['video_list_column']})):
+            # pretty(containrer)
             for thumbnail in _iter(containrer.find_all('div', {'class': 'thumb_video'})):
                 # pretty(thumbnail)
                 href = URL(thumbnail.a.attrs['href'], base_url=url, load_method='SELENIUM')
                 description = thumbnail.a.img.attrs['alt']
                 thumb_url = URL(thumbnail.img.attrs['data-master'], base_url=url)
 
-                duration = thumbnail.find('span', {'class': "time"})
+                duration = thumbnail.find('li', {'class': "duration-top"})
                 dur_time = '' if duration is None else str(duration.string)
 
-                quality = thumbnail.find('span', {'class': "quality"})
+                quality = thumbnail.find('li', {'class': "topHD"})
                 qual = '' if quality is None else str(quality.string)
 
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
@@ -53,7 +51,11 @@ class PorntubeSite(BaseSiteParser):
                                        {'text': description, 'align': 'bottom center'},
                                        {'text': qual, 'align': 'top left', 'bold': True}])
 
-        psp(i)
+    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+        tags = soup.find('ul', {'class': 'categories-nav'})
+        if tags:
+            for tag in tags.find_all('a'):
+                self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 
     def get_pagination_container(self, soup: BeautifulSoup):
         return soup.find('ul', {'class': 'pagination'})
@@ -61,13 +63,17 @@ class PorntubeSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('video')
         if video is not None:
-            pretty(video)
+            # pretty(video)
             for source in _iter(video.find_all('source')):
                 self.add_video(source.attrs['data-res'], URL(source.attrs['src'], base_url=url))
             # self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        for tag_container in _iter(soup.find_all('div', {'class': 'tags-container'})):
+        for tag_container in _iter(soup.find_all('div', {'class': 'user'})):
+            for href in _iter(tag_container.find_all('a')):
+                if href.string is not None:
+                    self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
+        for tag_container in _iter(soup.find_all('div', {'class': 'tags'})):
             for href in _iter(tag_container.find_all('a')):
                 if href.string is not None:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))

@@ -17,9 +17,9 @@ def quotes(text:str, from_lex:str, to_lex:str):
 
 def collect_string(soup:BeautifulSoup)->str:
     result=''
-    for s in soup.stripped_strings:
-        result += s
-
+    if soup:
+        for s in soup.stripped_strings:
+            result += s
     return result
 
 def sp():

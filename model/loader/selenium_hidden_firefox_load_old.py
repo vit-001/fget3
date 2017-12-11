@@ -1,44 +1,45 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
-from socket import socket, AF_INET, SOCK_STREAM
+
+
+import os
+import sys
+
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium import webdriver
 
 from data_format.url import URL
 from data_format.loader_error import LoaderError
 
 from model.loader.base_loader import BaseLoadProcedure
 
-from model.loader.selenium_load_server import SeleniumLoadClient
 
 class SeleniumHiddenFirefoxLoad(BaseLoadProcedure):
+
+
     def __init__(self, proxies=None):
         self.proxies = proxies
+        self.driver = None
 
     def open(self, url: URL) -> bytes:
+        if not self.driver:
+            os.environ['MOZ_HEADLESS'] = '1'
+            binary = FirefoxBinary('C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe', log_file=sys.stdout)
+            self.driver = webdriver.Firefox(firefox_binary=binary)
+
         try:
             if url.method == 'GET':
-                sock = SeleniumLoadClient()
-
-                sock.command(url.get())
-                sock.send()
-                recv = sock.recv()
-                sock.close()
-
-            elif url.method == 'SCRIPT':
-                sock = SeleniumLoadClient()
-                script=url.any_data
-                for item in script.splitlines():
-                    sock.command(item)
-                sock.send()
-                recv = sock.recv()
-                sock.close()
-
+                self.driver.get(url.get())
             else:
                 raise LoaderError('Unknown method:' + url.method)
+
+            data=self.driver.page_source.encode(encoding='utf-8', errors='strict')
+            self.driver.close()
 
         except None:
             raise LoaderError('Unknown error in loader')
         else:
-            return recv
+            return data
 
     def get_redirect_location(self, url: URL) -> URL:
         return url

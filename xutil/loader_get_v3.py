@@ -79,8 +79,8 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'https://yourporn.sexy/'
-    url1a = 'https://www.porntube.com/videos/blonde-teenie-playing-banana-webcam_7263947'
-    url2 = 'http://porn96.xyz/?u=zHufneT3hJUlVfhUr/XrRzrZYuGrNnVWZRfO5FY5Jp5lDwiL3dION8mxURUbg/FCTXtXFzA640sVf6jZLopwaA=='
+    url1a = 'http://www.drtuber.com/video/4065629/hot-sexy-teen-deep-throat-blowjob'
+    url2 = 'https://cluster24a.heavy-r.com/v/09aac11d3cc528c684da39183acf9a5c/5a2bcd6e/vid/b7/20/d9/b720d98c5abf775.mp4'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
     fname1 = 'out/1.html'
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a)
+    r = load(url1a, fname1b)
     # r = load(url2, fname2)#, proxies=proxies)
 
     # r=get_response(url3, fname2)

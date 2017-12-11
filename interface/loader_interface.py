@@ -19,6 +19,9 @@ class LoadProcedureInterface:
         """
         pass
 
+    def abort(self):
+        pass
+
 
 class LoadProcessInterface:
     def load_list(self, fldata_list: list):
