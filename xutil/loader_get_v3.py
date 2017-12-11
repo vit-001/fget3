@@ -79,7 +79,7 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
     url1 = 'https://yourporn.sexy/'
-    url1a = 'http://www.drtuber.com/video/4065629/hot-sexy-teen-deep-throat-blowjob'
+    url1a = 'http://datoporn.co/embed-5w4yfk3qm2f6.html'
     url2 = 'https://cluster24a.heavy-r.com/v/09aac11d3cc528c684da39183acf9a5c/5a2bcd6e/vid/b7/20/d9/b720d98c5abf775.mp4'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 

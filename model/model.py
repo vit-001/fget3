@@ -55,6 +55,7 @@ from model.site.video.simple.tnaflix import TnaflixSite
 from model.site.video.simple.laidhub import LaidhubSite
 from model.site.video.selenium.porntube import PorntubeSite
 from model.site.video.selenium.drtuber import DrtuberSite
+from model.site.video.selenium.pornstreams import PornstreamsSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -66,6 +67,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
                             PorntubeSite,
                             DrtuberSite,
+                            PornstreamsSite,
 
                             # GirlstopSite,
 
