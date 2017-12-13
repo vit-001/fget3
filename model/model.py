@@ -56,6 +56,7 @@ from model.site.video.simple.laidhub import LaidhubSite
 from model.site.video.selenium.porntube import PorntubeSite
 from model.site.video.selenium.drtuber import DrtuberSite
 from model.site.video.selenium.pornstreams import PornstreamsSite
+from model.site.video.simple.bitporno import BitpornoSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -63,40 +64,41 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
         self._site_models=[
-                            LaidhubSite,
 
+
+                            # GirlstopSite,
+
+                            Space('Work on'),
+                            LaidhubSite,
+                            BitpornoSite,
                             PorntubeSite,
                             DrtuberSite,
                             PornstreamsSite,
 
-                            # GirlstopSite,
+                            Space('Classic:'),
+                            YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
+                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
+                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
+                            PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
+                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
+                            Space('Amateur:'),
+                            MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
 
-
-                           Space('Classic:'),
-                           YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
-                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
-                           PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
-                           PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
-                           VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
-
-                           Space('Amateur:'),
-                           MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
-
-                           Space('Deviant:'),
-                           ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,PervertslutSite,
+                            Space('Deviant:'),
+                            ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,PervertslutSite,
 
                            # Space('Short:'),
 
-                           Space('Photo:'),
-                           BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
-                           BabesandbitchesSite,FuskatorSite,
-                           Space('Non working:'),
-                           HeavyRSite,PornslandSite,V24videoSite,
+                            Space('Photo:'),
+                            BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
+                            BabesandbitchesSite,FuskatorSite,
+                            Space('Non working:'),
+                            HeavyRSite,PornslandSite,V24videoSite,
 
                            # Space('Info:'),
 
-                           ]
+                            ]
 
         self._thumb_history=HistoryModel('thumb', self._view_manager.on_thumb_history_changed)
         self._full_history=HistoryModel('full', self._view_manager.on_full_history_changed)

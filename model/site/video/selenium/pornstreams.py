@@ -23,7 +23,7 @@ class PornstreamsSite(BaseSiteParser):
                           Categories=URL('http://collectionofbestporn.com/channels/'),
                           Longest=URL('http://collectionofbestporn.com/longest*'))
 
-        view.add_start_button(picture_filename='model/site/resource/drtuber.png',
+        view.add_start_button(picture_filename='model/site/resource/pornstream.png',
                               menu_items=menu_items,
                               url=URL("http://pornstreams.eu/", test_string='Porn'))
 
@@ -57,7 +57,7 @@ class PornstreamsSite(BaseSiteParser):
                 self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 
     def get_pagination_container(self, soup: BeautifulSoup):
-        return soup.find('ul', {'class': 'pagination'})
+        return soup.find('div', {'class': 'wp-pagenavi'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'article-content'})
@@ -95,13 +95,13 @@ class PornstreamsSite(BaseSiteParser):
             self.generate_video_view()
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        for tag_container in _iter(soup.find_all('div', {'class': 'autor'})):
+        for tag_container in _iter(soup.find_all('span', {'class': 'cat-links'})):
             for href in _iter(tag_container.find_all('a')):
-                if href.string is not None:
+                if href.string:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
-        for tag_container in _iter(soup.find_all('div', {'class': 'categories_list'})):
+        for tag_container in _iter(soup.find_all('span', {'class': 'tag-links'})):
             for href in _iter(tag_container.find_all('a')):
-                if href.string is not None:
+                if href.string:
                     self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
 
 
