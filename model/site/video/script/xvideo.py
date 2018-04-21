@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes, psp, collect_string
+from common.util import _iter, quotes, psp, collect_string, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -43,27 +43,26 @@ class XvideoSite(BaseSiteParser):
             # psp(thumbnail.prettify())
             href=thumbnail.find('a',
                                 title=True,
-                                href=lambda x: str(x).startswith('/video') or str(x).startswith('/prof-video-click/'))
+                                href=lambda x: (str(x).startswith('/video') or str(x).startswith('/prof-video-click/') and '/THUMBNUM/' not in str(x)))
 
             profiles=thumbnail.find('p',{'class':'profile-name'})
             if href:
                 xref_url = URL(href.attrs['href'], base_url=url)
                 label = href.attrs['title']
 
-                script=thumbnail.script.string
-                thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+                thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
 
-                metadata=thumbnail.find('p', {'class','metadata'})
-                duration = metadata.find('strong')
-                dur_time = '' if duration is None else str(duration.string)
+                duration = thumbnail.find('span', {'class': 'duration'})
+                dur_time = collect_string(duration).strip('HD') if duration else ''
 
                 hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
-                hd = '' if hd_span is None else str(hd_span.string)
+                hd =  collect_string(hd_span) if hd_span else ''
 
                 self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
                                labels=[{'text':dur_time, 'align':'top right'},
                                        {'text':label, 'align':'bottom center'},
                                        {'text': hd, 'align': 'top left'}])
+                # psp(label,href.attrs['href'],thumb_url)
 
             if profiles:
                 xref_url = URL(profiles.a.attrs['href'] + suffix, base_url=url)
@@ -129,24 +128,24 @@ class XvideoSite(BaseSiteParser):
                 self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        # adding "user" and "star" to video
-        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
-            uploader=metadata.find('span', {'class','uploader'})
-            if uploader:
-                hlink=uploader.a
-                self.add_tag(str(hlink.string), URL(hlink.attrs['href']+'/videos/new/0', base_url=url), style=dict(color='blue'))
-            if 'Models ' in str(metadata):
-                for href in _iter(metadata.find_all('a', href=lambda x: '/profiles/' in str(x))):
-                    self.add_tag(str(href.string),
-                                 URL(href.attrs['href'] + '/videos/pornstar/0', base_url=url),
-                                 style=dict(color='red'))
+
+        # adding "uploader" to video
+        uploader=soup.find('span', {'class','uploader'})
+        if uploader:
+            hlink=uploader.a
+            self.add_tag(collect_string(hlink), URL(hlink.attrs['href']+'/videos/new/0', base_url=url), style=dict(color='blue'))
+
+        # adding "star" to video
+        for metadata in _iter(soup.find_all('div', {'class': 'video-metadata'})):
+            for href in _iter(metadata.find_all('a', href=lambda x: '/profiles/' in str(x))):
+                self.add_tag(collect_string(href), URL(href.attrs['href'] + '/videos/pornstar/0', base_url=url), style=dict(color='red'))
 
         # adding "tags" to video
-        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
+        for metadata in _iter(soup.find_all('div', {'class': 'video-metadata'})):
             for href in _iter(metadata.find_all('a', href=lambda x: '/tags/' in str(x))):
                 xref=href.attrs['href']
                 if xref != '/tags/':
-                    self.add_tag(str(href.string), URL(xref, base_url=url))
+                    self.add_tag(collect_string(href), URL(xref, base_url=url))
 
 if __name__ == "__main__":
     pass

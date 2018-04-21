@@ -60,11 +60,13 @@ class PornstreamsSite(BaseSiteParser):
         return soup.find('div', {'class': 'wp-pagenavi'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div',{'class':'article-content'})
-        if container:
-            # pretty(container)
+        # containers=soup.find_all('div',{'class':'article-content'})
+        # if containers:
+
             sources=[]
-            for iframe in _iter(container.find_all('iframe')):
+            # for container in containers:
+            #     pretty(container)
+            for iframe in _iter(soup.find_all('iframe')):
 
                 pretty(iframe)
                 src=iframe.attrs['src']

@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
 
     print('Todo:')
-    # print('http://www.xnxx.com/', 'verifyed, script')
+    print('www.tgpdog.com', '  - VeroniccaComSite ')
     print('http://www.shameless.com/', 'verifyed, script')
     print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
     print('https://www.pornfreeze.com/','verifyed, simple')
@@ -45,6 +45,7 @@ if __name__ == '__main__':
     print('https://faapy.com/', 'jwplayer script')
     print('')
     print('http://www.girlstop.info/','photo')
+    print('https://www.coedcherry.com/models/danica-mpl-studios')
 
     # print('Исправить TUBE8')
     print('Thats all')

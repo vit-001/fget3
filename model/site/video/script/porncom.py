@@ -3,8 +3,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from data_format.fl_data import FLData
-from common.util import _iter, quotes
+from common.util import _iter, quotes, pretty, collect_string, psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -36,75 +35,71 @@ class PornComSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/porncom.svg',
                               menu_items=menu_items,
-                              url=URL("http://www.porn.com/videos*", test_string='PORN.COM'))
+                              url=URL("http://www.porn.com/videos*", test_string='PORN.COM', load_method='SELENIUM'))
 
     def get_shrink_name(self):
         return 'PC'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        mainw = soup.find('div', {'class': ['mainw', 'profileContent']})
-        thumbs_list = mainw.find('ul', {'class': ['listThumbs', 'listChannels', 'listProfiles', 'listTags']})
-        if thumbs_list is not None:
-            for thumbnail in _iter(thumbs_list.find_all('li')):
-                href = thumbnail.a.attrs['href']
-                url = URL(href, base_url=url)
+        psp(soup)
+        container=soup.find('section',{'class':['videos','categories','profiles','models','channels']})
+        if container:
+            for item in _iter(container.find_all('div',{'class':'item'})):
+                try:
+                    href = URL(item.a.attrs['href'], base_url=url)
+                    thumb_url = URL(item.img.attrs['src'], base_url=url)
+                    label = item.img.attrs.get('alt', '')
 
-                hd_span = thumbnail.find('span', {'class': 'hd'})
-                hd = '' if hd_span is None else '  HD'
+                    meta=item.find('div',{'class':'meta'})
+                    dur_time=''
+                    if meta:
+                        if meta.find('span'):
+                            dur_time = collect_string(meta.span)
 
-                if '/videos/' in href or '/pornstars/' in href:
-                    thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
+                    hd_span = item.find('span', {'class': ['hd']})
+                    hd = '  HD' if hd_span else ''
 
-                    duration = thumbnail.find('span', {'class': 'added'})
-                    dur_time = '' if duration is None else str(duration.string)
-
-                    caption = thumbnail.find('a', {'class': ['title', 'name']})
-                    label = '' if caption is None else str(caption.string)
-
-                    self.add_thumb(thumb_url=thumb_url, href=url, popup=label,
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
                                    labels=[{'text': dur_time, 'align': 'top right'},
                                            {'text': label, 'align': 'bottom center'},
-                                           {'text': hd, 'align': 'top left', 'bold': True}])
-                elif '/channels/' in href:
-                    logo = thumbnail.find('img', {'class': 'logo'})
-                    thumb_url = URL(logo.attrs['src'], base_url=url)
-
-                    title = thumbnail.find('span', {'class': 'title'})
-                    label = '' if title is None else str(title.string)
-
-                    count_span = thumbnail.find('span', {'class': 'count'})
-                    count = '' if count_span is None else str(count_span.string)
-
-                    self.add_thumb(thumb_url=thumb_url, href=url, popup=label,
-                                   labels=[{'text': count, 'align': 'top right'},
-                                           {'text': label, 'align': 'bottom center'},
                                            {'text': hd, 'align': 'top left'}])
+                except KeyError:
+                    pass
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        # adding tags to thumbs
-        tags_container = soup.find('div', {'class': 'listFilters'})
-        if tags_container is not None:
-            for tag in _iter(tags_container.find_all('a', {'class': None})):
-                title = tag.attrs.get('title', '')
-                count = tag.find('span', {'class': 'count'})
-                count_str = '' if count is None else count.string
-                self.add_tag('{0}({1})'.format(title, count_str), URL(tag.attrs['href'], base_url=url))
-
         # adding alpha to thumbs
         alpha_container = soup.find('div', {'class': 'alpha'})
         if alpha_container is not None:
             for alpha in _iter(alpha_container.find_all('a')):
                 self.add_tag(str(alpha.string), URL(alpha.attrs['href'], base_url=url))
 
+        # adding tags to thumbs
+        tags_container = soup.find('aside')
+        if tags_container is not None:
+            for tag in _iter(tags_container.find_all('a', id=None)):
+                if '#' in tag.get('href','#'):
+                    continue
+                self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
+
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div', {'class': 'pager'})
+        return soup.find('nav', {'class': 'pager'})
+
+    def parse_pagination(self, soup: BeautifulSoup, url: URL):
+        container = self.get_pagination_container(soup)
+        if container:
+            for page in _iter(container.find_all('a', {'href': True})):
+                if page.string and str(page.string).strip().isdigit():
+                    self.add_page(page.string.strip(), URL(page.attrs['href'], base_url=url))
+                elif 'next' in page.attrs['class']:
+                    self.add_page('>', URL(page.attrs['href'], base_url=url))
+                elif 'prev' in page.attrs['class']:
+                    self.add_page('<', URL(page.attrs['href'], base_url=url))
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         head = soup.find('head')
         if head:
-
             script = head.find('script', text=lambda x: 'streams:' in str(x))
-            if script is not None:
+            if script:
                 data = str(script).replace(' ', '')
                 sources = quotes(data, 'streams:[{', '}]').split('},{')
                 for f in sources:
@@ -118,8 +113,13 @@ class PornComSite(BaseSiteParser):
         return super().parse_video_title(soup, url).rpartition('-')[0]
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        vid_source = soup.find('div', {'class': 'vidSource'})
-        for item in _iter(vid_source.find_all('a', href=lambda x: '#' not in x)):
+        stars=soup.find('div',{'class':'pornstars'})
+        if stars:
+            for item in _iter(stars.find_all('a', href=lambda x: '#' not in x)):
+                self.add_tag(collect_string(item), URL(item.attrs['href']+'/videos', base_url=url), style=dict(color='magenta'))
+
+        tags = soup.find('div', {'class': 'meta-tags'})
+        for item in _iter(tags.find_all('a', href=lambda x: '#' not in x)):
             color = None
             href = item.attrs['href']
             if '/pornstars/' in href:
@@ -130,7 +130,9 @@ class PornComSite(BaseSiteParser):
                 href += '/videos'
             if '/channels/' in href:
                 color = 'blue'
-            label = str(item.string)
+            if '/playlists/' in href:
+                color = 'brown'
+            label = collect_string(item)
             self.add_tag(label, URL(href, base_url=url), style=dict(color=color))
 
 

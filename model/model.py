@@ -57,6 +57,7 @@ from model.site.video.selenium.porntube import PorntubeSite
 from model.site.video.selenium.drtuber import DrtuberSite
 from model.site.video.selenium.pornstreams import PornstreamsSite
 from model.site.video.simple.bitporno import BitpornoSite
+from model.site.video.selenium.pornhd8k import Pornhd8kSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -69,18 +70,23 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             # GirlstopSite,
 
                             Space('Work on'),
+
+
+                            PornbrazeSite,
+                            DonfreepornSite,
+
                             LaidhubSite,
-                            BitpornoSite,
-                            PorntubeSite,
-                            DrtuberSite,
+
                             PornstreamsSite,
 
                             Space('Classic:'),
-                            YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
-                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
-                            PornbrazeSite,XvideoSite,ToseepornSite,SextubeNlSite,
-                            PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
-                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
+                            RedtubeSite, PornComSite,XvideoSite, XnxxSite, PlusoneSite, VpornSite, PornoxoSite,PorntrexSite,Pornhd8kSite,
+                            CollectionofbestpornSite, PorntubeSite,
+                            ToseepornSite,SextubeNlSite,DrtuberSite,
+
+                            HdEasypornSite, Tube8Site,BeemtubeSite,
+
+
 
                             Space('Amateur:'),
                             MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
@@ -94,7 +100,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                             BabesandbitchesSite,FuskatorSite,
                             Space('Non working:'),
-                            HeavyRSite,PornslandSite,V24videoSite,
+                            HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,XhamsterSite,
+                            PornhdSite,ThumbzillaSite,SpankwireSite,
 
                            # Space('Info:'),
 

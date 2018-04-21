@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes
+from common.util import _iter, quotes, psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -64,14 +64,16 @@ class PornoxoSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'videoDetail'})
         if video is not None:
-            script=video.find('script', text=lambda x: 'jwplayer(' in str(x))
-            if script is not None:
-                data = str(script.string).replace(' ', '').replace('\t', '').replace('\n', '')
+            script=video.find('script', text=lambda x: 'VideoPlayer' in str(x))
+            if script:
+                data = str(script.string).replace(' ', '').replace('\\', '')
+                # psp(data)
                 if 'sources:' in data:
                     sources=quotes(data,'sources:[{','}]').split('},{')
                     for item in sources:
-                        file = quotes(item, 'file:"', '"')
-                        label=quotes(item,'label:"','"')
+                        psp(item)
+                        file = quotes(item, '"src":"', '"')
+                        label=quotes(item,'"desc":"','"')
                         self.add_video(label, URL(file, base_url=url))
                 elif "filefallback':" in data:
                     file=quotes(data,'filefallback\':"','"')

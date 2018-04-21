@@ -16,15 +16,15 @@ class DrtuberSite(BaseSiteParser):
 
     @staticmethod
     def create_start_button(view: ViewManagerFromModelInterface):
-        menu_items = dict(HD=URL('http://collectionofbestporn.com/tag/hd-porn*'),
-                          Latest=URL('http://collectionofbestporn.com/most-recent*'),
-                          TopRated=URL('http://collectionofbestporn.com/top-rated*'),
-                          MostViewed=URL('http://collectionofbestporn.com/most-viewed*'),
-                          Categories=URL('http://collectionofbestporn.com/channels/'),
-                          Longest=URL('http://collectionofbestporn.com/longest*'))
+        # menu_items = dict(HD=URL('http://collectionofbestporn.com/tag/hd-porn*'),
+        #                   Latest=URL('http://collectionofbestporn.com/most-recent*'),
+        #                   TopRated=URL('http://collectionofbestporn.com/top-rated*'),
+        #                   MostViewed=URL('http://collectionofbestporn.com/most-viewed*'),
+        #                   Categories=URL('http://collectionofbestporn.com/channels/'),
+        #                   Longest=URL('http://collectionofbestporn.com/longest*'))
 
         view.add_start_button(picture_filename='model/site/resource/drtuber.png',
-                              menu_items=menu_items,
+                              # menu_items=menu_items,
                               url=URL("http://www.drtuber.com/", test_string='Movies'))
 
     def get_shrink_name(self):

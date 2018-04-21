@@ -34,7 +34,7 @@ class SpankwireSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/spankwire.png',
                               menu_items=menu_items,
-                              url=URL("http://www.spankwire.com/home2/Straight/Upcoming/All_Time/Submitted*", test_string='Spankwire'))
+                              url=URL("https://www.spankwire.com/home2/Straight/Upcoming/All_Time/Submitted*", test_string='Spankwire'))
 
     def get_shrink_name(self):
         return 'SKW'

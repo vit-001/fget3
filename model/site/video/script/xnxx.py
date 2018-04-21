@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 from json import loads
 
-from common.util import _iter, quotes, collect_string,psp
+from common.util import _iter, quotes, collect_string,psp, pretty
 from data_format.url import URL
 from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
@@ -17,7 +17,7 @@ class XnxxSite(BaseSiteParser):
     @staticmethod
     def create_start_button(view: ViewManagerFromModelInterface):
         menu_items = dict(BestOf=URL('http://www.xnxx.com/best/'),
-                          Newest_Video=URL('http://www.xnxx.com/new/'),
+                          Newest_Video=URL('http://www.xnxx.com/'),
                           Hot=URL('http://www.xnxx.com/hot/'),
                           MostViewed=URL('http://www.xnxx.com/hits/'),
                           MainPage=URL('http://www.xnxx.com/'),
@@ -25,7 +25,7 @@ class XnxxSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/xnxx.png',
                               menu_items=menu_items,
-                              url=URL("http://www.xnxx.com/new/", test_string='Porn'))
+                              url=URL("http://www.xnxx.com/", test_string='Porn'))
 
     def get_shrink_name(self):
         return 'XNXX'
@@ -33,26 +33,27 @@ class XnxxSite(BaseSiteParser):
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'mozaique'})
         if container:
-            # psp(container.prettify())
-            for thumbnail in _iter(container.find_all('div',{'class':'thumb-block '})):
-                # psp(thumbnail.prettify())
-                xref = thumbnail.find('a')
-                if xref:
-                    # psp(thumbnail.prettify())
-                    href = URL(xref.attrs['href'], base_url=url)
+            for thumbnail in _iter(container.find_all('div',{'class':'thumb-block'})):
+                # pretty(thumbnail)
+                try:
+                    href = URL(thumbnail.a.attrs['href'], base_url=url)
+                    thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
+                    label = thumbnail.find('a',title=True).attrs['title']
 
-                    script=thumbnail.find('script',text=lambda x: 'img src' in str(x))
-                    thumb_file = quotes(script.text,'<img src="','"')
-                    thumb_url = URL(thumb_file, base_url=url)
+                    duration = thumbnail.find('span', {'class': 'duration'})
+                    dur_time = collect_string(duration).strip('()') if duration else ''
 
-                    label = xref.attrs.get('title', '')
-
-                    duration = thumbnail.find('span',{'class':'duration'})
-                    dur_time = str(duration.string).strip('()') if duration else ''
+                    hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
+                    hd = collect_string(hd_span) if hd_span else ''
 
                     self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
                                    labels=[{'text': dur_time, 'align': 'top right'},
-                                           {'text': label, 'align': 'bottom center'}])
+                                           {'text': label, 'align': 'bottom center'},
+                                           {'text': hd, 'align': 'top left'}])
+                except KeyError:
+                    pass
+                except AttributeError:
+                    pass
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'id': 'side-categories'})
