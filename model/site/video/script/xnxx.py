@@ -25,7 +25,7 @@ class XnxxSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/xnxx.png',
                               menu_items=menu_items,
-                              url=URL("http://www.xnxx.com/", test_string='Porn'))
+                              url=URL("https://www.xnxx.com/hits*", test_string='Porn'))
 
     def get_shrink_name(self):
         return 'XNXX'
@@ -37,10 +37,10 @@ class XnxxSite(BaseSiteParser):
                 # pretty(thumbnail)
                 try:
                     href = URL(thumbnail.a.attrs['href'], base_url=url)
-                    thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
+                    thumb_url = URL(thumbnail.img.attrs['data-src'].replace('THUMBNUM','2'), base_url=url)
                     label = thumbnail.find('a',title=True).attrs['title']
 
-                    duration = thumbnail.find('span', {'class': 'duration'})
+                    duration = thumbnail.find('span', {'class': 'video-duration-mark'})
                     dur_time = collect_string(duration).strip('()') if duration else ''
 
                     hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
