@@ -76,11 +76,11 @@ class VpornSite(BaseSiteParser):
         if info:
             # psp(info.prettify())
             for xref in _iter(info.find_all('a',href=lambda x: not 'javascript' in str(x))):
-                psp(xref)
-                href=xref.attrs['href']
+                # psp(xref)
+                href=xref.attrs.get('href','')
                 if '/user/' in href:
                     self.add_tag(quotes(href,'/user/','/'),URL(href.replace('/user/','/submitted/'),base_url=url), style={'color':'blue'})
-                else:
+                elif '#' not in href:
                     self.add_tag(collect_string(xref), URL(href, base_url=url))
 
 

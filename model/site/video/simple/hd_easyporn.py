@@ -2,7 +2,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes
+from common.util import _iter, quotes, psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -70,9 +70,10 @@ class HdEasypornSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'video'})
         if video is not None:
-            for source in _iter(video.find_all('source')):
-                self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
-            self.set_default_video(-1)
+            psp(video.prettify())
+            # for source in _iter(video.find_all('source')):
+            #     self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
+            # self.set_default_video(-1)
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         return super().parse_video_title(soup, url).rpartition('-')[0]

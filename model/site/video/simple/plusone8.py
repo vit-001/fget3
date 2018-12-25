@@ -59,16 +59,16 @@ class PlusoneSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div',{'class':'video-player'})
         if video is not None:
-            # psp(video.prettify())
+            psp(video.prettify())
             for source in _iter(video.find_all('source')):
                 psp(source)
-                self.add_video('DEFAULT', URL(source.attrs['src'], base_url=url))
+                self.add_video('DEFAULT', URL(source.attrs['src'], base_url=url, referer=url))
             self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         for actor_container in _iter(soup.find_all('div', {'id': 'video-actors'})):
             for href in _iter(actor_container.find_all('a')):
-                psp(href)
+                # psp(href)
                 self.add_tag(str(href.attrs['title']), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
 
         for tag_container in _iter(soup.find_all('div', {'id': 'cat-list'})):

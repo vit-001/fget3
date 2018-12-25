@@ -79,7 +79,7 @@ class PornoxoSite(BaseSiteParser):
                     file=quotes(data,'filefallback\':"','"')
                     self.add_video('DEFAULT', URL(file, base_url=url))
 
-                self.set_default_video(-1)
+                self.set_default_video(0)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         # adding "user" to video

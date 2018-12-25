@@ -78,9 +78,9 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    url1 = 'http://www.xnxx.com/'
-    url1a = 'http://www.xvideos.com/profiles/gina-gerson#0'
-    url2 = 'https://www230.playercdn.net/186/3/53wIXy8vcsQLFP-l9bGoag/1513359647/171211/355FMCV4PK0ZWON0FXZFS.mp4'
+    url1 = 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'
+    url1a = 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'
+    url2 = 'http://media.plusone8.com/videos/3bydate/28102018/376%20My%20GodShe%20Is%20So%20Beautiful%20And%20Blows%20Perfect-Plusone8.com.mp4'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
     fname1 = 'out/1.html'
@@ -95,13 +95,13 @@ if __name__ == "__main__":
 
     # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
 
-    # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
+    headers = {'Referer': 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'}
 
-    r=load(url1,fname1)#, proxies=proxies)
+    # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url1a, fname1a)
-    # r = load(url2, fname2)#, proxies=proxies)
+    r = load(url2, fname2, headers=headers)#, proxies=proxies)
 
     # r=get_response(url3, fname2)
 

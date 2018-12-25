@@ -41,7 +41,7 @@ class VideoPlayerWidget(QWidget):
         self.media_player.setVideoOutput(self.media_player_widget)
         self.media_player_widget.show()
 
-        self.media_player.bufferStatusChanged.connect(lambda x:self.ui.buffer.setValue(x))
+        self.media_player.bufferStatusChanged.connect(self.buffer_status_changed)
         self.media_player.positionChanged.connect(self.positionChanged)
         self.media_player.durationChanged.connect(self.durationChanged)
         self.media_player.mediaStatusChanged.connect(self.media_status_changed)
@@ -89,7 +89,12 @@ class VideoPlayerWidget(QWidget):
 
         # print(self.media_player.media().canonicalRequest())
 
+    def buffer_status_changed(self, buffer_status):
+        print(buffer_status)
+        self.ui.buffer.setValue(buffer_status)
+
     def media_status_changed(self, media_status):
+        # print('status=',media_status)
         if media_status == QMediaPlayer.BufferedMedia:
             if self.saved_position:
                 self.media_player.setPosition(self.saved_position)
