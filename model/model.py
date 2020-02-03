@@ -13,10 +13,10 @@ from model.site.other.space import Space
 from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
 from model.site.picture.tgp_sites.fuskator import FuskatorSite
+from model.site.picture.tgp_sites.girlstop import GirlstopSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
-from model.site.picture.tgp_sites.girlstop import GirlstopSite
 from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
@@ -25,6 +25,7 @@ from model.site.video.plus_file.toseeporn import ToseepornSite
 from model.site.video.plus_file.yourporn import YourpornSite
 from model.site.video.script.beemtube import BeemtubeSite
 from model.site.video.script.deviantclip import DeviantclipSite
+from model.site.video.script.katestube import KatestubeSite
 from model.site.video.script.motherless import MotherlessSite
 from model.site.video.script.porncom import PornComSite
 from model.site.video.script.pornhd import PornhdSite
@@ -39,25 +40,26 @@ from model.site.video.script.thumbzilla import ThumbzillaSite
 from model.site.video.script.tube8 import Tube8Site
 from model.site.video.script.v24videos import V24videoSite
 from model.site.video.script.xhamster import XhamsterSite
+from model.site.video.script.xnxx import XnxxSite
 from model.site.video.script.xvideo import XvideoSite
+from model.site.video.selenium.drtuber import DrtuberSite
+from model.site.video.selenium.pornhd8k import Pornhd8kSite
+from model.site.video.selenium.pornstreams import PornstreamsSite
+from model.site.video.selenium.porntube import PorntubeSite
+from model.site.video.simple.bitporno import BitpornoSite
 from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.heavy_r import HeavyRSite
+from model.site.video.simple.laidhub import LaidhubSite
 from model.site.video.simple.plusone8 import PlusoneSite
 from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
+from model.site.video.simple.tnaflix import TnaflixSite
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
-from model.site.video.script.xnxx import XnxxSite
-from model.site.video.simple.tnaflix import TnaflixSite
-from model.site.video.simple.laidhub import LaidhubSite
-from model.site.video.selenium.porntube import PorntubeSite
-from model.site.video.selenium.drtuber import DrtuberSite
-from model.site.video.selenium.pornstreams import PornstreamsSite
-from model.site.video.simple.bitporno import BitpornoSite
-from model.site.video.selenium.pornhd8k import Pornhd8kSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -80,8 +82,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             PornstreamsSite,
 
                             Space('Classic:'),
-                            RedtubeSite, PornComSite,XvideoSite, XnxxSite, PlusoneSite, VpornSite, PornoxoSite,PorntrexSite,Pornhd8kSite,
-                            CollectionofbestpornSite, PorntubeSite,
+                            CollectionofbestpornSite, KatestubeSite, XvideoSite, XnxxSite, PlusoneSite,  PornoxoSite,PorntrexSite,Pornhd8kSite,
+                            PorntubeSite,RedtubeSite, PornComSite,VpornSite,
                             ToseepornSite,SextubeNlSite,DrtuberSite,
 
                             HdEasypornSite, Tube8Site,BeemtubeSite,

@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes, psp, collect_string
+from common.util import _iter, quotes, psp, collect_string, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -17,12 +17,12 @@ class PlusoneSite(BaseSiteParser):
         return url.contain('plusone8.com/')
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface):
-        menu_items=dict(Popular=URL('http://plusone8.com/?filter=rate*'),
+        menu_items=dict(Best=URL('http://plusone8.com/?filter=popular*'),
                         Latest=URL('http://plusone8.com/?filter=date*'),
                         Random=URL('http://plusone8.com/?filter=random*'),
-                        MostViewed=URL('http://plusone8.com/?filter=views*'),
-                        Categories=URL('http://plusone8.com/categories/'),
-                        Longest=URL('http://plusone8.com/?filter=duration*'))
+                        MostViewed=URL('http://plusone8.com/?filter=most-viewed*'),
+                        Categories=URL('http://plusone8.com/porn-categories'),
+                        Longest=URL('http://plusone8.com/?filter=longest*'))
 
         view.add_start_button(picture_filename='model/site/resource/plusone8.png',
                               menu_items=menu_items,
@@ -32,17 +32,19 @@ class PlusoneSite(BaseSiteParser):
         return 'PO8'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        container = soup.find('main',{'id':'main'})
+        container = soup.find('div',{'class':'videos-list'})
+        # pretty(container)
         if container:
-            for thumbnail in _iter(container.find_all('div', {'class': 'column'})):
+            for thumbnail in _iter(container.find_all('article')):
                 # psp(thumbnail.prettify())
                 xref=thumbnail.find('a')
                 if xref:
                     href = URL(xref.attrs['href'], base_url=url)
                     description = xref.attrs['title']
-                    thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
+                    thumb_url = URL(thumbnail.img.attrs.get('data-src',thumbnail.img.attrs.get('src')), base_url=url)
+                    # psp(thumb_url.get())
 
-                    duration = thumbnail.find('span', {'class': "length"})
+                    duration = thumbnail.find('span', {'class': "duration"})
                     dur_time = '' if duration is None else collect_string(duration)
 
                     quality = thumbnail.find('span', {'class': "quality"})
@@ -59,21 +61,21 @@ class PlusoneSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div',{'class':'video-player'})
         if video is not None:
-            psp(video.prettify())
+            # psp(video.prettify())
             for source in _iter(video.find_all('source')):
-                psp(source)
+                # psp(source)
                 self.add_video('DEFAULT', URL(source.attrs['src'], base_url=url, referer=url))
             self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        for actor_container in _iter(soup.find_all('div', {'id': 'video-actors'})):
-            for href in _iter(actor_container.find_all('a')):
-                # psp(href)
-                self.add_tag(str(href.attrs['title']), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
+        # for actor_container in _iter(soup.find_all('div', {'id': 'video-actors'})):
+        #     for href in _iter(actor_container.find_all('a')):
+        #         # psp(href)
+        #         self.add_tag(str(href.attrs['title']), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
 
-        for tag_container in _iter(soup.find_all('div', {'id': 'cat-list'})):
+        for tag_container in _iter(soup.find_all('div', {'class': 'tags-list'})):
             for href in _iter(tag_container.find_all('a')):
-                psp(href)
+                # psp(href)
                 self.add_tag(str(href.attrs['title']), URL(href.attrs['href'], base_url=url))
 
 

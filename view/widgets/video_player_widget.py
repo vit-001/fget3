@@ -90,7 +90,7 @@ class VideoPlayerWidget(QWidget):
         # print(self.media_player.media().canonicalRequest())
 
     def buffer_status_changed(self, buffer_status):
-        print(buffer_status)
+        # print(buffer_status)
         self.ui.buffer.setValue(buffer_status)
 
     def media_status_changed(self, media_status):
