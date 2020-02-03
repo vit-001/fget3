@@ -78,9 +78,9 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    url1 = 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'
-    url1a = 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'
-    url2 = 'http://media.plusone8.com/videos/3bydate/28102018/376%20My%20GodShe%20Is%20So%20Beautiful%20And%20Blows%20Perfect-Plusone8.com.mp4'
+    url1 = 'https://ru.redtube.com/newest'
+    url1a = 'http://porno365.sex/movie/16752'
+    url2 = 'http://cdn365eu.porno365.sex/porno365/ff4/16752.mp4?st=0ptZ_RhbewjlkzVT2g9XEQ&e=1550659136'
     url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
 
     fname1 = 'out/1.html'
@@ -97,11 +97,11 @@ if __name__ == "__main__":
 
     headers = {'Referer': 'http://plusone8.com/376-my-godshe-is-so-beautiful-and-blows-perfect/'}
 
-    # r=load(url1,fname1)#, proxies=proxies)
+    r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname2a)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url1a, fname1a)
-    r = load(url2, fname2, headers=headers)#, proxies=proxies)
+    # r = load(url2, fname2)#, headers=headers)#, proxies=proxies)
 
     # r=get_response(url3, fname2)
 

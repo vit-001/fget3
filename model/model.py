@@ -58,6 +58,7 @@ from model.site.video.selenium.drtuber import DrtuberSite
 from model.site.video.selenium.pornstreams import PornstreamsSite
 from model.site.video.simple.bitporno import BitpornoSite
 from model.site.video.selenium.pornhd8k import Pornhd8kSite
+from model.site.video.xhr.porno365 import Porno365Site
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -80,7 +81,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             PornstreamsSite,
 
                             Space('Classic:'),
-                            RedtubeSite, PornComSite,XvideoSite, XnxxSite, PlusoneSite, VpornSite, PornoxoSite,PorntrexSite,Pornhd8kSite,
+                            Porno365Site,XvideoSite, XnxxSite,
+                            RedtubeSite, PornComSite, PlusoneSite, VpornSite, PornoxoSite,PorntrexSite,Pornhd8kSite,
                             CollectionofbestpornSite, PorntubeSite,
                             ToseepornSite,SextubeNlSite,DrtuberSite,
 

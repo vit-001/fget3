@@ -33,7 +33,7 @@ class RedtubeSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/redtube.png',
                               menu_items=menu_items,
-                              url=URL("http://www.redtube.com/", test_string='Redtube'))
+                              url=URL("https://ru.redtube.com/newest", test_string='Redtube'))
 
     def get_shrink_name(self):
         return 'RT'
@@ -41,9 +41,10 @@ class RedtubeSite(BaseSiteParser):
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         # process thumbs
         for thumbnail in _iter(soup.find_all('div',{'class':'video_block_wrapper'})):
+            # pretty(thumbnail)
             try:
                 href = URL(thumbnail.a.attrs['href'], base_url=url)
-                thumb_url = URL(thumbnail.img.attrs['data-thumb_url'], base_url=url)
+                thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
                 label = thumbnail.img.attrs.get('alt', '')
 
                 duration = thumbnail.find('span', {'class': 'duration'})
