@@ -78,7 +78,7 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    url1 = 'https://www.youngpornvideos.com/videos/straight/all-recent.html'
+    url1 = 'http://www.hotgirlclub.com/videos/20157/daya-knight-french-lessons/'
     url1a = 'https://www.katestube.com/videos/2322205/huge-boobs-teen-thief-caught-stealing-and-is-in-trouble/'
     url2 = 'https://rt.pornhub.com/embed/ph5e73ab028a050'
     url3 = 'https://ce-h.phncdn.com/hls/videos/202003/19/294619331/,480P_2000K,_294619331.mp4.urlset/index-v1-a1.m3u8?0LF98PreiD_ghfJqHP86kXtfnK0XoYHOS94IvWSEPpIGy5Kk1Y7PEylCOzGG9cKFOBBDIoHHaPURQjM836s4YxexVhIc7ntmdMn-Jaz4dsOxkE3E48bpNfB5L1soOrPqGR4BNhgEfJibgu94RhaFPnPKqZRxHirFd8GOp8t04FSngBkS-g'

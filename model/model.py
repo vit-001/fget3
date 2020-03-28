@@ -53,6 +53,7 @@ from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 from model.site.video.script.youngpornvideos import YoungPornVideosSite
+from model.site.video.simple.hotgirlclub import HotgirlclubSite
 
 from model.site.video.simple.test import TestSite
 
@@ -80,7 +81,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
                             Space('Classic:'),
                             YoungPornVideosSite,
-                            CollectionofbestpornSite, KatestubeSite, XvideoSite, XnxxSite, PlusoneSite,  PornoxoSite,PorntrexSite,Pornhd8kSite,
+                            CollectionofbestpornSite, KatestubeSite, XvideoSite, XnxxSite, PlusoneSite, HotgirlclubSite,
+                            PornoxoSite,PorntrexSite,Pornhd8kSite,
                             PorntubeSite,RedtubeSite, PornComSite,VpornSite,
                             ToseepornSite,SextubeNlSite,DrtuberSite,
 
