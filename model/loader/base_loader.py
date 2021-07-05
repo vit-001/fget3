@@ -39,6 +39,7 @@ class BaseLoadProcedure(LoadProcedureInterface):
 
             buf = io.BytesIO(result)
             try:
+                # print(file.filename)
                 with open(file.filename, 'wb') as fd:
                     chunk = buf.read(256)
                     while len(chunk) > 0:
