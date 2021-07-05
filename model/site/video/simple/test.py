@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes, pretty, psp, collect_string_to_array
+# from common.util import _iter, quotes, pretty, psp, collect_string_to_array
 
 import json
 

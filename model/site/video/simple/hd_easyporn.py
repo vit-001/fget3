@@ -68,18 +68,18 @@ class HdEasypornSite(BaseSiteParser):
                 self.add_tag(str(tag.string).strip(), URL(tag.attrs['href'], base_url=url))
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-<<<<<<< Updated upstream
-        video = soup.find('div', {'class': 'video'})
-        if video is not None:
-            for source in _iter(video.find_all('source')):
-                self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
-=======
+# <<<<<<< Updated upstream
+#         video = soup.find('div', {'class': 'video'})
+#         if video is not None:
+#             for source in _iter(video.find_all('source')):
+#                 self.add_video(source.attrs['res'], URL(source.attrs['src'], base_url=url))
+# =======
         video = soup.find('video', {'class': 'video-js'})
         if video:
             psp(video.prettify())
             for source in _iter(video.find_all('source')):
                 self.add_video(source.attrs['data-res'], URL(source.attrs['src'], base_url=url))
->>>>>>> Stashed changes
+# >>>>>>> Stashed changes
             self.set_default_video(-1)
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
