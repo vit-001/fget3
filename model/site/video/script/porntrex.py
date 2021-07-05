@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes, psp
+from common.util import _iter, quotes, psp, pretty, collect_string
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -33,23 +33,30 @@ class PorntrexSite(BaseSiteParser):
         return 'PT'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumbnail in _iter(soup.find_all('div', {'class': 'video-item'})):
-            private=thumbnail.find('span',{'class':'ico-private'})
-            if not private:
-                href = URL(thumbnail.a.attrs['href'], base_url=url)
-                description = thumbnail.img.attrs['alt']
-                thumb_url = URL(thumbnail.img.attrs['data-original'], base_url=url)
+        container=soup.find('div',{'class':'video-list'})
+        if container:
+            pretty(container)
+            for thumbnail in _iter(container.find_all('div', {'class': 'video-item'})):
+                pretty(thumbnail)
+                private=thumbnail.find('span',{'class':'ico-private'})
+                if not private:
+                    href = URL(thumbnail.a.attrs['href'], base_url=url)
+                    description = thumbnail.img.attrs['alt']
+                    thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
 
-                duration = thumbnail.find('div', {'class': 'durations'})
-                dur_time = '' if duration is None else str(duration.contents[-1]).strip()
+                    duration = thumbnail.find('div', {'class': 'durations'})
+                    dur_time = '' if duration is None else str(duration.contents[-1]).strip()
 
-                hd_div = thumbnail.find('div', {'class': 'hd-text-icon'})
-                hd = '' if hd_div is None else str(hd_div.string).strip()
+                    quality=thumbnail.find('span', {'class': 'quality'})
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                               labels=[{'text': dur_time, 'align': 'top right'},
-                                       {'text': description, 'align': 'bottom center'},
-                                       {'text': hd, 'align': 'top left', 'bold': True}])
+
+                    # hd_div = thumbnail.find('div', {'class': 'hd-text-icon'})
+                    hd = '' if quality is None else str(quality.string).strip()
+
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                                   labels=[{'text': dur_time, 'align': 'top right'},
+                                           {'text': description, 'align': 'bottom center'},
+                                           {'text': hd, 'align': 'top left', 'bold': True}])
 
 
     def parse_others(self, soup: BeautifulSoup, url: URL):
@@ -76,7 +83,8 @@ class PorntrexSite(BaseSiteParser):
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         for tags_container in _iter(soup.find_all('div', {'class': 'sidebar'})):
                 for tag in _iter(tags_container.find_all('a', href=lambda x:'/categories/' in str(x))):
-                    self.add_tag(str(tag.contents[0]), URL(tag.attrs['href'], base_url=url))
+                    # psp(tag, collect_string(tag))
+                    self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
 
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         container = soup.find('div', {'class': 'pagination-holder'})

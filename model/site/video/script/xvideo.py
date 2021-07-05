@@ -117,7 +117,8 @@ class XvideoSite(BaseSiteParser):
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'id': 'video-player-bg'})
-        if video is not None:
+        if video:
+            # psp(video)
             script=video.find('script', text=lambda x: 'HTML5Player' in str(x))
             if script is not None:
                 lines=str(script.string).split(';')

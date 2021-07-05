@@ -39,10 +39,10 @@ class BeemtubeSite(BaseSiteParser):
         contents=soup.find('div', {'class':'videos'})
         if contents:
             for thumbnail in _iter(contents.find_all('div', {'class': 'content'})):
-                # psp(thumbnail.prettify())
+                psp(thumbnail.prettify())
                 xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
-                thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
+                thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
                 label=thumbnail.img.attrs.get('alt','')
 
                 duration = thumbnail.find('div', {'class': 'duration'})
@@ -83,7 +83,7 @@ class BeemtubeSite(BaseSiteParser):
             script=contents.find('script',text=lambda x: 'beemPlayer' in str(x))
             if script:
                 # psp(script.prettify())
-                video_url=URL(quotes(str(script.text),'file:',',').strip(' "'))
+                video_url=URL(quotes(str(script.text),'file:',',').strip(' "'),referer=url)
                 self.add_video('default',video_url)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):

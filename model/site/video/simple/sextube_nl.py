@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes, psp, collect_string
+from common.util import _iter, quotes, psp, collect_string, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -31,14 +31,16 @@ class SextubeNlSite(BaseSiteParser):
         return 'NL'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div', {'class':'video_overview'})
+        container=soup.find('div', {'class':'videos-list'})
         if container:
-            for thumbnail in _iter(container.find_all('a',href=True, title=True)):
+            for article in _iter(container.find_all('article')):
+                pretty(article)
+                thumbnail=article.find('a')
                 href = URL(thumbnail.attrs['href'], base_url=url)
 
                 img=thumbnail.find('img')
                 if img:
-                    thumb_file=img.attrs.get('data-original',img.attrs.get('src'))
+                    thumb_file=img.attrs.get('data-src',img.attrs.get('src'))
                     thumb_url = URL(thumb_file, base_url=url)
 
                     label = thumbnail.attrs['title']
@@ -64,8 +66,9 @@ class SextubeNlSite(BaseSiteParser):
         return soup.find('div',{'class':'pagination2'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('video')
+        container=soup.find('div',{'class':'video-player'})
         if container:
+            pretty(container)
             source=container.find('source', src=True)
             if source:
                 self.add_video('default',URL(source.attrs['src']))

@@ -35,6 +35,7 @@ if __name__ == '__main__':
 
 
 
+<<<<<<< Updated upstream
     # print('Todo:')
     # # print('http://www.xnxx.com/', 'verifyed, script')
     # print('http://www.shameless.com/', 'verifyed, script')
@@ -49,6 +50,24 @@ if __name__ == '__main__':
     # print('Thats all')
     # print("Let's go..")
     # print('')
+=======
+    print('Todo:')
+    # print('www.tgpdog.com', '  - VeroniccaComSite ')
+    print('http://www.shameless.com/', 'verifyed, script')
+    # print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
+    # print('https://www.pornfreeze.com/','verifyed, simple')
+    print('https://www.ebalovo.com/', 'simple')
+    print('http://www.txxx.com/  script')
+    # print('https://faapy.com/', 'jwplayer script')
+    print('https://kinovau.tv/','verifyed, simple')
+    # print('http://www.girlstop.info/','photo')
+    # print('https://www.coedcherry.com/models/danica-mpl-studios')
+
+    # print('Исправить TUBE8')
+    print('Thats all')
+    print("Let's go..")
+    print('')
+>>>>>>> Stashed changes
 
 
     app = QApplication(sys.argv)

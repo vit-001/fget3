@@ -12,7 +12,6 @@ from model.loader.multiprocess_az_loader import MultiprocessAZloader
 from model.site.other.space import Space
 from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
-from model.site.picture.tgp_sites.fuskator import FuskatorSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
@@ -20,8 +19,10 @@ from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
 from model.site.video.plus_file.sexix import SexixSite
-from model.site.video.plus_file.toseeporn import ToseepornSite
+from model.site.video.plus_file.pornwild import PornwildSite
 from model.site.video.plus_file.yourporn import YourpornSite
+from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
+from model.site.video.plus_file.pornmz import PornmzSite
 from model.site.video.script.beemtube import BeemtubeSite
 from model.site.video.script.deviantclip import DeviantclipSite
 from model.site.video.script.motherless import MotherlessSite
@@ -45,12 +46,29 @@ from model.site.video.simple.heavy_r import HeavyRSite
 from model.site.video.simple.plusone8 import PlusoneSite
 from model.site.video.simple.pornbozz import PornbozzSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
+<<<<<<< Updated upstream
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 from model.site.video.script.xnxx import XnxxSite
 from model.site.video.simple.tnaflix import TnaflixSite
+=======
+from model.site.video.simple.tnaflix import TnaflixSite
+from model.site.video.xhr.extremetube import ExtremetubeSite
+from model.site.video.xhr.pervertslut import PervertslutSite
+from model.site.video.script.youngpornvideos import YoungPornVideosSite
+from model.site.video.simple.hotgirlclub import HotgirlclubSite
+from model.site.video.simple.porngo import PorngoSite
+from model.site.video.simple.pornone import PornoneSite
+from model.site.video.simple.gigporno import GigpornoSite
+from model.site.video.script.boundhub import BoundhubSite
+from model.site.video.script.porn0sex import Porn0sexSite
+from model.site.video.script.rusvideos import RusvideosSite
+from model.site.video.script.jizzbunker import JizzbunkerSite
+
+from model.site.video.simple.test import TestSite
+>>>>>>> Stashed changes
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -60,6 +78,39 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
 
+<<<<<<< Updated upstream
+=======
+                            TestSite,
+
+                            # GirlstopSite,
+
+                            # Space('Work on'),
+
+
+                            # PornbrazeSite,
+                            # DonfreepornSite,
+                            #
+                            # LaidhubSite,
+                            #
+                            # PornstreamsSite,
+
+
+
+
+                            Space('Classic:'),
+
+                            PornwildSite,PornmzSite,
+                            YespornpleasexxxSite,
+
+                            GigpornoSite,RusvideosSite,JizzbunkerSite,
+                            HdEasypornSite, RedtubeSite, KatestubeSite,
+                            XvideoSite, XnxxSite, PlusoneSite, HotgirlclubSite,
+                            CollectionofbestpornSite,
+                            # VpornSite,
+                            PorngoSite,
+
+                            SextubeNlSite,
+>>>>>>> Stashed changes
 
 
                            Space('Classic:'),
@@ -69,6 +120,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
+<<<<<<< Updated upstream
                            Space('Amateur:'),
                            MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
 
@@ -83,6 +135,26 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                            Space('Non working:'),
                            HeavyRSite,PornslandSite,V24videoSite,
 
+=======
+                            Space('Amateur:'),
+                             RealGfSite,
+
+                            Space('Deviant:'),
+                            BoundhubSite, ShockingmoviesSite,
+
+                           # Space('Short:'),
+
+                            Space('Photo:'),
+                            BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
+                            BabesandbitchesSite,
+                            Space('Non working:'),
+                            HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,XhamsterSite,
+                            PornhdSite,ThumbzillaSite,SpankwireSite,PorntubeSite,PornComSite,PornoxoSite,YoungPornVideosSite,
+                            DeviantclipSite,ExtremetubeSite,PervertslutSite,MotherlessSite,PornfunSite,PornbozzSite,Pornhd8kSite,DrtuberSite,
+                            Tube8Site,BeemtubeSite,PornoneSite,Porn0sexSite,
+                            Space('Blocked'),
+                            PorntrexSite,
+>>>>>>> Stashed changes
                            # Space('Info:'),
 
                            ]

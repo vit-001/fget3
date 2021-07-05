@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes
+from common.util import _iter, quotes, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -57,12 +57,16 @@ class RealGfSite(BaseSiteParser):
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         content = soup.find('div', {'id': 'mediaspace'})
-        if content is not None:
-            script = content.find('script', text=lambda x: 'jwplayer(' in x)
-            if script is not None:
-                data = str(script.string).replace(' ', '')
-                file = quotes(data, 'file:"', '"')
-                self.add_video('DEFAULT', URL(file, base_url=url))
+
+        if content:
+            pretty(content)
+            video = content.find('video')
+            pretty(video)
+            video_url=video.find('source').attrs['src']
+            # if script is not None:
+            #     data = str(script.string).replace(' ', '')
+            #     file = quotes(data, 'file:"', '"')
+            self.add_video('DEFAULT', URL(video_url,referer=url))
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         return super().parse_video_title(soup, url).rpartition('-')[0]
