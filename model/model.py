@@ -52,21 +52,16 @@ from model.site.video.simple.hd_easyporn import HdEasypornSite
 from model.site.video.simple.heavy_r import HeavyRSite
 from model.site.video.simple.plusone8 import PlusoneSite
 from model.site.video.simple.pornbozz import PornbozzSite
-# from model.site.video.simple.hotgirlclub import HotgirlclubSite
 from model.site.video.simple.porngo import PorngoSite
 from model.site.video.simple.pornone import PornoneSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.test import TestSite
-# =======
 from model.site.video.simple.tnaflix import TnaflixSite
-# <<<<<<< Updated upstream
 from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 
-
-# >>>>>>> Stashed changes
 
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
@@ -75,25 +70,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessAZloader()
         self._site_models=[
-
-# <<<<<<< Updated upstream
-# =======
                             TestSite,
-
-                            # GirlstopSite,
-
-                            # Space('Work on'),
-
-
-                            # PornbrazeSite,
-                            # DonfreepornSite,
-                            #
-                            # LaidhubSite,
-                            #
-                            # PornstreamsSite,
-
-
-
 
                             Space('Classic:'),
 
@@ -102,42 +79,21 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
                             GigpornoSite,RusvideosSite,JizzbunkerSite,
                             HdEasypornSite, RedtubeSite,
-            # KatestubeSite,
                             XvideoSite, XnxxSite, PlusoneSite,
-            # HotgirlclubSite,
                             CollectionofbestpornSite,
-                            # VpornSite,
                             PorngoSite,
 
                             SextubeNlSite,
-# >>>>>>> Stashed changes
 
 
                            Space('Classic:'),
                            YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
                            XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
                            PornbrazeSite,XvideoSite,
-            # ToseepornSite,
-            SextubeNlSite,
+                            SextubeNlSite,
                            PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
                            VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
-# <<<<<<< Updated upstream
-#                            Space('Amateur:'),
-#                            MotherlessSite, RealGfSite, PornfunSite,PornbozzSite,
-#
-#                            Space('Deviant:'),
-#                            ShockingmoviesSite,DeviantclipSite,ExtremetubeSite,PervertslutSite,
-#
-#                            # Space('Short:'),
-#
-#                            Space('Photo:'),
-#                            BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
-#                            BabesandbitchesSite,FuskatorSite,
-#                            Space('Non working:'),
-#                            HeavyRSite,PornslandSite,V24videoSite,
-#
-# =======
                             Space('Amateur:'),
                              RealGfSite,
 
@@ -152,15 +108,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             Space('Non working:'),
                             HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,XhamsterSite,
                             PornhdSite,ThumbzillaSite,SpankwireSite,
-            # PorntubeSite,
-            PornComSite,PornoxoSite,YoungPornVideosSite,
+                            PornComSite,PornoxoSite,YoungPornVideosSite,
                             DeviantclipSite,ExtremetubeSite,PervertslutSite,MotherlessSite,PornfunSite,PornbozzSite,
-            # Pornhd8kSite,DrtuberSite,
                             Tube8Site,BeemtubeSite,PornoneSite,Porn0sexSite,
                             Space('Blocked'),
                             PorntrexSite,
-# >>>>>>> Stashed changes
-                           # Space('Info:'),
 
                            ]
 
