@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
 
     url1 = 'https://x.rusvideos.net/porno'
-    url1a = 'https://hotscope.tv/porn/12409'
+    url1a = 'https://pornobomba.vip/videos/arabskiy-minet/'
     url2 = 'https://pornmz.com/f.php?id=gqp8nc-dwqz6j43'
     url3 = 'https://s2.pornharlot.xyz/media/videos/iphone/33265.mp4'
 

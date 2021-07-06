@@ -8,7 +8,7 @@ from interface.site_interface import SiteInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.favorites.favorites import Favorites
 from model.history_model.hystory import HistoryModel
-from model.loader.multiprocess_az_loader import MultiprocessAZloader
+from model.loader.multiprocess_loader import MultiprocessLoader
 from model.site.other.space import Space
 from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
@@ -71,7 +71,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
     def __init__(self, view_manager:ViewManagerFromModelInterface):
         self._view_manager=view_manager
-        self._loader=MultiprocessAZloader()
+        self._loader=MultiprocessLoader()
         self._site_models=[
                             TestSite,
                             PornoaktSite,

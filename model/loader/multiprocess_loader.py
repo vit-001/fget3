@@ -25,7 +25,7 @@ class DataServer:
     def __init__(self):
         self.manager = Manager()
         self.data = self.manager.dict()
-        self.last_load_proxy_pack = None
+        # self.last_load_proxy_pack = None
         self.init_data()
         # print('Proxy pack', len(self.data['proxy_domains']))
 
@@ -33,75 +33,75 @@ class DataServer:
         return self.data
 
     def stop(self):
-        self.write_config(Setting.data_server_config_path+'az.json')
+        # self.write_config(Setting.data_server_config_path+'az.json')
         self.manager.shutdown()
 
     def init_data(self):
         print('Requests version: ' + requests.__version__)
-        self.read_config(Setting.data_server_config_path+'az.json')
-        self.read_proxy_pac(URL("http://antizapret.prostovpn.org/proxy.pac*"))
+        # self.read_config(Setting.data_server_config_path+'az.json')
+        # self.read_proxy_pac(URL("http://antizapret.prostovpn.org/proxy.pac*"))
         self.data['domain_cash'] = dict()
 
-    def read_proxy_pac(self, pac_url):
-        if self.last_load_proxy_pack:
-            if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(seconds=2):
-                return
-        try:
-            print('Loading', pac_url)
-            pac = RequestLoad().open(pac_url).decode(errors='ignore')
+    # def read_proxy_pac(self, pac_url):
+    #     if self.last_load_proxy_pack:
+    #         if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(seconds=2):
+    #             return
+    #     try:
+    #         print('Loading', pac_url)
+    #         pac = RequestLoad().open(pac_url).decode(errors='ignore')
+    #
+    #         r = re.search('\"PROXY (.*); DIRECT', pac)
+    #         if r:
+    #             self.data['free_http_proxy'] = r.group(1)
+    #             # print(self.data)
+    #             # p = re.findall("\"(.*?)\",", pac)
+    #             #
+    #             # proxy_domains = list()
+    #             # for item in p:
+    #             #     proxy_domains.append(item)
+    #             # self.data['proxy_domains']=proxy_domains
+    #     except LoaderError:
+    #         print('AZLoader error:', pac_url, 'not loaded. Lets try to load later...')
+    #
+    #     self.last_load_proxy_pack=datetime.datetime.now()
 
-            r = re.search('\"PROXY (.*); DIRECT', pac)
-            if r:
-                self.data['free_http_proxy'] = r.group(1)
-                # print(self.data)
-                # p = re.findall("\"(.*?)\",", pac)
-                #
-                # proxy_domains = list()
-                # for item in p:
-                #     proxy_domains.append(item)
-                # self.data['proxy_domains']=proxy_domains
-        except LoaderError:
-            print('AZLoader error:', pac_url, 'not loaded. Lets try to load later...')
+    # def read_config(self, config_filename):
+    #     try:
+    #         with open(config_filename) as config:
+    #             data = json.load(config)
+    #             self.data['free_http_proxy'] = data.get('free_http_proxy', None)
+    #             self.data['proxy_domains'] = data.get('proxy_domains', list())
+    #             self.last_load_proxy_pack = datetime.datetime.fromtimestamp(data.get('last_loaded'), None)
+    #
+    #             print('Load DataServer config')
+    #
+    #     except EnvironmentError as err:
+    #         print('Read ' + config_filename + ' error: ', err)
+    #     except (TypeError, ValueError):
+    #         print('DataServer config error, using default')
+    #         self.last_load_proxy_pack = None
 
-        self.last_load_proxy_pack=datetime.datetime.now()
-
-    def read_config(self, config_filename):
-        try:
-            with open(config_filename) as config:
-                data = json.load(config)
-                self.data['free_http_proxy'] = data.get('free_http_proxy', None)
-                self.data['proxy_domains'] = data.get('proxy_domains', list())
-                self.last_load_proxy_pack = datetime.datetime.fromtimestamp(data.get('last_loaded'), None)
-
-                print('Load DataServer config')
-
-        except EnvironmentError as err:
-            print('Read ' + config_filename + ' error: ', err)
-        except (TypeError, ValueError):
-            print('DataServer config error, using default')
-            self.last_load_proxy_pack = None
-
-    def write_config(self, config_filename):
-        try:
-            os.replace(config_filename, config_filename + '.old')
-        except EnvironmentError as err:
-            print('Writing ' + config_filename + ' error: ', err)
-
-        try:
-            with open(config_filename, 'w') as config:
-                print('Writing DataServer config to ' + config_filename)
-
-                data = dict()
-                data['free_http_proxy'] = self.data['free_http_proxy']
-                data['last_loaded'] = self.last_load_proxy_pack.timestamp()
-                data['proxy_domains'] = self.data.get('proxy_domains', list())
-
-                json.dump(data, config)
-        except EnvironmentError as err:
-            print('Writing ' + config_filename + ' error: ', err)
+    # def write_config(self, config_filename):
+    #     try:
+    #         os.replace(config_filename, config_filename + '.old')
+    #     except EnvironmentError as err:
+    #         print('Writing ' + config_filename + ' error: ', err)
+    #
+    #     try:
+    #         with open(config_filename, 'w') as config:
+    #             print('Writing DataServer config to ' + config_filename)
+    #
+    #             data = dict()
+    #             data['free_http_proxy'] = self.data['free_http_proxy']
+    #             data['last_loaded'] = self.last_load_proxy_pack.timestamp()
+    #             data['proxy_domains'] = self.data.get('proxy_domains', list())
+    #
+    #             json.dump(data, config)
+    #     except EnvironmentError as err:
+    #         print('Writing ' + config_filename + ' error: ', err)
 
 
-class AZloaderMP(BaseLoadProcedure):
+class LoaderMP(BaseLoadProcedure):
     def __init__(self, data, lock:Lock):
         self.data = data
         self.lock = lock
@@ -165,14 +165,14 @@ class AZloaderMP(BaseLoadProcedure):
         except LoaderError:
             pass
 
-        try:
-            self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
-            string = self.request_load.open(url).decode(errors='ignore')
-
-            if url.test_string in string:
-                return 'proxy'
-        except LoaderError:
-            pass
+        # try:
+        #     self.request_load.proxies = {'http': self.data.get('free_http_proxy', '')}
+        #     string = self.request_load.open(url).decode(errors='ignore')
+        #
+        #     if url.test_string in string:
+        #         return 'proxy'
+        # except LoaderError:
+        #     pass
 
         for method_name in self.trick_load.trick_headers:
             # print(method_name)
@@ -203,7 +203,7 @@ class LoadServer(Process):
 
     def run(self):
         self.events.put(LoadProcessEvent('start'))
-        loader = AZloaderMP(self.data, self.lock)
+        loader = LoaderMP(self.data, self.lock)
 
         for filedata in self.filelist:
             try:
@@ -246,7 +246,7 @@ class LoadProcess(LoadProcessInterface):
             self.loader.terminate()
             self.update()
 
-class MultiprocessAZloader(LoaderInterface):
+class MultiprocessLoader(LoaderInterface):
     def __init__(self):
         self.data = DataServer()
         self.lock = Lock()
