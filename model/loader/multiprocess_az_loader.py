@@ -273,6 +273,7 @@ class MultiprocessAZloader(LoaderInterface):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
+        # print("Loading ",filedata.url.get())
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 

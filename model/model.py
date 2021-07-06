@@ -65,6 +65,7 @@ from model.site.video.simple.pornoakt import PornoaktSite
 from model.site.video.simple.pornobomba import PornobombaSite
 from model.site.video.simple.homeporno import HomepornoSite
 from model.site.video.simple.spreee import SpreeeSite
+from model.site.video.simple.hotscope import HotscopeSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -77,6 +78,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             PornobombaSite,
                             HomepornoSite,
                             SpreeeSite,
+                            HotscopeSite,
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,

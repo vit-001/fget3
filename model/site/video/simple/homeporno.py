@@ -26,7 +26,7 @@ class HomepornoSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/gigporno.jpg',
                               # menu_items=menu_items,
-                              url=URL("http://homeporno.info/"))
+                              url=URL("http://homeporno.info/", test_string='порно'))
 
     def get_shrink_name(self):
         return 'HP'

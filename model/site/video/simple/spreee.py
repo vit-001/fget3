@@ -26,7 +26,7 @@ class SpreeeSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/gigporno.jpg',
                               # menu_items=menu_items,
-                              url=URL("https://xxx.spreee.pro/"))
+                              url=URL("https://xxx.spreee.pro/", test_string='порно'))
 
     def get_shrink_name(self):
         return 'PB'

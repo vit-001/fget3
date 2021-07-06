@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class PornobombaSite(BaseSiteParser):
+class HotscopeSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('pornobomba.vip/')
+        return url.contain('hotscope.tv/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -26,10 +26,10 @@ class PornobombaSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/gigporno.jpg',
                               # menu_items=menu_items,
-                              url=URL("https://pornobomba.vip/", test_string='порно'))
+                              url=URL("https://hotscope.tv/", test_string='Periscope'))
 
     def get_shrink_name(self):
-        return 'PB'
+        return 'HS'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         contents=soup.find('div', {'class':'dle-content'})
