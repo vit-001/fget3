@@ -78,17 +78,12 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-<<<<<<< Updated upstream
-    url1 = 'http://www.extremetube.com/videos'
-    url1a = 'https://www.tnaflix.com/hardcore-porn/Assfucked-euro-babe-rubs-her-pussy/video2528566'
-    url2 = 'http://porn96.xyz/?u=zHufneT3hJUlVfhUr/XrRzrZYuGrNnVWZRfO5FY5Jp5lDwiL3dION8mxURUbg/FCTXtXFzA640sVf6jZLopwaA=='
-    url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
-=======
+
     url1 = 'https://x.rusvideos.net/porno'
-    url1a = 'https://pornmz.com/video/id=pm21150518116718'
+    url1a = 'https://pornobomba.vip/'
     url2 = 'https://pornmz.com/f.php?id=gqp8nc-dwqz6j43'
     url3 = 'https://s2.pornharlot.xyz/media/videos/iphone/33265.mp4'
->>>>>>> Stashed changes
+
 
     fname1 = 'out/1.html'
     fname1a = 'out/1a.html'
@@ -101,7 +96,6 @@ if __name__ == "__main__":
     fname5 = 'out/1.svg'
 
 
-<<<<<<< Updated upstream
     # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
 
     # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
@@ -111,16 +105,7 @@ if __name__ == "__main__":
     # r = load(url1a, fname1a, proxies=proxies)
     r = load(url1a, fname1a)
     # r = load(url2, fname2)#, proxies=proxies)
-=======
-    headers = {'Referer': 'https://hdporn92.com/houseoftaboo-kinuski-bdsm-dp-domination-session/'}
 
-    # r=load(url1,fname1, cookies=coockies)#, headers=headers)#, proxies=proxies)
-    # r = load(url1a, fname1a)
-    r = load(url2, fname2a)
-    # r = load(url1a, fname1a, proxies=proxies)
-    # r = load(url1a, fname1a, cookies=coockies)#, headers=headers)
-    # r = load(url2, fname2, headers=headers)#, proxies=proxies)
->>>>>>> Stashed changes
 
     # r=get_response(url3, fname2)
 

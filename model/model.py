@@ -61,8 +61,8 @@ from model.site.video.simple.veronicca import VeroniccaComSite
 from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
-
-
+from model.site.video.simple.pornoakt import PornoaktSite
+from model.site.video.simple.pornobomba import PornobombaSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -71,7 +71,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessAZloader()
         self._site_models=[
                             TestSite,
-
+                            PornoaktSite,
+                            PornobombaSite,
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,

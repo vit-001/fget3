@@ -190,7 +190,8 @@ class XvideoSite(BaseSiteParser):
                 self.add_tag(str(name.string), URL(xref, base_url=url), style=dict(color='blue'))
 
             for href in _iter(container.find_all('a', href=lambda x: '/pornstar-channels/' in str(x))):
-                xref=href.attrs['href']+'#_tabVideos*'
+                xref=href.attrs['href']
+                     # +'#_tabVideos*'
                 name=href.find('span', {'class': 'name'})
                 # if xref != '/tags/':
                 self.add_tag(str(name.string), URL(xref, base_url=url),style=dict(color='red'))

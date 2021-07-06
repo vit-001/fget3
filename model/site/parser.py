@@ -89,7 +89,7 @@ class BaseSiteParser(BaseSite):
         return url.get().strip('/').rpartition('/')[2].partition('.')[0]
 
     def get_shrink_name(self):
-        return ''
+        return '*'
 
 
 if __name__ == "__main__":
