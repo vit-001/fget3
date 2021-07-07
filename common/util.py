@@ -22,6 +22,14 @@ def collect_string(soup:BeautifulSoup)->str:
 
     return result
 
+def collect_string_to_array(soup:BeautifulSoup)-> list[str]:
+    result=list()
+    for s in soup.stripped_strings:
+        result.append(s)
+
+    return result
+
+
 def sp():
     print('=========================================')
 

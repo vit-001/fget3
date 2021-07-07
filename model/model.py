@@ -62,7 +62,7 @@ from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 from model.site.video.simple.pornoakt import PornoaktSite
-from model.site.video.simple.pornobomba import PornobombaSite
+from model.site.video.script.pornobomba import PornobombaSite
 from model.site.video.simple.homeporno import HomepornoSite
 from model.site.video.simple.spreee import SpreeeSite
 from model.site.video.simple.hotscope import HotscopeSite
@@ -74,23 +74,24 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessLoader()
         self._site_models=[
                             TestSite,
-                            PornoaktSite,
-                            PornobombaSite,
-                            HomepornoSite,
+            HotscopeSite,
                             SpreeeSite,
-                            HotscopeSite,
+
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,
-
+                            PornoaktSite,
+                            PornobombaSite,XvideoSite,
                             GigpornoSite,RusvideosSite,JizzbunkerSite,
+                            HomepornoSite,
                             HdEasypornSite, RedtubeSite,
-                            XvideoSite, XnxxSite, PlusoneSite,
+                            XnxxSite, PlusoneSite,
                             CollectionofbestpornSite,
                             PorngoSite,
 
-                            SextubeNlSite,
+
+            SextubeNlSite,
 
 
                            Space('Classic:'),

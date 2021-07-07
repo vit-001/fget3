@@ -24,43 +24,42 @@ class HomepornoSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/gigporno.jpg',
+        view.add_start_button(picture_filename='model/site/resource/homeporno.png',
                               # menu_items=menu_items,
-                              url=URL("http://homeporno.info/", test_string='порно'))
+                              url=URL("http://homeporno.info/porno-onlain/", test_string='порно'))
 
     def get_shrink_name(self):
         return 'HP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'dle-content'})
-        pretty(contents)
+        contents=soup.find('div', {'id':'dle-content'})
+        # pretty(contents)
         if contents:
             # psp(contents.prettify())
-            for thumbnail in _iter(contents.find_all('div', {'class': {'thumb_main','thumb'}})):
+            for thumbnail in _iter(contents.find_all('div', {'class': 'th-item'})):
                 # psp(thumbnail.prettify())
                 xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
-                img_url=thumbnail.img.attrs.get('data-src',thumbnail.img.attrs.get('src',''))
-                thumb_url = URL(img_url, base_url=url)
+                img=thumbnail.find('img',alt=True, src=True)
+                if img:
+                    # img_url=img.attrs.get('src')
+                    thumb_url = URL(img.attrs.get('src'), base_url=url)
 
-                title_tag = thumbnail.find('div', {'class': 'th-title'})
-                label = '' if title_tag is None else collect_string(title_tag)
+                    # title_tag = thumbnail.find('div', {'class': 'th-title'})
+                    label = img.attrs.get('alt')
 
-                duration = thumbnail.find('div', {'class': 'duration'})
-                if duration is None:
-                    duration = thumbnail.find('span', {'class': 'duration'})
-                dur_time = '' if duration is None else collect_string(duration)
+                    duration = thumbnail.find('div', {'class': 'th-time'})
+                    dur_time = '' if duration is None else collect_string(duration)
+                    #
+                    # hd_tag = thumbnail.find('div', {'class': 't-hd'})
+                    # if hd_tag is None:
+                    #     hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
+                    # hd = '' if hd_tag is None else collect_string(hd_tag)
 
-                hd_tag = thumbnail.find('div', {'class': 't-hd'})
-                if hd_tag is None:
-                    hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
-                hd = '' if hd_tag is None else collect_string(hd_tag)
-
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                               labels=[{'text':dur_time, 'align':'top right'},
-                                       # {'text': count, 'align': 'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': hd, 'align': 'top left'}])
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                                   labels=[{'text':dur_time, 'align':'top right'},
+                                           # {'text': count, 'align': 'top right'},
+                                           {'text':label, 'align':'bottom center'}])
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         container=soup.find('nav',{'class':'menu-inner2'})
@@ -78,31 +77,24 @@ class HomepornoSite(BaseSiteParser):
         return soup.find('div',{'class':'navigation'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'class': 'fplayer video-box'})
+        video = soup.find('div', {'class': 'player-box'})
         if video:
             # psp(video)
-            for source in _iter(video.find_all('source')):
-                # psp(source)
-                if 'http' in source.attrs.get('src',''):
-                    self.add_video(source.attrs.get('title','default'), URL(source.attrs['src']))
-            self.set_default_video(-1)
+            script = video.find('script', text=lambda x: 'file:' in str(x))
+            if script:
+                data = str(script.string).replace(' ', '').replace('\\', '')
+                # psp(data)
+                mp4 = quotes(data, 'file:"', '"')
+                self.add_video('DEFAULT', URL(mp4, base_url=url))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        models=soup.find('div',{'class':'meta-item'})
-        if models:
-            # pretty(models)
-            for xref in _iter(models.find_all('a',href=lambda x: not 'javascript' in str(x))):
-                # psp(xref)
-                href=xref.attrs.get('href','')
-                self.add_tag(collect_string(xref), URL(href, base_url=url), style=dict(color='blue'))
-
-        categories=soup.find('div',{'class':'full-category'})
-        if categories:
-            # pretty(categories)
-            for xref in _iter(categories.find_all('a',href=lambda x: not 'javascript' in str(x))):
+        for container in _iter(soup.find_all('div', {'class':'vp-tags'})):
+            # pretty(container)
+            for xref in _iter(container.find_all('a')):
                 # psp(xref)
                 href=xref.attrs.get('href','')
                 self.add_tag(collect_string(xref), URL(href, base_url=url))
+
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         head= soup.find('head')

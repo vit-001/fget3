@@ -26,41 +26,41 @@ class HotscopeSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/gigporno.jpg',
                               # menu_items=menu_items,
-                              url=URL("https://hotscope.tv/", test_string='Periscope'))
+                              url=URL("https://hotscope.tv/recent*", test_string='teens'))
 
     def get_shrink_name(self):
         return 'HS'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'dle-content'})
-        pretty(contents)
-        if contents:
+        # contents=soup.find('div', {'class':'dle-content'})
+        # pretty(soup)
+        # if contents:
             # psp(contents.prettify())
-            for thumbnail in _iter(contents.find_all('div', {'class': {'thumb_main','thumb'}})):
-                # psp(thumbnail.prettify())
-                xref=thumbnail.find('a',href=True)
-                href = URL(xref.attrs['href'], base_url=url)
-                img_url=thumbnail.img.attrs.get('data-src',thumbnail.img.attrs.get('src',''))
-                thumb_url = URL(img_url, base_url=url)
+        for thumbnail in _iter(soup.find_all('div', {'class': 'MuiGrid-item'})):
+            psp(thumbnail.prettify())
+            xref=thumbnail.find('a',href=True, title=True)
+            href = URL(xref.attrs['href'], base_url=url)
+            img_url=thumbnail.img.attrs.get('data-src',thumbnail.img.attrs.get('src',''))
+            thumb_url = URL(img_url, base_url=url)
 
-                title_tag = thumbnail.find('div', {'class': 'th-title'})
-                label = '' if title_tag is None else collect_string(title_tag)
+            title_tag = thumbnail.find('div', {'class': 'th-title'})
+            label = xref.attrs['title']
 
-                duration = thumbnail.find('div', {'class': 'duration'})
-                if duration is None:
-                    duration = thumbnail.find('span', {'class': 'duration'})
-                dur_time = '' if duration is None else collect_string(duration)
+            duration = thumbnail.find('div', {'class': 'duration'})
+            if duration is None:
+                duration = thumbnail.find('span', {'class': 'duration'})
+            dur_time = '' if duration is None else collect_string(duration)
 
-                hd_tag = thumbnail.find('div', {'class': 't-hd'})
-                if hd_tag is None:
-                    hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
-                hd = '' if hd_tag is None else collect_string(hd_tag)
+            hd_tag = thumbnail.find('div', {'class': 't-hd'})
+            if hd_tag is None:
+                hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
+            hd = '' if hd_tag is None else collect_string(hd_tag)
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                               labels=[{'text':dur_time, 'align':'top right'},
-                                       # {'text': count, 'align': 'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': hd, 'align': 'top left'}])
+            # self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+            #                labels=[{'text':dur_time, 'align':'top right'},
+            #                        # {'text': count, 'align': 'top right'},
+            #                        {'text':label, 'align':'bottom center'},
+            #                        {'text': hd, 'align': 'top left'}])
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         container=soup.find('nav',{'class':'menu-inner2'})

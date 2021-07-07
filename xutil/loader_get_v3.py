@@ -79,8 +79,8 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
 
-    url1 = 'https://x.rusvideos.net/porno'
-    url1a = 'https://pornobomba.vip/videos/arabskiy-minet/'
+    url1 = 'https://hotscope.tv/'
+    url1a = 'https://www.xnxx.com/video-11x8cx42/slut_sucked_a_guy_on_the_roof_after_a_cigarette'
     url2 = 'https://pornmz.com/f.php?id=gqp8nc-dwqz6j43'
     url3 = 'https://s2.pornharlot.xyz/media/videos/iphone/33265.mp4'
 
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
 
     # r=load(url1,fname1)#, proxies=proxies)
-    # r = load(url2, fname2a)
+    # r = load(url1, fname1)
     # r = load(url1a, fname1a, proxies=proxies)
     r = load(url1a, fname1a)
     # r = load(url2, fname2)#, proxies=proxies)

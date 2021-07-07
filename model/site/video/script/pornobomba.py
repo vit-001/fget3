@@ -106,10 +106,10 @@ class PornobombaSite(BaseSiteParser):
         for block in _iter(container.find_all('ul',{'class':'keywords'})):
             # pretty(block)
             for item in _iter(block.find_all('a')):
-                pretty(item)
+                # pretty(item)
                 href=item.attrs.get('href','')
                 name = item.find('span', {'itemprop': 'name'})
-                psp(name)
+                # psp(name)
                 self.add_tag(collect_string(name), URL(href, base_url=url))
 
 
