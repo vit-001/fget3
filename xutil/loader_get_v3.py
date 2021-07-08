@@ -80,9 +80,9 @@ if __name__ == "__main__":
 
 
     url1 = 'https://hotscope.tv/'
-    url1a = 'https://www.xnxx.com/video-11x8cx42/slut_sucked_a_guy_on_the_roof_after_a_cigarette'
+    url1a = 'https://pohub.org/video_online?id=536'
     url2 = 'https://pornmz.com/f.php?id=gqp8nc-dwqz6j43'
-    url3 = 'https://s2.pornharlot.xyz/media/videos/iphone/33265.mp4'
+    url3 = 'https://cdn2.embed-player.space/21/06/29/1096317.mp4'
 
 
     fname1 = 'out/1.html'
@@ -98,13 +98,13 @@ if __name__ == "__main__":
 
     # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
 
-    # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
+    headers = {'Referer': 'https://pohub.org/'}
 
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url1, fname1)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a)
-    # r = load(url2, fname2)#, proxies=proxies)
+    r = load(url1a, fname1a,headers=headers)
+    # r = load(url3, fname2)#, proxies=proxies)
 
 
     # r=get_response(url3, fname2)

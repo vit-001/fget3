@@ -47,6 +47,8 @@ class BaseLoadProcedure(LoadProcedureInterface):
                         chunk = buf.read(256)
             except FileNotFoundError as err:
                 print(err)
+            except OSError as err:
+                print(err)
 
         return file
 

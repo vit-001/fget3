@@ -26,7 +26,7 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://s2.pornharlot.xyz/media/videos/iphone/33265.mp4*'
+        t = 'https://pohub.org/video_online?id=536*'
         # referrer=URL('https://www.phicatube.net/video/113273/humper-an*')
         self.add_video('DEFAULT', URL(t))
 

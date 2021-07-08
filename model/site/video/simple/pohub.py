@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class SpreeeSite(BaseSiteParser):
+class PohubSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('xxx.spreee.pro/')
+        return url.contain('pohub.org/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,39 +24,38 @@ class SpreeeSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/spreee.png',
+        view.add_start_button(picture_filename='model/site/resource/pohub.png',
                               # menu_items=menu_items,
-                              url=URL("https://xxx.spreee.pro/new/", test_string='порно'))
+                              url=URL("https://pohub.org/video/", test_string='порно'))
 
     def get_shrink_name(self):
         return 'SP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'jumbotron1'})
-        # pretty(contents)
-        if contents:
-            # psp(contents.prettify())
-            for thumbnail in _iter(contents.find_all('div', {'class': 'video_item'})):
+        # contents=soup.find('div', {'class':'jumbotron1'})
+        # # pretty(contents)
+        # if contents:
+        #     # psp(contents.prettify())
+            for thumbnail in _iter(soup.find_all('div', {'class': 'video-col'})):
                 # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
                 img=thumbnail.find('img')
-                thumb_url = URL(img.attrs.get('data-src'), base_url=url)
+                thumb_url = URL(img.attrs.get('src'), base_url=url)
                 label = img.attrs.get('alt')
 
-                duration = thumbnail.find('span', {'style': 'float:right;'})
+                duration = thumbnail.find('span', {'class': 'time'})
                 dur_time = '' if duration is None else collect_string(duration)
 
-                hd_tag = thumbnail.find('div', {'class': 't-hd'})
-                if hd_tag is None:
-                    hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
-                hd = '' if hd_tag is None else collect_string(hd_tag)
+                # hd_tag = thumbnail.find('div', {'class': 't-hd'})
+                # if hd_tag is None:
+                #     hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
+                # hd = '' if hd_tag is None else collect_string(hd_tag)
 
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
                                labels=[{'text':dur_time, 'align':'top right'},
                                        # {'text': count, 'align': 'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': hd, 'align': 'top left'}])
+                                       {'text':label, 'align':'bottom center'}])
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         container=soup.find('nav',{'class':'menu-inner2'})
@@ -74,25 +73,24 @@ class SpreeeSite(BaseSiteParser):
         return soup.find('ul',{'class':'pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('video', {'class': 'video-js'})
+        video = soup.find('script', text=lambda x: 'Playerjs({' in str(x))
         if video:
-            # pretty(video)
-            for source in _iter(video.find_all('source')):
-                # psp(source)
-                if 'http' in source.attrs.get('src',''):
-                    self.add_video(source.attrs.get('title','default'), URL(source.attrs['src']))
-            self.set_default_video(-1)
+            # psp(video)
+            # psp(str(video))
+            file=quotes(str(video), 'file:"', '"')
+            self.add_video('default', URL(file,base_url=url))
+            # self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div', {'class':'tags_cats'})
+        container=soup.find('div', {'id':'pills-info'})
         if container:
-            pretty(container)
-            for tag in _iter(container.find_all('li', {'class':'tag'})):
-                pretty(tag)
-                xref=tag.find('a',href=True)
-                if xref:
-                    href = xref.attrs.get('href', '')
-                    self.add_tag(collect_string(xref), URL(href, base_url=url))
+            # pretty(container)
+            for tag in _iter(container.find_all('a', {'class':'cat-item'}, href=lambda x: '/video/' in str(x))):
+                # pretty(tag)
+                # xref=tag.find('a',href=True)
+                # if xref:
+                href = tag.attrs.get('href', '')
+                self.add_tag(collect_string(tag), URL(href, base_url=url))
         #
         # models=soup.find('div',{'class':'meta-item'})
         # if models:

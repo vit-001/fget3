@@ -37,7 +37,7 @@ class PornoaktSite(BaseSiteParser):
         if contents:
             # psp(contents.prettify())
             for thumbnail in _iter(contents.find_all('article', {'class': 'shortstory'})):
-                psp(thumbnail.prettify())
+                # psp(thumbnail.prettify())
                 img=thumbnail.find('a', {'class':'post_img'})
                 text=thumbnail.find('div',{'class':'short_post_content'})
                 # pretty(img)

@@ -3,6 +3,8 @@ __author__ = 'Nikitin'
 
 
 from urllib.parse import urlparse, urlsplit, parse_qs, parse_qsl, urlencode, urlunsplit, SplitResult
+import hashlib
+from sys import getdefaultencoding
 
 def get_href(txt: str, base_url):
     txt = txt.strip()
@@ -82,7 +84,8 @@ class URL:
 
     def get_short_filename(self, base=''):
         p = urlparse(self.get())
-        return base.rstrip('/') + '/' + p[1] + '/' + p[2].strip(' /').replace('/', '..')
+        hashname=hashlib.sha224(p[2].strip(' /').encode()).hexdigest()
+        return base.rstrip('/') + '/' + p[1] + '/' + hashname
 
     def get_path(self, base=''):
         p = urlparse(self.get())

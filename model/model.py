@@ -66,6 +66,8 @@ from model.site.video.script.pornobomba import PornobombaSite
 from model.site.video.simple.homeporno import HomepornoSite
 from model.site.video.simple.spreee import SpreeeSite
 from model.site.video.simple.hotscope import HotscopeSite
+from model.site.video.simple.ruleporn import RulepornSite
+from model.site.video.simple.pohub import PohubSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -74,33 +76,21 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessLoader()
         self._site_models=[
                             TestSite,
-            HotscopeSite,
-                            SpreeeSite,
+
+                            PohubSite,
 
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,
-                            PornoaktSite,
-                            PornobombaSite,XvideoSite,
-                            GigpornoSite,RusvideosSite,JizzbunkerSite,
+                            PornoaktSite,SpreeeSite,XnxxSite,
+                            PornobombaSite,XvideoSite,RulepornSite,
+                            GigpornoSite,JizzbunkerSite,
                             HomepornoSite,
-                            HdEasypornSite, RedtubeSite,
-                            XnxxSite, PlusoneSite,
-                            CollectionofbestpornSite,
-                            PorngoSite,
 
 
             SextubeNlSite,
 
-
-                           Space('Classic:'),
-                           YourpornSite, PlusoneSite, TnaflixSite, PorntrexSite,SexixSite,RedtubeSite,
-                           XhamsterSite, CollectionofbestpornSite, PornComSite, PornhdSite,ThumbzillaSite,
-                           PornbrazeSite,XvideoSite,
-                            SextubeNlSite,
-                           PornoxoSite,  VpornSite,DonfreepornSite,SpankwireSite,XnxxSite,
-                           VeroniccaComSite, HdEasypornSite, Tube8Site,BeemtubeSite,
 
                             Space('Amateur:'),
                              RealGfSite,
@@ -114,6 +104,11 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                             BabesandbitchesSite,
                             Space('Non working:'),
+                            RusvideosSite, HdEasypornSite, RedtubeSite,
+                             PlusoneSite,
+                            CollectionofbestpornSite,
+                            PorngoSite,
+            HotscopeSite,
                             HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,XhamsterSite,
                             PornhdSite,ThumbzillaSite,SpankwireSite,
                             PornComSite,PornoxoSite,YoungPornVideosSite,
