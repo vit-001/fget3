@@ -80,9 +80,9 @@ if __name__ == "__main__":
 
 
     url1 = 'https://hotscope.tv/'
-    url1a = 'https://pohub.org/video_online?id=536'
-    url2 = 'https://pornmz.com/f.php?id=gqp8nc-dwqz6j43'
-    url3 = 'https://cdn2.embed-player.space/21/06/29/1096317.mp4'
+    url1a = 'https://pornvibe.org/shoplyfter-hot-thief-gets-cock/'
+    url2 = 'https://myupload.co/plugins/mediaplayer/site/_embed.php?u=6op&w=640&h=320'
+    url3 = 'https://xdporner.com/york/335bf558f0a880a7b5676b1bcbe28ffc0a66e83f/360.mp4'
 
 
     fname1 = 'out/1.html'
@@ -98,12 +98,12 @@ if __name__ == "__main__":
 
     # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
 
-    headers = {'Referer': 'https://pohub.org/'}
+    headers = {'Referer': 'https://xxxscenes.net/seducing-a-hot-collegue'}
 
     # r=load(url1,fname1)#, proxies=proxies)
-    # r = load(url1, fname1)
+    r = load(url2, fname1b)#,headers=headers)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a,headers=headers)
+    # r = load(url1a, fname1a)
     # r = load(url3, fname2)#, proxies=proxies)
 
 

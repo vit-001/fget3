@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>PAGE_NAME - Upload And Share Files For Free</title>
+    <meta name="description" content="PAGE_DESCRIPTION"/>
+    <meta name="keywords" content="PAGE_KEYWORDS"/>
+    <meta name="copyright" content="Copyright &copy; 2021 - Upload And Share Files For Free"/>
+    <meta name="robots" content="all"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Expires" content="-1"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <script type="text/javascript" src="https://myupload.co/themes/flow/js/jquery-1.11.0.min.js"></script>
+    <script>
+        var trackJWTime = false;
+        var jwTimer = null;
+        var timerPeriod = 5; // after how many seconds to check for the video state again
+        var totalPlayedTime = 0;
+        var mediaTotalDuration = -1;
+        var ackPercentage = 60;
+        var trackJWTime = true;
+    </script>
+    <style>
+        body, html {
+            background-color: #fff;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .embedded div.jp-audio div.jp-type-single div.jp-progress, .embedded div.jp-audio div.jp-type-single div.jp-time-holder {
+            width: 65%;
+        }
+
+        .embedded div.jp-audio div.jp-volume-bar {
+            right: 36px;
+            left: auto !important;
+        }
+
+        .embedded div.jp-audio div.jp-type-single a.jp-mute, div.jp-audio div.jp-type-single a.jp-unmute {
+            margin-left: 440px;
+        }
+
+    </style>
+</head>
+
+<body style="width: 100%;">
+<div class="embedded">
+
+
+    <div style="width: 100%;">
+
+
+        <link href="https://myupload.co/plugins/mediaplayer/assets/players/videojs/video-js.css" rel="stylesheet">
+        <link href="https://myupload.co/plugins/mediaplayer/assets/players/videojs/videojs-brand/dist/videojs-brand.css"
+              rel="stylesheet">
+        <script src="https://myupload.co/plugins/mediaplayer/assets/players/videojs/video.js"></script>
+        <script type="text/javascript">
+            //<![CDATA[
+            var player = null;
+            var isPlaying = false;
+
+            $(document).ready(function () {
+                player = videojs('videoJSContainer', { /* Options */}, function () {
+                });
+
+
+                // responsiveness
+                player.ready(function () {
+
+                    // Store the video object
+                    var myPlayer = this, id = myPlayer.id();
+
+                    // Make up an aspect ratio
+                    var aspectRatio = 264 / 640;
+
+                    function resizeVideoJS() {
+                        var width = document.getElementById(id).parentElement.offsetWidth;
+                        myPlayer.width(width).height(width * aspectRatio);
+                    }
+
+                    // Initialize resizeVideoJS()
+                    resizeVideoJS();
+
+                    // Then on resize call resizeVideoJS()
+                    window.onresize = resizeVideoJS;
+
+                    var brandOptions = {
+                        image: "https://myupload.co/core/cache/themes/flow/logo.png",
+                        title: "myUpload",
+                        destination: "https://www.myupload.co",
+                        destinationTarget: "_top"
+                    };
+
+                    var containerElement = document.createElement("div");
+                    containerElement.className = "vjs-brand-container";
+
+                    var linkElement = document.createElement("a");
+                    linkElement.className = "vjs-brand-container-link";
+                    linkElement.setAttribute("href", brandOptions.destination);
+                    linkElement.setAttribute("title", brandOptions.title);
+                    linkElement.setAttribute("target", brandOptions.destinationTarget);
+
+                    var imageElement = document.createElement("img");
+                    imageElement.src = brandOptions.image;
+
+                    linkElement.appendChild(imageElement);
+                    containerElement.appendChild(linkElement);
+
+                    player.controlBar.el().insertBefore(containerElement, player.controlBar.fullscreenToggle.el());
+                    player.addClass('vjs-brand');
+                });
+
+                player.on(['waiting', 'pause'], function () {
+                    isPlaying = false;
+                });
+
+                player.on('playing', function () {
+                    isPlaying = true;
+                });
+
+                // track total played in seconds
+                jwTimer = setInterval(trackJWPlayedTime, (timerPeriod * 1000));
+            });
+
+            function trackJWPlayedTime() {
+                if (trackJWTime == false) {
+                    // stop any future attempts of the timer
+                    clearInterval(jwTimer);
+                    return false;
+                }
+
+                if (isPlaying === true) {
+                    // track actual played time
+                    totalPlayedTime = totalPlayedTime + timerPeriod;
+                }
+
+                if (mediaTotalDuration == -1) {
+                    // get total video length
+                    mediaTotalDuration = player.duration();
+                } else {
+                    // calculate percentage
+                    percent = 0;
+                    if (totalPlayedTime > 0) {
+                        percent = (parseInt(totalPlayedTime) / parseInt(mediaTotalDuration)) * 100;
+                    }
+
+                    // should we log yet?
+                    if (percent >= ackPercentage) {
+                        // clear for next time
+                        trackJWTime = false;
+
+                        // log PPD
+                        $.ajax({
+                            method: "POST",
+                            url: "https://myupload.co/plugins/rewards/site/_log_media_percentage.php",
+                            data: {
+                                fileId: "4577",
+                                tracker: "aHR0cHM6Ly9teXVwbG9hZC5jby82b3Avc2hvcGx5ZnRlci4yMC4xMi4wOS5tYWRkeS5tYXkudGhlLnNwb2lsZWQudGhpZWYubXA0P2Rvd25sb2FkX3Rva2VuPTAzODNhYWQzOWE1MTRmODM5OTM3NzdiNTM2OTMzNDM5OTc1MmE4MTQ5YTUyN2JkZTY2ZTliMzJiNmQyZTMwOWU=",
+                                percent: percent
+                            }
+                        });
+                    }
+                }
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#video').on('click', function (ev) {
+
+                    $("#video")[0].src += "&autoplay=1";
+                    ev.preventDefault();
+
+                });
+            });
+        </script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+
+        <!--
+        <a href="#" id="mytest" rel="0" class="newWindow" >
+        <div style="z-index:99999999999; position:absolute; width:100%; height:100%;"></div>
+        </a>
+        -->
+
+        <video id="videoJSContainer" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264"
+               poster="https://myupload.co/plugins/mediaconverter/site/resize_image.php?f=4577&w=640&h=320&m=cropped"
+               data-setup='{ "playbackRates": [0.5, 1, 1.5, 2] }'>
+            <source src="https://myupload.co/6op/shoplyfter.20.12.09.maddy.may.the.spoiled.thief.mp4?download_token=0383aad39a514f83993777b5369334399752a8149a527bde66e9b32b6d2e309e"
+                    type="video/mp4">
+            <p class="vjs-no-js">
+
+                <a id="play-video" href="#"></a>
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+
+
+    </div>
+</div>
+</body>
+</html>

@@ -26,7 +26,7 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://pohub.org/video_online?id=536*'
+        t = 'https://myupload.co/6op/shoplyfter.20.12.09.maddy.may.the.spoiled.thief.mp4?download_token=0383aad39a514f83993777b5369334399752a8149a527bde66e9b32b6d2e309e*'
         # referrer=URL('https://www.phicatube.net/video/113273/humper-an*')
         self.add_video('DEFAULT', URL(t))
 

@@ -15,11 +15,9 @@ from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
-from model.site.video.plus_file.pornbaze import PornbrazeSite
 from model.site.video.plus_file.pornfun import PornfunSite
 from model.site.video.plus_file.pornmz import PornmzSite
 from model.site.video.plus_file.pornwild import PornwildSite
-from model.site.video.plus_file.post.donfreeporn import DonfreepornSite
 from model.site.video.plus_file.sexix import SexixSite
 from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
 from model.site.video.plus_file.yourporn import YourpornSite
@@ -57,8 +55,6 @@ from model.site.video.simple.pornone import PornoneSite
 from model.site.video.simple.sextube_nl import SextubeNlSite
 from model.site.video.simple.test import TestSite
 from model.site.video.simple.tnaflix import TnaflixSite
-from model.site.video.simple.veronicca import VeroniccaComSite
-from model.site.video.simple.vporn import VpornSite
 from model.site.video.xhr.extremetube import ExtremetubeSite
 from model.site.video.xhr.pervertslut import PervertslutSite
 from model.site.video.simple.pornoakt import PornoaktSite
@@ -68,6 +64,8 @@ from model.site.video.simple.spreee import SpreeeSite
 from model.site.video.simple.hotscope import HotscopeSite
 from model.site.video.simple.ruleporn import RulepornSite
 from model.site.video.simple.pohub import PohubSite
+from model.site.video.simple.xdporner import XdpornerSite
+from model.site.video.plus_file.pornvibe import PornvibeSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -76,13 +74,14 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessLoader()
         self._site_models=[
                             TestSite,
+                            XdpornerSite,
+                            PornvibeSite,
 
-                            PohubSite,
 
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,
-                            YespornpleasexxxSite,
+                            YespornpleasexxxSite,PohubSite,
                             PornoaktSite,SpreeeSite,XnxxSite,
                             PornobombaSite,XvideoSite,RulepornSite,
                             GigpornoSite,JizzbunkerSite,
