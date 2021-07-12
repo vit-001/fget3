@@ -38,33 +38,36 @@ class PornvibeSite(BaseSiteParser):
         if container:
             # pretty(container)
             for thumbnail in _iter(soup.find_all('div', {'class': 'post'})):
-                # pretty(thumbnail)
-                picture=thumbnail.find('div',{'class':'post-thumb'})
-                text=thumbnail.find('div',{'class':'post-des'})
-                # pretty(picture)
-                # pretty(text)
+                try:
+                    # pretty(thumbnail)
+                    picture=thumbnail.find('div',{'class':'post-thumb'})
+                    text=thumbnail.find('div',{'class':'post-des'})
+                    # pretty(picture)
+                    # pretty(text)
 
-                xref=text.find('a', href=True)
-                href = URL(xref.attrs['href'], base_url=url)
-                description = collect_string(xref)
+                    xref=text.find('a', href=True)
+                    href = URL(xref.attrs['href'], base_url=url)
+                    description = collect_string(xref)
 
-                img=picture.find('img', src=True)
-                thumb_url = URL(img.attrs['src'], base_url=url)
+                    img=picture.find('img', src=True)
+                    thumb_url = URL(img.attrs['src'], base_url=url)
 
-                duration = picture.find('div', {'class': "thumb-stats pull-right"})
-                dur_time = '' if duration is None else collect_string(duration)
-                #
-                # quality = thumbnail.find('span', {'class': "quality-icon"})
-                # qual = '' if quality is None else str(quality.string)
+                    duration = picture.find('div', {'class': "thumb-stats pull-right"})
+                    dur_time = '' if duration is None else collect_string(duration)
+                    #
+                    # quality = thumbnail.find('span', {'class': "quality-icon"})
+                    # qual = '' if quality is None else str(quality.string)
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                                           labels=[{'text': dur_time, 'align': 'top right'},
-                                                   {'text': description, 'align': 'bottom center'}])
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                                               labels=[{'text': dur_time, 'align': 'top right'},
+                                                       {'text': description, 'align': 'bottom center'}])
+                except AttributeError as e:
+                    print(e.__repr__())
 
     def parse_others(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'main-cat'})
         if container:
-            # pretty(container)
+            pretty(container)
             for thumbnail in _iter(soup.find_all('div', {'class': 'item-cat'})):
                 # pretty(thumbnail)
                 picture=thumbnail.find('img',alt=True, src=True)

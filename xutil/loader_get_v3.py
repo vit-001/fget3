@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
 
     url1 = 'https://hotscope.tv/'
-    url1a = 'https://pornvibe.org/shoplyfter-hot-thief-gets-cock/'
+    url1a = 'https://rapelust.com/video/sex-slaves-forced-fucked-in-european-brothel/'
     url2 = 'https://myupload.co/plugins/mediaplayer/site/_embed.php?u=6op&w=640&h=320'
     url3 = 'https://xdporner.com/york/335bf558f0a880a7b5676b1bcbe28ffc0a66e83f/360.mp4'
 
@@ -101,9 +101,9 @@ if __name__ == "__main__":
     headers = {'Referer': 'https://xxxscenes.net/seducing-a-hot-collegue'}
 
     # r=load(url1,fname1)#, proxies=proxies)
-    r = load(url2, fname1b)#,headers=headers)
+    # r = load(url2, fname1b)#,headers=headers)
     # r = load(url1a, fname1a, proxies=proxies)
-    # r = load(url1a, fname1a)
+    r = load(url1a, fname1a)
     # r = load(url3, fname2)#, proxies=proxies)
 
 

@@ -66,6 +66,8 @@ from model.site.video.simple.ruleporn import RulepornSite
 from model.site.video.simple.pohub import PohubSite
 from model.site.video.simple.xdporner import XdpornerSite
 from model.site.video.plus_file.pornvibe import PornvibeSite
+from model.site.video.simple.rapelust import RapelustSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -74,15 +76,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._loader=MultiprocessLoader()
         self._site_models=[
                             TestSite,
-                            XdpornerSite,
-                            PornvibeSite,
 
+                            RapelustSite,
 
                             Space('Classic:'),
 
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,PohubSite,
-                            PornoaktSite,SpreeeSite,XnxxSite,
+                            PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,
+                            PornvibeSite,
                             PornobombaSite,XvideoSite,RulepornSite,
                             GigpornoSite,JizzbunkerSite,
                             HomepornoSite,
