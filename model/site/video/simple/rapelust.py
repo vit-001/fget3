@@ -69,16 +69,16 @@ class RapelustSite(BaseSiteParser):
                                        {'text':label, 'align':'bottom center'},
                                        {'text': hd, 'align': 'top left'}])
 
-    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('nav',{'class':'menu-inner2'})
-        if container:
-            # psp(container.prettify())
-            for item in _iter(container.find_all('li',{'class':'cat-item'})):
-                # psp(item)
-                tag=item.find('a')
-                if tag:
-                    # psp(tag)
-                    self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
+    # def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+    #     container=soup.find('nav',{'class':'menu-inner2'})
+    #     if container:
+    #         # psp(container.prettify())
+    #         for item in _iter(container.find_all('li',{'class':'cat-item'})):
+    #             # psp(item)
+    #             tag=item.find('a')
+    #             if tag:
+    #                 # psp(tag)
+    #                 self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
@@ -87,19 +87,19 @@ class RapelustSite(BaseSiteParser):
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'videoBox'})
         if video:
-            pretty(video)
+            # pretty(video)
             player=video.find('div',{'class':'flowplayer'})
             # pretty(player)
             sources=player.attrs.get('data-item')
-            psp(sources.replace('\\',''))
-            psp(quotes(sources.replace('\\',''),'"src":"','"'))
+            # psp(sources.replace('\\',''))
+            # psp(quotes(sources.replace('\\',''),'"src":"','"'))
             self.add_video('default', URL(quotes(sources.replace('\\',''),'"src":"','"')))
 
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         container=soup.find('div',{'class':'videoTags'})
         if container:
-            pretty(container)
+            # pretty(container)
 
             for xref in _iter(container.find_all('a', href=lambda x: '/tag/' in str(x))):
                 # psp(xref)

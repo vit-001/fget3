@@ -67,7 +67,9 @@ from model.site.video.simple.pohub import PohubSite
 from model.site.video.simple.xdporner import XdpornerSite
 from model.site.video.plus_file.pornvibe import PornvibeSite
 from model.site.video.simple.rapelust import RapelustSite
-
+from model.site.video.simple.freeuseporn import FreeusepornSite
+from model.site.video.simple.pornxxxvideos import PornxxxvideosSite
+from model.site.video.simple.dlouha import DlouhaSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -78,6 +80,9 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             TestSite,
 
                             RapelustSite,
+                            FreeusepornSite,
+                            PornxxxvideosSite,
+                            DlouhaSite,
 
                             Space('Classic:'),
 

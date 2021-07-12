@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
 
     url1 = 'https://hotscope.tv/'
-    url1a = 'https://rapelust.com/video/sex-slaves-forced-fucked-in-european-brothel/'
+    url1a = 'https://www.dlouha-videa.cz/video/rychly-prachy-aneb-public-agent-v-ulicich-katarina-rina/'
     url2 = 'https://myupload.co/plugins/mediaplayer/site/_embed.php?u=6op&w=640&h=320'
     url3 = 'https://xdporner.com/york/335bf558f0a880a7b5676b1bcbe28ffc0a66e83f/360.mp4'
 
@@ -94,16 +94,17 @@ if __name__ == "__main__":
     fname3 = 'out/3.json'
     fname4 = 'out/1.js'
     fname5 = 'out/1.svg'
+#PHPSESSID=b5452159d9b0465182078eaecf8c7dcf; kt_ips=217.66.158.229; _ga=GA1.2.1348248477.1626100592; _gid=GA1.2.1906675378.1626100592; kt_tcookie=1; fapsterp0=1; _stat=3965542467.2905627009.23479322.3785358264; _gat_gtag_UA_135268328_1=1
 
-
-    # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
+    coockies={'PHPSESSID':'b5452159d9b0465182078eaecf8c7dcf',
+    }
 
     headers = {'Referer': 'https://xxxscenes.net/seducing-a-hot-collegue'}
 
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname1b)#,headers=headers)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a)
+    r = load(url1a, fname1a)#, cookies=coockies)
     # r = load(url3, fname2)#, proxies=proxies)
 
 
