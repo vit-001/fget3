@@ -26,7 +26,7 @@ class PornxxxvideosSite(BaseSiteParser):
                     Videos_Top_Rated=URL('http://www.pornbozz.com/top-rated/'),
                     Videos_Longest=URL('http://www.pornbozz.com/longest/'))
 
-        view.add_start_button(picture_filename='model/site/resource/pornbozz.png',
+        view.add_start_button(picture_filename='model/site/resource/pornxxxvideos.png',
                               url=URL("https://pornxxxvideos.net/videos/"),
                               menu_items=menu_items)
 
