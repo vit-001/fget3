@@ -70,6 +70,9 @@ from model.site.video.simple.rapelust import RapelustSite
 from model.site.video.simple.freeuseporn import FreeusepornSite
 from model.site.video.simple.pornxxxvideos import PornxxxvideosSite
 from model.site.video.simple.dlouha import DlouhaSite
+from model.site.video.simple.darknessporn import DarknesspornSite
+from model.site.video.simple.sickjunk import SickjunkSite
+from model.site.video.script.shooshtime import ShooshtimeSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -83,6 +86,9 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             FreeusepornSite,
                             PornxxxvideosSite,
                             DlouhaSite,
+                            DarknesspornSite,
+                            SickjunkSite,
+                            ShooshtimeSite,
 
                             Space('Classic:'),
 

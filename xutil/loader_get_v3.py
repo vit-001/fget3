@@ -80,8 +80,8 @@ if __name__ == "__main__":
 
 
     url1 = 'https://hotscope.tv/'
-    url1a = 'https://www.dlouha-videa.cz/video/rychly-prachy-aneb-public-agent-v-ulicich-katarina-rina/'
-    url2 = 'https://myupload.co/plugins/mediaplayer/site/_embed.php?u=6op&w=640&h=320'
+    url1a = 'https://shooshtime.com/videos/233077/skeeny-whole-blac/'
+    url2 = 'https://xhamster.com/embed/14876776'
     url3 = 'https://xdporner.com/york/335bf558f0a880a7b5676b1bcbe28ffc0a66e83f/360.mp4'
 
 
