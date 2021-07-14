@@ -24,7 +24,7 @@ class SickjunkSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/ruleporn.png',
+        view.add_start_button(picture_filename='model/site/resource/sickjunk.png',
                               # menu_items=menu_items,
                               url=URL("https://sickjunk.com/", test_string='adult'))
 
@@ -32,19 +32,20 @@ class SickjunkSite(BaseSiteParser):
         return 'SJ'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        # contents=soup.find('div', {'class':'row'})
-        # pretty(contents)
+        # contents=soup.find('div', {'class':'content-area'})
+        # # pretty(contents)
         # if contents:
-            # psp(contents.prettify())
-            for thumbnail in _iter(soup.find_all('div', {'class': 'item-col'})):
+            # pretty(contents)
+            for thumbnail in _iter(soup.find_all('article', {'class': 'post'})):
                 # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True,title=True)
                 if xref:
                     href = URL(xref.attrs['href'], base_url=url)
                     label = xref.attrs.get('title')
 
-                    img=thumbnail.find('img')
-                    thumb_url = URL(img.attrs.get('src'), base_url=url)
+                    img=thumbnail.find('img', {'data-lazy-src':True})
+                    # pretty(img)
+                    thumb_url = URL(img.attrs.get('data-lazy-src'), base_url=url)
                 #
                     duration = thumbnail.find('span', {'class': 'time'})
                     dur_time = '' if duration is None else collect_string(duration)
@@ -71,20 +72,20 @@ class SickjunkSite(BaseSiteParser):
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('nav',{'class':'pagination'})
+        return soup.find('ul',{'class':'page-numbers'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('video', {'class': 'video-js'})
+        video = soup.find('video', src=True)
         if video:
             # pretty(video)
-            for source in _iter(video.find_all('source')):
-                self.add_video(source.attrs.get('title','default'), URL(source.attrs['src']))
+            self.add_video('default', URL(video.attrs['src']))
             # self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
 
-        for container in _iter(soup.find_all('div', {'class':'tags-block'})):
-            # psp(container)
+        container = soup.find('footer', {'class':'single-entry-footer'})
+        if container:
+            # pretty(container)
             for tag in _iter(container.find_all('a', href=True)):
                 # pretty(tag)
                 href = tag.attrs.get('href')

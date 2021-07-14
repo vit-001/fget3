@@ -26,9 +26,9 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://rl.eros.icu/cd/sex_slaves_forced_fucked_in_european_brothel.mp4*'
-        # referrer=URL('https://www.phicatube.net/video/113273/humper-an*')
-        self.add_video('DEFAULT', URL(t))
+        t = 'https://cdn8.bdsmstreak.com/hd/47063.mp4?md5=pgk3hapdef1I97-XfULqTw&;expires=1626256065*'
+        referrer=URL('https://bdsmstreak.com/')
+        self.add_video('DEFAULT', URL(t,referer=referrer))
 
 if __name__ == "__main__":
     pass

@@ -24,7 +24,7 @@ class DarknesspornSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/ruleporn.png',
+        view.add_start_button(picture_filename='model/site/resource/darknessporn.png',
                               # menu_items=menu_items,
                               url=URL("https://darknessporn.com/?filter=latest", test_string='porn'))
 
@@ -32,11 +32,11 @@ class DarknesspornSite(BaseSiteParser):
         return 'DP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        # contents=soup.find('div', {'class':'row'})
+        # contents=soup.find('div', {'class':'container'})
         # pretty(contents)
         # if contents:
-            # psp(contents.prettify())
-            for thumbnail in _iter(soup.find_all('div', {'class': 'item-col'})):
+        #     psp(contents.prettify())
+            for thumbnail in _iter(soup.find_all('div', {'class': 'video-block'})):
                 # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True,title=True)
                 if xref:
@@ -44,12 +44,12 @@ class DarknesspornSite(BaseSiteParser):
                     label = xref.attrs.get('title')
 
                     img=thumbnail.find('img')
-                    thumb_url = URL(img.attrs.get('src'), base_url=url)
+                    thumb_url = URL(img.attrs.get('data-src'), base_url=url)
                 #
-                    duration = thumbnail.find('span', {'class': 'time'})
+                    duration = thumbnail.find('span', {'class': 'duration'})
                     dur_time = '' if duration is None else collect_string(duration)
 
-                    hd_tag = thumbnail.find('div', {'class': 'quality'})
+                    hd_tag = thumbnail.find('span', {'class': 'hdicon'})
                     hd = '' if hd_tag is None else collect_string(hd_tag)
 
                     self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
@@ -58,20 +58,9 @@ class DarknesspornSite(BaseSiteParser):
                                            {'text':label, 'align':'bottom center'},
                                            {'text': hd, 'align': 'top left'}])
 
-    # def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-    #     container=soup.find('nav',{'class':'menu-inner2'})
-    #     if container:
-    #         # psp(container.prettify())
-    #         for item in _iter(container.find_all('li',{'class':'cat-item'})):
-    #             # psp(item)
-    #             tag=item.find('a')
-    #             if tag:
-    #                 # psp(tag)
-    #                 self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
-
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('nav',{'class':'pagination'})
+        return soup.find('ul',{'class':'pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('video', {'class': 'video-js'})
@@ -83,7 +72,7 @@ class DarknesspornSite(BaseSiteParser):
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
 
-        for container in _iter(soup.find_all('div', {'class':'tags-block'})):
+        for container in _iter(soup.find_all('div', {'class':'tags-list'})):
             # psp(container)
             for tag in _iter(container.find_all('a', href=True)):
                 # pretty(tag)
@@ -108,6 +97,7 @@ class DarknesspornSite(BaseSiteParser):
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         head= soup.find('head')
+        # pretty(head)
         title=collect_string(head.find('title'))
         # psp(title)
         return title[:50]

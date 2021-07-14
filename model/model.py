@@ -73,6 +73,8 @@ from model.site.video.simple.dlouha import DlouhaSite
 from model.site.video.simple.darknessporn import DarknesspornSite
 from model.site.video.simple.sickjunk import SickjunkSite
 from model.site.video.script.shooshtime import ShooshtimeSite
+from model.site.video.script.petardashd import PetardashdSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -82,23 +84,24 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[
                             TestSite,
 
-                            RapelustSite,
-                            FreeusepornSite,
-                            PornxxxvideosSite,
-                            DlouhaSite,
-                            DarknesspornSite,
-                            SickjunkSite,
+
+
+
+
+
+
                             ShooshtimeSite,
 
-                            Space('Classic:'),
 
+                            Space('Classic:'),
+                            DlouhaSite,
                             PornwildSite,PornmzSite,
-                            YespornpleasexxxSite,PohubSite,
+                            YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,
-                            PornvibeSite,
+                            PornvibeSite,RapelustSite,DarknesspornSite,FreeusepornSite,
                             PornobombaSite,XvideoSite,RulepornSite,
-                            GigpornoSite,JizzbunkerSite,
-                            HomepornoSite,
+                            GigpornoSite,JizzbunkerSite,PornxxxvideosSite,
+                            HomepornoSite,PetardashdSite,
 
 
             SextubeNlSite,

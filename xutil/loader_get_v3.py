@@ -79,10 +79,10 @@ if __name__ == "__main__":
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
 
-    url1 = 'https://hotscope.tv/'
-    url1a = 'https://shooshtime.com/videos/233077/skeeny-whole-blac/'
-    url2 = 'https://xhamster.com/embed/14876776'
-    url3 = 'https://xdporner.com/york/335bf558f0a880a7b5676b1bcbe28ffc0a66e83f/360.mp4'
+    url1 = 'https://sickjunk.com/'
+    url1a = 'https://shooshtime.com/videos/162051/162051_blnd/'
+    url2 = 'https://www.eporner.com/embed/i9EKB71E49b/'
+    url3 = 'https://cdn8.bdsmstreak.com/hd/47063.mp4?md5=VuDNvEj9XqZ0z-VX768BGQ&expires=1626253427'
 
 
     fname1 = 'out/1.html'
@@ -99,13 +99,13 @@ if __name__ == "__main__":
     coockies={'PHPSESSID':'b5452159d9b0465182078eaecf8c7dcf',
     }
 
-    headers = {'Referer': 'https://xxxscenes.net/seducing-a-hot-collegue'}
+    headers = {'Referer': 'https://bdsmstreak.com/'}
 
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url2, fname1b)#,headers=headers)
     # r = load(url1a, fname1a, proxies=proxies)
     r = load(url1a, fname1a)#, cookies=coockies)
-    # r = load(url3, fname2)#, proxies=proxies)
+    # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)
 
 
     # r=get_response(url3, fname2)
