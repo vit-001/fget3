@@ -138,3 +138,4 @@ ENV/
 *.iml
 .idea/misc.xml
 xutil/out/1a.html
+*.html

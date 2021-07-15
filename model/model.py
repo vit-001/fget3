@@ -74,7 +74,7 @@ from model.site.video.simple.darknessporn import DarknesspornSite
 from model.site.video.simple.sickjunk import SickjunkSite
 from model.site.video.script.shooshtime import ShooshtimeSite
 from model.site.video.script.petardashd import PetardashdSite
-
+from model.site.video.simple.pornozot import PornozotSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -86,15 +86,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
 
+                            PornozotSite,
 
 
 
 
-                            ShooshtimeSite,
 
 
                             Space('Classic:'),
-                            DlouhaSite,
+                            DlouhaSite,ShooshtimeSite,
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,

@@ -26,9 +26,9 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://cdn8.bdsmstreak.com/hd/47063.mp4?md5=pgk3hapdef1I97-XfULqTw&;expires=1626256065*'
-        referrer=URL('https://bdsmstreak.com/')
-        self.add_video('DEFAULT', URL(t,referer=referrer))
+        t = 'http://video-hw.xvideos-cdn.com/videos/mp4/9/1/a/xvideos.com_91a2212955b408d0f9551ebabf1ea91a.mp4?e=1626344676&ri=1024&rs=85&h=ef86eebae8432b98e7972fa062f44c8a*'
+        # referrer=URL('https://bdsmstreak.com/')
+        self.add_video('DEFAULT', URL(t))
 
 if __name__ == "__main__":
     pass
