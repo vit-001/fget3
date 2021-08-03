@@ -75,6 +75,7 @@ from model.site.video.simple.sickjunk import SickjunkSite
 from model.site.video.script.shooshtime import ShooshtimeSite
 from model.site.video.script.petardashd import PetardashdSite
 from model.site.video.simple.pornozot import PornozotSite
+from model.site.video.script.pornhub import PornhubSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -87,6 +88,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             PornozotSite,
+                            PornhubSite,
 
 
 
