@@ -2,7 +2,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes
+from common.util import _iter, quotes, pretty, collect_string, psp
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -26,29 +26,32 @@ class XhamsterSite(BaseSiteParser):
 
         view.add_start_button(picture_filename='model/site/resource/xmaster.svg',
                               menu_items=menu_items,
-                              url=URL("http://ru.xhamster.com/", test_string='xHamster'))
+                              url=URL("https://sv.xhamster.com/newest", test_string='xHamster'))
 
     def get_shrink_name(self):
         return 'XM'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumb_container in _iter(soup.find_all('div',{'class':['box boxTL','box boxTR'], 'id':lambda x: x!='vPromo'})):
-            for thumb in _iter(thumb_container.find_all('div',{'class':'video'})):
-                # psp(thumb)
-                href = URL(thumb.a.attrs['href'], base_url=url)
-                description = thumb.a.img.attrs['alt']
-                thumb_url = URL(thumb.img.attrs['src'], base_url=url)
+        for thumb_container in _iter(soup.find_all('div',{'class':'thumb-list'})):
+            for thumb in _iter(thumb_container.find_all('div',{'class':'video-thumb'})):
+                try:
+                    # pretty(thumb)
+                    href = URL(thumb.a.attrs['href'], base_url=url)
+                    description = thumb.a.img.attrs['alt']
+                    thumb_url = URL(thumb.img.attrs['src'], base_url=url)
 
-                duration = thumb.find('b')
-                dur_time = '' if duration is None else str(duration.string)
+                    duration = thumb.find('b')
+                    dur_time = '' if duration is None else str(duration.string)
 
-                quality = thumb.find('div', {'class': "hSpriteHD"})
-                qual = '' if quality is None else 'HD'
+                    quality = thumb.find('div', {'class': "hSpriteHD"})
+                    qual = '' if quality is None else 'HD'
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                                labels=[{'text': dur_time, 'align': 'top right'},
-                                        {'text': description, 'align': 'bottom center'},
-                                        {'text': qual, 'align': 'top left', 'bold': True}])
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                                    labels=[{'text': dur_time, 'align': 'top right'},
+                                            {'text': description, 'align': 'bottom center'},
+                                            {'text': qual, 'align': 'top left', 'bold': True}])
+                except AttributeError as e:
+                    print(e.__repr__())
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         menu=soup.find('div', {'id':'menuLeft'})
@@ -68,13 +71,15 @@ class XhamsterSite(BaseSiteParser):
         return soup.find('div', {'class': 'pager'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'id': 'playerSwf'})
-        if video is not None:
-            script=video.find('script', text=lambda x: 'XPlayer' in str(x))
-            if script is not None:
-                data = str(script.string).replace(' ', '').replace('\\/', '/')
+        video = soup.find('script', {'id': 'initials-script'})
+        if video:
+            # pretty(video)
+            script=str(video)
+            if script:
+                data = str(script).replace(' ', '').replace('\\/', '/')
+                psp(data)
                 if 'sources:' in data:
-                    sources=quotes(data,'sources:{','}').split('","')
+                    sources=quotes(data,'"sources":{','}').split('","')
                     for item in sources:
                         part=item.partition('":"')
                         file = part[2].strip('"')

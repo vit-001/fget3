@@ -76,6 +76,7 @@ from model.site.video.script.shooshtime import ShooshtimeSite
 from model.site.video.script.petardashd import PetardashdSite
 from model.site.video.simple.pornozot import PornozotSite
 from model.site.video.script.pornhub import PornhubSite
+from model.site.video.simple.fapmeifyoucan import FapmeifyoucanSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -88,7 +89,9 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             PornozotSite,
-                            PornhubSite,
+                            XhamsterSite,
+
+
 
 
 
@@ -96,6 +99,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Classic:'),
+                            PornhubSite,FapmeifyoucanSite,
                             DlouhaSite,ShooshtimeSite,
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
@@ -126,7 +130,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             CollectionofbestpornSite,
                             PorngoSite,
             HotscopeSite,
-                            HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,XhamsterSite,
+                            HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,
                             PornhdSite,ThumbzillaSite,SpankwireSite,
                             PornComSite,PornoxoSite,YoungPornVideosSite,
                             DeviantclipSite,ExtremetubeSite,PervertslutSite,MotherlessSite,PornfunSite,PornbozzSite,
