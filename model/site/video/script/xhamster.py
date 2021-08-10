@@ -68,7 +68,7 @@ class XhamsterSite(BaseSiteParser):
         return super().parse_thumb_title(soup, url).partition('.')[0]
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div', {'class': 'pager'})
+        return soup.find('div', {'class': 'pager-container'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('script', {'id': 'initials-script'})
@@ -77,33 +77,37 @@ class XhamsterSite(BaseSiteParser):
             script=str(video)
             if script:
                 data = str(script).replace(' ', '').replace('\\/', '/')
-                psp(data)
-                if 'sources:' in data:
+                if '"sources":' in data:
+                    # psp(data)
                     sources=quotes(data,'"sources":{','}').split('","')
+                    # psp(sources)
                     for item in sources:
+                        # psp(item)
                         part=item.partition('":"')
+                        # psp(part)
                         file = part[2].strip('"')
                         label=part[0].strip('"')
                         self.add_video(label, URL(file, base_url=url))
                     self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        info_box = soup.find('div', {'id': 'videoInfoBox'})
-        for item in _iter(info_box.find_all('a')):
-            # psp(item)
-            label=''
-            for s in item.stripped_strings:
-                label +=s
-            color = None
-            href = item.attrs['href']
-            if '/pornstars/' in href:
-                color = 'magenta'
-                # href += '/videos'
-            if '/user/' in href:
-                color = 'blue'
-                href = href.replace('/user/','/user/video/')+'/new-1.html'
+        info_box = soup.find('ul', {'class': 'categories-container'})
+        if info_box:
+            for item in _iter(info_box.find_all('a')):
+                # psp(item)
+                label=''
+                for s in item.stripped_strings:
+                    label +=s
+                color = None
+                href = item.attrs['href']
+                if '/pornstars/' in href:
+                    color = 'magenta'
+                    # href += '/videos'
+                if '/users/' in href:
+                    color = 'blue'
+                    href = href+'/videos*'
 
-            self.add_tag(label.strip(), URL(href, base_url=url), style={'color':color})
+                self.add_tag(label.strip(), URL(href, base_url=url), style={'color':color})
 
 
 if __name__ == "__main__":

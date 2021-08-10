@@ -80,8 +80,8 @@ if __name__ == "__main__":
 
 
     url1 = 'https://sickjunk.com/'
-    url1a = 'https://sv.xhamster.com/videos/rain-de-grey-transit-farm-xhZlmZo?_gl=1*1csn1a1*_ga*MTIyMzI2NDAzOS4xNjI1NDc0NzI2*_ga_M59JX8S6QE*MTYyODA5MjE0Ni40LjEuMTYyODA5MjI2MC42&_ga=2.80037855.95297468.1628077815-1223264039.1625474726'
-    url2 = 'https://www.eporner.com/embed/A9N6XA2098z/'
+    url1a = 'https://sv.xhamster.com/videos/fucked-hottie-in-stiletto-heels-and-in-stockings-on-train-xhSoSjt'
+    url2 = 'https://19-17.b.cdn13.com/021/042/728/720p.h264.mp4?cdn_creation_time=1628600400&cdn_ttl=14400&cdn_bw=378k&cdn_bw_fs=402k&cdn_cv_data=217.66.158.192-dvp&cdn_hash=730442c465665fb787f262193f04c484'
     url3 = 'https://cdn8.bdsmstreak.com/hd/47063.mp4?md5=VuDNvEj9XqZ0z-VX768BGQ&expires=1626253427'
 
 
@@ -101,8 +101,8 @@ if __name__ == "__main__":
 
     headers = {'Referer': 'https://bdsmstreak.com/'}
 
-    r = load(url1a, fname1a)#, cookies=coockies)
-    # r = load(url2, fname1b)#,headers=headers)
+    # r = load(url1a, fname1a)#, cookies=coockies)
+    r = load(url2, fname2)#,headers=headers)
     # r=load(url1,fname1)#, proxies=proxies)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)
