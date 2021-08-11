@@ -93,7 +93,7 @@ class XhamsterSite(BaseSiteParser):
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         info_box = soup.find('ul', {'class': 'categories-container'})
         if info_box:
-            for item in _iter(info_box.find_all('a')):
+            for item in _iter(info_box.find_all('a', href=True)):
                 # psp(item)
                 label=''
                 for s in item.stripped_strings:

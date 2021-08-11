@@ -26,7 +26,7 @@ class PornozotSite(BaseSiteParser):
                     Videos_Top_Rated=URL('http://www.pornbozz.com/top-rated/'),
                     Videos_Longest=URL('http://www.pornbozz.com/longest/'))
 
-        view.add_start_button(picture_filename='model/site/resource/pornbozz.png',
+        view.add_start_button(picture_filename='model/site/resource/pornozot.png',
                               url=URL("https://www.pornozot.com/"),
                               menu_items=menu_items)
 
@@ -88,24 +88,10 @@ class PornozotSite(BaseSiteParser):
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         pass
-        # user_container=soup.find('div',{'class':'submitter-container'})
-        # xref=user_container.find('a',href=True,title=True)
-        # if user_container:
-        #     username=str(xref.attrs['title'])
-        #     href=str(xref.attrs['href'])
-        #     user_number=href.rstrip('/').rpartition('-')[2]
-        #
-        #     self.add_tag(username + ' videos',
-        #                  URL('http://www.pornbozz.com/uploads-by-user/{0}/'.format(user_number)),
-        #                  style={'color': 'blue'})
-        #
-        #     self.add_tag(username +  ' photos',
-        #                  URL('http://www.pornbozz.com/uploads-by-user/{0}/?photos=1'.format(user_number)),
-        #                  style={'color': 'blue'})
-        #
-        # for tags_block in _iter(soup.find_all('div',{'class':'tags-block'})):
-        #     for href in _iter(tags_block.find_all('a',href=True)):
-        #         self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+        container=soup.find('div',{'id':'data-title'})
+        if container:
+            for href in _iter(container.find_all('a',href=True)):
+                self.add_tag(collect_string(href), URL(href.attrs['href'], base_url=url))
 
     def parse_pictures(self, soup: BeautifulSoup, url: URL):
         gallery=soup.find('div',{'class':'gallery-block'})
