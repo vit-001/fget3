@@ -40,7 +40,7 @@ class XhamsterSite(BaseSiteParser):
                     description = thumb.a.img.attrs['alt']
                     thumb_url = URL(thumb.img.attrs['src'], base_url=url)
 
-                    duration = thumb.find('b')
+                    duration = thumb.find('span', {'data-role-video-duration':True})
                     dur_time = '' if duration is None else str(duration.string)
 
                     quality = thumb.find('div', {'class': "hSpriteHD"})
@@ -106,6 +106,13 @@ class XhamsterSite(BaseSiteParser):
                 if '/users/' in href:
                     color = 'blue'
                     href = href+'/videos*'
+                if '/channels/' in href:
+                    color = 'green'
+                    # href += '/videos'
+                if '/creators/' in href:
+                    color = 'blue'
+                    # href += '/videos'
+
 
                 self.add_tag(label.strip(), URL(href, base_url=url), style={'color':color})
 
