@@ -3,7 +3,7 @@ __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
 from data_format.url import URL
-from common.util import _iter, quotes, psp, collect_string
+from common.util import _iter, quotes, psp, collect_string, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -34,28 +34,32 @@ class PornozotSite(BaseSiteParser):
         return 'PZ'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        for thumbnail in _iter(soup.find_all('div', {'class': 'item-inner-col'})):
-            xref=thumbnail.a.attrs['href']
-            if '/video/' in xref or '/galleries/' in xref:
-                href = URL(thumbnail.a.attrs['href'], base_url=url)
-                description = thumbnail.a.img.attrs['alt']
+        container=soup.find('div', {'class':'grid--videos'})
+        if container:
+            # pretty(container)
+            for thumbnail in _iter(container.find_all('div', {'class': 'box-escena'})):
+                pretty(thumbnail)
+                xref=thumbnail.find('a', href=True)
+                # xref=thumbnail.a.attrs['href']
+                if xref:
+                    href = URL(xref.attrs['href'], base_url=url)
+                    img=thumbnail.find('img')
 
-                thumb_file = thumbnail.img.attrs['src']
-                channel_img = thumbnail.find('img', {'class': "img-responsive"})
-                thumb_file = thumb_file if channel_img is None else channel_img.attrs['src']
+                    description = img.attrs['alt']
 
-                thumb_url = URL(thumb_file, base_url=url)
+                    thumb_file = thumbnail.img.attrs['data-src']
+                    thumb_url = URL(thumb_file, base_url=url)
 
-                duration = thumbnail.find('span', {'class': "time"})
-                dur_time = '' if duration is None else str(duration.string)
+                    duration = thumbnail.find('div', {'class': "duracion"})
+                    dur_time = '' if duration is None else str(duration.string)
 
-                quality = thumbnail.find('span', {'class': "quality-icon"})
-                qual = '' if quality is None else str(quality.string)
+                    quality = thumbnail.find('span', {'class': "quality-icon"})
+                    qual = '' if quality is None else str(quality.string)
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
-                                           labels=[{'text': dur_time, 'align': 'top right'},
-                                                   {'text': qual, 'align': 'top left'},
-                                                   {'text': description, 'align': 'bottom center'}])
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=description,
+                                               labels=[{'text': dur_time, 'align': 'top right'},
+                                                       {'text': qual, 'align': 'top left'},
+                                                       {'text': description, 'align': 'bottom center'}])
 
     def parse_others(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'item-inner-col'})):
@@ -74,33 +78,34 @@ class PornozotSite(BaseSiteParser):
                 self.add_tag(str(channel.attrs['title']),URL(channel.attrs['href']))
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('nav',{'class':'pagination'})
+        return soup.find('ul',{'class':'pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('video')
-        if video is not None:
+        if video:
             for source in _iter(video.find_all('source')):
-                self.add_video('default', URL(source.attrs['src'], base_url=url))
+                self.add_video(source.attrs.get('type','default'), URL(source.attrs['src'], base_url=url))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        user_container=soup.find('div',{'class':'submitter-container'})
-        xref=user_container.find('a',href=True,title=True)
-        if user_container:
-            username=str(xref.attrs['title'])
-            href=str(xref.attrs['href'])
-            user_number=href.rstrip('/').rpartition('-')[2]
-
-            self.add_tag(username + ' videos',
-                         URL('http://www.pornbozz.com/uploads-by-user/{0}/'.format(user_number)),
-                         style={'color': 'blue'})
-
-            self.add_tag(username +  ' photos',
-                         URL('http://www.pornbozz.com/uploads-by-user/{0}/?photos=1'.format(user_number)),
-                         style={'color': 'blue'})
-
-        for tags_block in _iter(soup.find_all('div',{'class':'tags-block'})):
-            for href in _iter(tags_block.find_all('a',href=True)):
-                self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
+        pass
+        # user_container=soup.find('div',{'class':'submitter-container'})
+        # xref=user_container.find('a',href=True,title=True)
+        # if user_container:
+        #     username=str(xref.attrs['title'])
+        #     href=str(xref.attrs['href'])
+        #     user_number=href.rstrip('/').rpartition('-')[2]
+        #
+        #     self.add_tag(username + ' videos',
+        #                  URL('http://www.pornbozz.com/uploads-by-user/{0}/'.format(user_number)),
+        #                  style={'color': 'blue'})
+        #
+        #     self.add_tag(username +  ' photos',
+        #                  URL('http://www.pornbozz.com/uploads-by-user/{0}/?photos=1'.format(user_number)),
+        #                  style={'color': 'blue'})
+        #
+        # for tags_block in _iter(soup.find_all('div',{'class':'tags-block'})):
+        #     for href in _iter(tags_block.find_all('a',href=True)):
+        #         self.add_tag(str(href.string), URL(href.attrs['href'], base_url=url))
 
     def parse_pictures(self, soup: BeautifulSoup, url: URL):
         gallery=soup.find('div',{'class':'gallery-block'})

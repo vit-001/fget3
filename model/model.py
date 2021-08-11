@@ -86,10 +86,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._site_models=[
                             TestSite,
 
-
-
                             PornozotSite,
-                            XhamsterSite,
+
 
 
 
@@ -99,7 +97,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Classic:'),
-                            PornhubSite,FapmeifyoucanSite,
+                            PornhubSite,XhamsterSite,FapmeifyoucanSite,
                             DlouhaSite,ShooshtimeSite,
                             PornwildSite,PornmzSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
