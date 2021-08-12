@@ -147,7 +147,7 @@ class PornhubSite(BaseSiteParser):
 
             tags=container.find('div', {'class':'tagsWrapper'})
             if tags:
-                pretty(tags)
+                # pretty(tags)
 
 
                 for item in _iter(tags.find_all('a',{'class':'item'})):

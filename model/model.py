@@ -33,7 +33,7 @@ from model.site.video.script.pornoxo import PornoxoSite
 from model.site.video.script.pornsland import PornslandSite
 from model.site.video.script.porntrex import PorntrexSite
 from model.site.video.script.realgf import RealGfSite
-from model.site.video.script.redtube import RedtubeSite
+from model.site.video.plus_file.redtube import RedtubeSite
 from model.site.video.script.rusvideos import RusvideosSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.script.spankwire import SpankwireSite
@@ -84,7 +84,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,
+                            TestSite,RedtubeSite,
 
 
 
@@ -123,7 +123,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                             BabesandbitchesSite,
                             Space('Non working:'),
-                            RusvideosSite, HdEasypornSite, RedtubeSite,
+                            RusvideosSite, HdEasypornSite,
                              PlusoneSite,
                             CollectionofbestpornSite,
                             PorngoSite,

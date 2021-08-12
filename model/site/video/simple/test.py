@@ -26,7 +26,7 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://cdnlt9.serviporno.com/videos/6/0/9/6/3/609630c52a785bd30eaa6f281d2772e38dfab39c.mp4?nva=20210812020551&nvb=20210810220551&token=03f3753ff2900323437f5*'
+        t = 'https://ev-ph.rdtcdn.com/videos/202106/23/390077411/720P_4000K_390077411.mp4?validfrom=1628778400&validto=1628785600&rate=281k&burst=1400k&hash=sZS2gX%2BJMGXqtEITnrBdpOq%2BOOE%3D*'
         referrer=URL('https://fr.xhamster.com')
         self.add_video('DEFAULT', URL(t))
 
