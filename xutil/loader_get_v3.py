@@ -80,9 +80,9 @@ if __name__ == "__main__":
 
 
     url1 = 'https://sickjunk.com/'
-    url1a = 'https://fr.redtube.com/39862901'
+    url1a = 'https://rapelust.com/video/forced-anal-pain-factory/'
     url2 = 'https://19-17.b.cdn13.com/021/042/728/720p.h264.mp4?cdn_creation_time=1628600400&cdn_ttl=14400&cdn_bw=378k&cdn_bw_fs=402k&cdn_cv_data=217.66.158.192-dvp&cdn_hash=730442c465665fb787f262193f04c484'
-    url3 = 'https://strtapeadblock.me/e/b1KWaRz2KyUda8/'
+    url3 = 'https://a.adtng.com/get/10009021?time=1575323689465'
 
 
     fname1 = 'out/1.html'
