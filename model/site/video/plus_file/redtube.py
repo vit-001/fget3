@@ -59,7 +59,7 @@ class RedtubeSite(BaseSiteParser):
                         thumb_url = URL(img.attrs['data-src'], base_url=url)
                         label = img.attrs.get('alt', '')
 
-                        duration = thumbnail.find('span', {'class': ['widget-video-duration','video-duration']})
+                        duration = thumbnail.find('span', {'class': 'duration'})
                         dur_time = '' if duration is None else collect_string(duration)
 
                         hd_span = thumbnail.find('span', {'class': ['hd-video-icon','hd-video']})
@@ -104,51 +104,15 @@ class RedtubeSite(BaseSiteParser):
         #             # print(tag)
         #             self.add_tag(str(tag.string), URL(tag.attrs['href'], base_url=url))
 
-    def continue_with_stars(self, filedata:FLData, soup:BeautifulSoup):
-        # parce stars page
-        self.waiting_data=False
-        for stars_container in soup.find_all('ul', {'class': ['pornStarsThumbs']}):
-            for star in _iter(stars_container.find_all('li')):
-                href = URL(star.a.attrs['href'], base_url=filedata.url)
-                img = star.find('img')
-                thumb_url = URL(img.attrs['src'], base_url=filedata.url)
-                label = img.attrs.get('alt', '')
-
-                num_videos_span = star.find('span', text=lambda x: 'Videos' in str(x))
-                num_videos = '' if num_videos_span is None else str(num_videos_span.string)
-
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                               labels=[{'text': num_videos, 'align': 'top right'},
-                                       {'text': label, 'align': 'bottom center'}])
-        self.generate_thumb_view()
-
-    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
-    #     return 'RT '+ url.get().partition('redtube.com/')[2]
-
-    # def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-    #     tags_containers = _iter(soup.find_all('ul', {'class': ['categories-listing', 'categories-popular-listing']}))
-    #     for tags_container in tags_containers:
-    #         for tag in _iter(tags_container.find_all('a')):
-    #             self.add_tag(str(tag.attrs['title']), URL(tag.attrs['href'], base_url=url))
-
-    # def parse_pagination(self, soup: BeautifulSoup, url: URL):
-    #     pagination = soup.find('div', {'class': 'pages'})
-    #     if pagination:
-    #         for page in _iter(pagination.find_all('a')):
-    #             num = '' if page.string is None else str(page.string)
-    #             if num.isdigit():
-    #                 self.add_page(num, URL(page.attrs['href'], base_url=url))
-    #         return
-    #
-    #     pagination_v2=soup.find('ul',{'id':'w_pagination_list'})
-    #     if pagination_v2:
-    #         # psp(pagination_v2.prettify())
-    #         for page in _iter(pagination_v2.find_all('a')):
-    #             # psp(page)
-    #             num = page.span.string
-    #             if num.isdigit():
-    #                 self.add_page(num, URL(page.attrs['href'], base_url=url))
-
+    def parse_pagination(self, soup: BeautifulSoup, url: URL):
+        pagination = soup.find('ul', {'class':'tm_w_pagination_list'})
+        if pagination:
+            for page in _iter(pagination.find_all('a')):
+                # pretty(page)
+                num = collect_string(page).strip(' ')
+                if num.isdigit():
+                    self.add_page(num, URL(page.attrs['href'], base_url=url))
+            return
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         # psp(soup)
@@ -162,7 +126,7 @@ class RedtubeSite(BaseSiteParser):
                 t=quotes(data,'"mediaDefinitions":[',']').split('},{')
                 for item in t:
                     if '"format":"mp4"' in item:
-                        psp(item)
+                        # psp(item)
                         json_file_url = URL(quotes(item, '"videoUrl":"', '"'), base_url=url)
                         filedata = FLData(json_file_url, '')
 
@@ -179,8 +143,6 @@ class RedtubeSite(BaseSiteParser):
                 #         # self.sort_video()
                 #         # self.set_default_video(-1)
 
-
-
     def continue_parse_video(self, fldata: FLData):
         data = json.loads(fldata.text)
         psp(data)
@@ -188,6 +150,52 @@ class RedtubeSite(BaseSiteParser):
             psp(item)
             self.add_video(item['quality'], URL(item['videoUrl']))
         self.generate_video_view()
+
+    # def continue_with_stars(self, filedata:FLData, soup:BeautifulSoup):
+    #     # parce stars page
+    #     self.waiting_data=False
+    #     for stars_container in soup.find_all('ul', {'class': ['pornStarsThumbs']}):
+    #         for star in _iter(stars_container.find_all('li')):
+    #             href = URL(star.a.attrs['href'], base_url=filedata.url)
+    #             img = star.find('img')
+    #             thumb_url = URL(img.attrs['src'], base_url=filedata.url)
+    #             label = img.attrs.get('alt', '')
+    #
+    #             num_videos_span = star.find('span', text=lambda x: 'Videos' in str(x))
+    #             num_videos = '' if num_videos_span is None else str(num_videos_span.string)
+    #
+    #             self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+    #                            labels=[{'text': num_videos, 'align': 'top right'},
+    #                                    {'text': label, 'align': 'bottom center'}])
+    #     self.generate_thumb_view()
+
+    # def parse_thumb_title(self, soup: BeautifulSoup, url: URL) -> str:
+    #     return 'RT '+ url.get().partition('redtube.com/')[2]
+
+    # def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
+    #     tags_containers = _iter(soup.find_all('ul', {'class': ['categories-listing', 'categories-popular-listing']}))
+    #     for tags_container in tags_containers:
+    #         for tag in _iter(tags_container.find_all('a')):
+    #             self.add_tag(str(tag.attrs['title']), URL(tag.attrs['href'], base_url=url))
+
+    #
+    #     pagination_v2=soup.find('ul',{'id':'w_pagination_list'})
+    #     if pagination_v2:
+    #         # psp(pagination_v2.prettify())
+    #         for page in _iter(pagination_v2.find_all('a')):
+    #             # psp(page)
+    #             num = page.span.string
+
+    #             if num.isdigit():
+    #                 self.add_page(num, URL(page.attrs['href'], base_url=url))
+
+
+    # def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
+    #     return soup.find('ul', {'class':'tm_w_pagination_list'})
+
+
+
+
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         title=soup.find('h1',{'class':'videoTitle'})
@@ -199,24 +207,18 @@ class RedtubeSite(BaseSiteParser):
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         tags = soup.find('div', {'id': 'video_tags_carousel'})
         # first add user reference
-        # user_container = video_detail.find('td', {'class': 'withbadge'})
-        # if user_container:
-        #     user = user_container.find('a')
-        #     if user:
-        #         href = user.attrs['href']
-        #         username = user.string
-        #         self.add_tag(username, URL(href, base_url=url), style={'color':'blue'})
-        # # stars in video adding
-        # stars_container = video_detail.find('ul', {'class': 'pornstars-in-video'})
-        # if stars_container:
-        #     stars = _iter(stars_container.find_all('li', {'class': None}, recursive=False))
-        #     for star in stars:
-        #         href = star.find('a')
-        #         if href:
-        #             info = list(star.find('span', {'class': 'pornstar-info'}).stripped_strings)
-        #             name = info[0] + ' ' + info[1]
-        #             url = URL(href.attrs['href'], base_url=url)
-        #             self.add_tag(name, url, style={'color':'magenta'})
+        user_container = soup.find('span', {'class': 'video-infobox-uploader-name'})
+        if user_container:
+            user = user_container.find('a', href=True)
+            if user:
+                self.add_tag(collect_string(user), URL(user.attrs['href'], base_url=url), style={'color': 'blue'})
+
+        stars_container = soup.find('div', {'class': 'video-infobox-ps-wrap'})
+        if stars_container:
+            for star in _iter(stars_container.find_all('div', {'class': 'pornstar-name'})):
+                href = star.find('a',href=True)
+                if href:
+                    self.add_tag(collect_string(href), URL(href.attrs['href'],base_url=url), style={'color':'magenta'})
         # other tags
         for href in _iter(tags.find_all('a', {'class': 'video_carousel_item', 'href': True})):
                 self.add_tag(collect_string(href), URL(href.attrs['href'], base_url=url))
