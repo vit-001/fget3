@@ -79,6 +79,9 @@ from model.site.video.script.pornhub import PornhubSite
 from model.site.video.simple.fapmeifyoucan import FapmeifyoucanSite
 from model.site.video.simple.its import ItsSite
 from model.site.video.script.pornicom import PornicomSite
+from model.site.video.script.pornwhite import PornwhiteSite
+from model.site.video.script.katestube import KatestubeSite
+from model.site.video.script.sleazyneasy import SleazyneasySite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -86,7 +89,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,
+                            TestSite,PornwhiteSite,KatestubeSite,SleazyneasySite,
 
 
 
