@@ -77,6 +77,8 @@ from model.site.video.script.petardashd import PetardashdSite
 from model.site.video.simple.pornozot import PornozotSite
 from model.site.video.script.pornhub import PornhubSite
 from model.site.video.simple.fapmeifyoucan import FapmeifyoucanSite
+from model.site.video.simple.its import ItsSite
+from model.site.video.script.pornicom import PornicomSite
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -84,7 +86,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,RedtubeSite,
+                            TestSite,
 
 
 
@@ -97,8 +99,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Classic:'),
-                            PornhubSite,XhamsterSite,FapmeifyoucanSite,
-                            DlouhaSite,ShooshtimeSite,
+                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,
+                            DlouhaSite,ShooshtimeSite,PornicomSite,
                             PornwildSite,PornmzSite,PornozotSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,

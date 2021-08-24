@@ -52,7 +52,7 @@ class RedtubeSite(BaseSiteParser):
                 for thumbnail in _iter(container.find_all('li', {'class':'tm_video_block'})):
                     try:
                         # psp(thumbnail.prettify())
-                        pretty(thumbnail)
+                        # pretty(thumbnail)
                         xref=thumbnail.find('a',href=True)
                         href = URL(xref.attrs['href'], base_url=url)
                         img=thumbnail.find('img',{'data-src':True})
@@ -145,9 +145,9 @@ class RedtubeSite(BaseSiteParser):
 
     def continue_parse_video(self, fldata: FLData):
         data = json.loads(fldata.text)
-        psp(data)
+        # psp(data)
         for item in data:
-            psp(item)
+            # psp(item)
             self.add_video(item['quality'], URL(item['videoUrl']))
         self.generate_video_view()
 
