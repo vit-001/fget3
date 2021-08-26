@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class SleazyneasySite(BaseSiteParser):
+class PervclipsSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('sleazyneasy.com/')
+        return url.contain('pervclips.com/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,15 +24,15 @@ class SleazyneasySite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/sleazyneasy.png',
+        view.add_start_button(picture_filename='model/site/resource/pervclips.svg',
                               # menu_items=menu_items,
-                              url=URL("https://www.sleazyneasy.com/latest-updates/", test_string='porn'))
+                              url=URL("https://www.pervclips.com/tube/latest-updates/", test_string='porn'))
 
     def get_shrink_name(self):
-        return 'PW'
+        return 'PV'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'thumbs-list'})
+        contents=soup.find('div', {'class':'thumbs-holder'})
         # pretty(contents)
         if contents:
             # pretty(contents)
@@ -48,11 +48,11 @@ class SleazyneasySite(BaseSiteParser):
                 # title_tag = thumbnail.find('div', {'class': 'th-title'})
                 label = thumbnail.img.attrs.get('alt')
 
-                duration = thumbnail.find('span', {'class': 'length'})
+                duration = thumbnail.find('div', {'class': 'time-holder'})
                 dur_time = '' if duration is None else collect_string(duration)
 
-                hd_tag = thumbnail.find('span', {'class': 'hd'})
-                hd = '' if hd_tag is None else collect_string(hd_tag)
+                hd_tag = thumbnail.find('div', {'class': 'hd-holder'})
+                hd = '' if hd_tag is None else 'HD'
 
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
                                labels=[{'text':dur_time, 'align':'top right'},
@@ -74,7 +74,7 @@ class SleazyneasySite(BaseSiteParser):
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pager'})
+        return soup.find('div',{'class':'pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'player'})
@@ -104,7 +104,7 @@ class SleazyneasySite(BaseSiteParser):
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
 
-        container = soup.find('div', {'class': 'block-more'})
+        container = soup.find('div', {'class': 'block-details'})
         if container:
             for item in _iter(container.find_all('a', href=True)):
                 # pretty(item)

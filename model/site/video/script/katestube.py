@@ -23,7 +23,7 @@ class KatestubeSite(BaseSiteParser):
                         Chanels=URL('https://www.katestube.com/channels/'),
                         Categories=URL('https://www.katestube.com/categories/alphabetical/'))
 
-        view.add_start_button(picture_filename='model/site/resource/katetube.svg',
+        view.add_start_button(picture_filename='model/site/resource/katestube.png',
                               menu_items=menu_items,
                               url=URL("https://www.katestube.com/latest-updates/", test_string='Kate\'s'))
 

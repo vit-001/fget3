@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class SleazyneasySite(BaseSiteParser):
+class VikipornSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('sleazyneasy.com/')
+        return url.contain('vikiporn.com/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,12 +24,12 @@ class SleazyneasySite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/sleazyneasy.png',
+        view.add_start_button(picture_filename='model/site/resource/vikiporn.png',
                               # menu_items=menu_items,
-                              url=URL("https://www.sleazyneasy.com/latest-updates/", test_string='porn'))
+                              url=URL("https://www.vikiporn.com/latest-updates/", test_string='porn'))
 
     def get_shrink_name(self):
-        return 'PW'
+        return 'VP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         contents=soup.find('div', {'class':'thumbs-list'})
@@ -74,7 +74,7 @@ class SleazyneasySite(BaseSiteParser):
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pager'})
+        return soup.find('ul',{'class':'paging'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'player'})

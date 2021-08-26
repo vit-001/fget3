@@ -15,73 +15,77 @@ from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
-from model.site.video.plus_file.pornfun import PornfunSite
+from model.site.video.plus_file._nonwork.pornfun import PornfunSite
+from model.site.video.plus_file._nonwork.sexix import SexixSite
+from model.site.video.plus_file._nonwork.yourporn import YourpornSite
 from model.site.video.plus_file.pornmz import PornmzSite
+from model.site.video.plus_file.pornvibe import PornvibeSite
 from model.site.video.plus_file.pornwild import PornwildSite
-from model.site.video.plus_file.sexix import SexixSite
-from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
-from model.site.video.plus_file.yourporn import YourpornSite
-from model.site.video.script.beemtube import BeemtubeSite
-from model.site.video.script.boundhub import BoundhubSite
-from model.site.video.script.deviantclip import DeviantclipSite
-from model.site.video.script.jizzbunker import JizzbunkerSite
-from model.site.video.script.motherless import MotherlessSite
-from model.site.video.script.porn0sex import Porn0sexSite
-from model.site.video.script.porncom import PornComSite
-from model.site.video.script.pornhd import PornhdSite
-from model.site.video.script.pornoxo import PornoxoSite
-from model.site.video.script.pornsland import PornslandSite
-from model.site.video.script.porntrex import PorntrexSite
-from model.site.video.script.realgf import RealGfSite
 from model.site.video.plus_file.redtube import RedtubeSite
-from model.site.video.script.rusvideos import RusvideosSite
+from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
+from model.site.video.script._nonwork.beemtube import BeemtubeSite
+from model.site.video.script._nonwork.deviantclip import DeviantclipSite
+from model.site.video.script._nonwork.motherless import MotherlessSite
+from model.site.video.script._nonwork.porn0sex import Porn0sexSite
+from model.site.video.script._nonwork.porncom import PornComSite
+from model.site.video.script._nonwork.pornhd import PornhdSite
+from model.site.video.script._nonwork.pornoxo import PornoxoSite
+from model.site.video.script._nonwork.pornsland import PornslandSite
+from model.site.video.script._nonwork.porntrex import PorntrexSite
+from model.site.video.script._nonwork.rusvideos import RusvideosSite
+from model.site.video.script._nonwork.spankwire import SpankwireSite
+from model.site.video.script._nonwork.thumbzilla import ThumbzillaSite
+from model.site.video.script._nonwork.tube8 import Tube8Site
+from model.site.video.script._nonwork.v24videos import V24videoSite
+from model.site.video.script._nonwork.youngpornvideos import YoungPornVideosSite
+from model.site.video.script.boundhub import BoundhubSite
+from model.site.video.script.jizzbunker import JizzbunkerSite
+from model.site.video.script.katestube import KatestubeSite
+from model.site.video.script.pervclips import PervclipsSite
+from model.site.video.script.petardashd import PetardashdSite
+from model.site.video.script.pornhub import PornhubSite
+from model.site.video.script.pornicom import PornicomSite
+from model.site.video.script.pornobomba import PornobombaSite
+from model.site.video.script.pornwatchers import PornwatchersSite
+from model.site.video.script.pornwhite import PornwhiteSite
+from model.site.video.script.realgf import RealGfSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
-from model.site.video.script.spankwire import SpankwireSite
-from model.site.video.script.thumbzilla import ThumbzillaSite
-from model.site.video.script.tube8 import Tube8Site
-from model.site.video.script.v24videos import V24videoSite
+from model.site.video.script.shooshtime import ShooshtimeSite
+from model.site.video.script.sleazyneasy import SleazyneasySite
+from model.site.video.script.vikiporn import VikipornSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xnxx import XnxxSite
 from model.site.video.script.xvideo import XvideoSite
-from model.site.video.script.youngpornvideos import YoungPornVideosSite
-from model.site.video.simple.collectionofbestporn import CollectionofbestpornSite
-from model.site.video.simple.gigporno import GigpornoSite
-from model.site.video.simple.hd_easyporn import HdEasypornSite
-from model.site.video.simple.heavy_r import HeavyRSite
-from model.site.video.simple.plusone8 import PlusoneSite
-from model.site.video.simple.pornbozz import PornbozzSite
-from model.site.video.simple.porngo import PorngoSite
-from model.site.video.simple.pornone import PornoneSite
-from model.site.video.simple.sextube_nl import SextubeNlSite
-from model.site.video.simple.test import TestSite
-from model.site.video.simple.tnaflix import TnaflixSite
-from model.site.video.xhr.extremetube import ExtremetubeSite
-from model.site.video.xhr.pervertslut import PervertslutSite
-from model.site.video.simple.pornoakt import PornoaktSite
-from model.site.video.script.pornobomba import PornobombaSite
-from model.site.video.simple.homeporno import HomepornoSite
-from model.site.video.simple.spreee import SpreeeSite
-from model.site.video.simple.hotscope import HotscopeSite
-from model.site.video.simple.ruleporn import RulepornSite
-from model.site.video.simple.pohub import PohubSite
-from model.site.video.simple.xdporner import XdpornerSite
-from model.site.video.plus_file.pornvibe import PornvibeSite
-from model.site.video.simple.rapelust import RapelustSite
-from model.site.video.simple.freeuseporn import FreeusepornSite
-from model.site.video.simple.pornxxxvideos import PornxxxvideosSite
-from model.site.video.simple.dlouha import DlouhaSite
+from model.site.video.simple._nonwork.plusone8 import PlusoneSite
+from model.site.video.simple._nonwork.collectionofbestporn import CollectionofbestpornSite
+from model.site.video.simple._nonwork.hd_easyporn import HdEasypornSite
+from model.site.video.simple._nonwork.heavy_r import HeavyRSite
+from model.site.video.simple._nonwork.hotscope import HotscopeSite
+from model.site.video.simple._nonwork.pornbozz import PornbozzSite
+from model.site.video.simple._nonwork.porngo import PorngoSite
+from model.site.video.simple._nonwork.pornone import PornoneSite
+from model.site.video.simple._nonwork.tnaflix import TnaflixSite
 from model.site.video.simple.darknessporn import DarknesspornSite
-from model.site.video.simple.sickjunk import SickjunkSite
-from model.site.video.script.shooshtime import ShooshtimeSite
-from model.site.video.script.petardashd import PetardashdSite
-from model.site.video.simple.pornozot import PornozotSite
-from model.site.video.script.pornhub import PornhubSite
+from model.site.video.simple.dlouha import DlouhaSite
 from model.site.video.simple.fapmeifyoucan import FapmeifyoucanSite
+from model.site.video.simple.freeuseporn import FreeusepornSite
+from model.site.video.simple.gigporno import GigpornoSite
+from model.site.video.simple.homeporno import HomepornoSite
 from model.site.video.simple.its import ItsSite
-from model.site.video.script.pornicom import PornicomSite
-from model.site.video.script.pornwhite import PornwhiteSite
-from model.site.video.script.katestube import KatestubeSite
-from model.site.video.script.sleazyneasy import SleazyneasySite
+from model.site.video.simple.pohub import PohubSite
+from model.site.video.simple.pornoakt import PornoaktSite
+from model.site.video.simple.pornozot import PornozotSite
+from model.site.video.simple.pornxxxvideos import PornxxxvideosSite
+from model.site.video.simple.rapelust import RapelustSite
+from model.site.video.simple.ruleporn import RulepornSite
+from model.site.video.simple.sextube_nl import SextubeNlSite
+from model.site.video.simple.sickjunk import SickjunkSite
+from model.site.video.simple.spreee import SpreeeSite
+from model.site.video.simple.test import TestSite
+from model.site.video.simple.xdporner import XdpornerSite
+from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
+from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
+
 
 class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
@@ -89,7 +93,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,PornwhiteSite,KatestubeSite,SleazyneasySite,
+                            TestSite,PornwhiteSite,KatestubeSite,
 
 
 
@@ -102,8 +106,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Classic:'),
-                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,
-                            DlouhaSite,ShooshtimeSite,PornicomSite,
+                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,PornwatchersSite,
+                            DlouhaSite,ShooshtimeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,
                             PornwildSite,PornmzSite,PornozotSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,
@@ -127,6 +131,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             Space('Photo:'),
                             BravoeroticaSite,TomorrowpornSite,TeenportSite,VibrapornSite,
                             BabesandbitchesSite,
+
                             Space('Non working:'),
                             RusvideosSite, HdEasypornSite,
                              PlusoneSite,
