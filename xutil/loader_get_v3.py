@@ -78,9 +78,18 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    # https://www.hd21.com/hd21_right_ads.php?v=17.88&se=1&ct=straight&keywords=Hd,Cumshot,Blowjob,POV,Amateur,LeluLove+condom+cum
+
     url1 = 'https://sickjunk.com/'
-    url1a = 'https://pohub.biz/view_video/577/Razdelsya_i_zalez_golii_v_dysh_k_devyshke__chtobi_pomoch_ei_konchit/'
+
+    # https://www.melonstube.com/category/huge-tits
+
+    # https://www.analdin.xxx/latest-updates/
+    # https://www.crockotube.com/allvideos/most_recent/
+    # https://www.theyarehuge.com/latest-updates/
+    # https://iporntoo.com/videos/
+    # https://www.bravotube.net/latest-updates/
+
+    url1a = 'https://www.bravotube.net/videos/amateur-big-ass-teen-gets-her-asshole-fisted-and-pounded-with-toys/'
     url2 = 'https://19-17.b.cdn13.com/021/042/728/720p.h264.mp4?cdn_creation_time=1628600400&cdn_ttl=14400&cdn_bw=378k&cdn_bw_fs=402k&cdn_cv_data=217.66.158.192-dvp&cdn_hash=730442c465665fb787f262193f04c484'
     url3 = 'https://t.probns.com/redirect/?spot_id=566&ct=straight&keywords=Hd,Cumshot,Blowjob,POV,Amateur,LeluLove condom cum'
 

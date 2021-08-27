@@ -41,7 +41,7 @@ class KatestubeSite(BaseSiteParser):
                     href = URL(xref.attrs['href'], base_url=url)
                     description = thumbnail.img.attrs.get('alt')
                     thumb_url = URL(thumbnail.img.attrs.get('data-original',thumbnail.img.attrs.get('src')), base_url=url)
-                    psp(thumb_url.get())
+                    # psp(thumb_url.get())
 
                     duration = thumbnail.find('span', {'class': "length"})
                     dur_time = '' if duration is None else collect_string(duration)
@@ -68,20 +68,36 @@ class KatestubeSite(BaseSiteParser):
                 self.add_video('DEFAULT', URL(mp4, base_url=url))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        for autor_container in _iter(soup.find_all('div', {'class': 'author'})):
-            for href in _iter(autor_container.find_all('a')):
-                # psp(href)
-                self.add_tag(collect_string(href), URL(href.attrs['href'], base_url=url), style={'color': 'red'})
+        models=soup.find('div',{'class':'models'})
+        if models:
+            for item in _iter(models.find_all('a', href=True)):
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url), style=dict(color='red'))
 
-        for models_container in _iter(soup.find_all('div', {'class': 'models'})):
-            for href in _iter(models_container.find_all('a')):
-                # psp(href)
-                self.add_tag(collect_string(href), URL(href.attrs['href'], base_url=url), style={'color': 'blue'})
+        container = soup.find('div', {'class': 'block-more'})
+        if container:
+            for item in _iter(container.find_all('a', href=True)):
+                # pretty(item)
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url))
 
-        for tag_container in _iter(soup.find_all('div', {'class': 'block-more'})):
-            for href in _iter(tag_container.find_all('a')):
-                # psp(href)
-                self.add_tag(str(href.attrs['title']), URL(href.attrs['href'], base_url=url))
+        container = soup.find('div', {'class': 'player-tags'})
+        if container:
+            for item in _iter(container.find_all('a', href=True)):
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url))
+
+
+
+
+        categories=soup.find('div',{'class':'full-category'})
+        if categories:
+            # pretty(categories)
+            for xref in _iter(categories.find_all('a',href=lambda x: not 'javascript' in str(x))):
+                # psp(xref)
+                href=xref.attrs.get('href','')
+                self.add_tag(collect_string(xref), URL(href, base_url=url))
+
 
 
 if __name__ == "__main__":

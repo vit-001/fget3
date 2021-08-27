@@ -56,6 +56,9 @@ from model.site.video.script.vikiporn import VikipornSite
 from model.site.video.script.xhamster import XhamsterSite
 from model.site.video.script.xnxx import XnxxSite
 from model.site.video.script.xvideo import XvideoSite
+from model.site.video.script.tprn import TprnSite
+from model.site.video.script.frprn import FrprnSite
+from model.site.video.script.xhand import XhandSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
 from model.site.video.simple._nonwork.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple._nonwork.hd_easyporn import HdEasypornSite
@@ -93,22 +96,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,PornwhiteSite,KatestubeSite,
-
-
-
-
-
-
-
+                            TestSite,
 
 
 
 
                             Space('Classic:'),
-                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,PornwatchersSite,
-                            DlouhaSite,ShooshtimeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,
-                            PornwildSite,PornmzSite,PornozotSite,
+                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,PornwatchersSite,KatestubeSite,XhandSite,
+                            DlouhaSite,ShooshtimeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,TprnSite,FrprnSite,
+                            PornwildSite,PornmzSite,PornozotSite,PornwhiteSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,
                             PornvibeSite,RapelustSite,DarknesspornSite,FreeusepornSite,
@@ -117,7 +113,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             HomepornoSite,PetardashdSite,
 
 
-            SextubeNlSite,
+                            SextubeNlSite,
 
 
                             Space('Amateur:'),
@@ -137,7 +133,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                              PlusoneSite,
                             CollectionofbestpornSite,
                             PorngoSite,
-            HotscopeSite,
+                            HotscopeSite,
                             HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,
                             PornhdSite,ThumbzillaSite,SpankwireSite,
                             PornComSite,PornoxoSite,YoungPornVideosSite,
