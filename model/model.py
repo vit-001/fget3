@@ -108,13 +108,14 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,AnaldinSite,
+                            TestSite,
 
 
 
 
                             Space('Classic:'),
-                            PornhubSite,RedtubeSite,XhamsterSite,ItsSite,FapmeifyoucanSite,PornwatchersSite,KatestubeSite,XhandSite,
+                            PornhubSite,RedtubeSite,XhamsterSite,AnaldinSite,
+                            ItsSite,FapmeifyoucanSite,PornwatchersSite,KatestubeSite,XhandSite,
                             DlouhaSite,ShooshtimeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,TprnSite,FrprnSite,
                             PornwildSite,PornmzSite,PornozotSite,PornwhiteSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,

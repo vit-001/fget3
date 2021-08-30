@@ -24,7 +24,7 @@ class AnaldinSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/xhand.svg',
+        view.add_start_button(picture_filename='model/site/resource/analdin.png',
                               # menu_items=menu_items,
                               url=URL("https://www.analdin.xxx/latest-updates/", test_string='porn'))
 
@@ -62,21 +62,29 @@ class AnaldinSite(BaseSiteParser):
                                        # {'text': hd, 'align': 'top left'}
                                ])
 
-    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('nav',{'class':'menu-inner2'})
-        if container:
-            # psp(container.prettify())
-            for item in _iter(container.find_all('li',{'class':'cat-item'})):
-                # psp(item)
-                tag=item.find('a')
-                if tag:
-                    # psp(tag)
-
-                    self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
-
-
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div',{'class':'pagination'})
+
+    def parse_pagination(self, soup: BeautifulSoup, url: URL):
+        container = self.get_pagination_container(soup)
+        if container:
+            # pretty(container)
+            for page in _iter(container.find_all('a', {'href': True})):
+                if page.string and str(page.string).strip().isdigit():
+                    href=page.attrs['href']
+                    if '#videos' in href:
+                        url_txt=url.get().strip('/')
+                        part=url_txt.rpartition('/')
+
+                        if part[2].isdigit():
+                            url_txt=part[0]
+
+
+                        href=url_txt+'/'+quotes(str(page),'from:','"')+'/'
+
+                    self.add_page(page.string, URL(href, base_url=url))
+                    # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
+
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'class': 'player'})
@@ -87,7 +95,7 @@ class AnaldinSite(BaseSiteParser):
 
             flashvars = quotes(str(script).replace(' ', ''), 'flashvars={', '}')
             if flashvars:
-                psp(flashvars)
+                # psp(flashvars)
 
                 video_url = quotes(flashvars, "video_url:'", "'")
                 video_url_text = quotes(flashvars, "video_url_text:'", "'")
@@ -109,10 +117,15 @@ class AnaldinSite(BaseSiteParser):
                 self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container = soup.find('div', {'class': 'video__player-inner'})
+        container = soup.find('div', {'class': 'info'})
         # pretty(container)
 
         if container:
+            for item in _iter(container.find_all('a', href=lambda x:'/channels/' in str(x))):
+                # pretty(item)
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url), style=dict(color='blue'))
+
             for item in _iter(container.find_all('a', href=lambda x:'/models/' in str(x))):
                 # pretty(item)
                 href = item.attrs.get('href', '')
