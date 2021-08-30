@@ -1,20 +1,28 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Vit'
 from common.setting import Setting
+
 from data_format.url import URL
+
 from interface.loader_interface import LoaderInterface
 from interface.model_interface import ModelFromControllerInterface, ModelFromSiteInterface
 from interface.site_interface import SiteInterface
 from interface.view_manager_interface import ViewManagerFromModelInterface
+
 from model.favorites.favorites import Favorites
+
 from model.history_model.hystory import HistoryModel
+
 from model.loader.multiprocess_loader import MultiprocessLoader
+
 from model.site.other.space import Space
+
 from model.site.picture.tgp_sites.babesandbitches import BabesandbitchesSite
 from model.site.picture.tgp_sites.bravoerotica import BravoeroticaSite
 from model.site.picture.tgp_sites.teenport import TeenportSite
 from model.site.picture.tgp_sites.tomorrowporn import TomorrowpornSite
 from model.site.picture.tgp_sites.vibraporn import VibrapornSite
+
 from model.site.video.plus_file._nonwork.pornfun import PornfunSite
 from model.site.video.plus_file._nonwork.sexix import SexixSite
 from model.site.video.plus_file._nonwork.yourporn import YourpornSite
@@ -23,6 +31,7 @@ from model.site.video.plus_file.pornvibe import PornvibeSite
 from model.site.video.plus_file.pornwild import PornwildSite
 from model.site.video.plus_file.redtube import RedtubeSite
 from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
+
 from model.site.video.script._nonwork.beemtube import BeemtubeSite
 from model.site.video.script._nonwork.deviantclip import DeviantclipSite
 from model.site.video.script._nonwork.motherless import MotherlessSite
@@ -59,6 +68,8 @@ from model.site.video.script.xvideo import XvideoSite
 from model.site.video.script.tprn import TprnSite
 from model.site.video.script.frprn import FrprnSite
 from model.site.video.script.xhand import XhandSite
+from model.site.video.script.analdin import AnaldinSite
+
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
 from model.site.video.simple._nonwork.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple._nonwork.hd_easyporn import HdEasypornSite
@@ -86,6 +97,7 @@ from model.site.video.simple.sickjunk import SickjunkSite
 from model.site.video.simple.spreee import SpreeeSite
 from model.site.video.simple.test import TestSite
 from model.site.video.simple.xdporner import XdpornerSite
+
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
 from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
 
@@ -96,7 +108,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,
+                            TestSite,AnaldinSite,
 
 
 
