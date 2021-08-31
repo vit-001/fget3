@@ -83,14 +83,12 @@ if __name__ == "__main__":
 
     # https://www.melonstube.com/category/huge-tits
 
-    # https://www.analdin.xxx/latest-updates/
-    # https://www.crockotube.com/allvideos/most_recent/
     # https://www.theyarehuge.com/latest-updates/
     # https://iporntoo.com/videos/
     # https://www.bravotube.net/latest-updates/
 
-    url1a = 'https://www.analdin.xxx/videos/472523/sexy-librarian-katana-kombat-fucks-on-the-table/'
-    url2 = 'https://19-17.b.cdn13.com/021/042/728/720p.h264.mp4?cdn_creation_time=1628600400&cdn_ttl=14400&cdn_bw=378k&cdn_bw_fs=402k&cdn_cv_data=217.66.158.192-dvp&cdn_hash=730442c465665fb787f262193f04c484'
+    url1a = 'https://www.bravotube.net/videos/tattooed-girl-kristen-scott-gets-her-hands-on-a-neighbor-s-cock/'
+    url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
     url3 = 'https://t.probns.com/redirect/?spot_id=566&ct=straight&keywords=Hd,Cumshot,Blowjob,POV,Amateur,LeluLove condom cum'
 
 
