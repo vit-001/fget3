@@ -84,12 +84,12 @@ if __name__ == "__main__":
     # https://www.melonstube.com/category/huge-tits
 
     # https://www.theyarehuge.com/latest-updates/
-    # https://iporntoo.com/videos/
-    # https://www.bravotube.net/latest-updates/
+    #
+    # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.bravotube.net/videos/tattooed-girl-kristen-scott-gets-her-hands-on-a-neighbor-s-cock/'
+    url1a = 'https://crocotube.com/videos/russian-teen-fucked-very-hard-and-jizzed-on-afce/?promoid=1263'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
-    url3 = 'https://t.probns.com/redirect/?spot_id=566&ct=straight&keywords=Hd,Cumshot,Blowjob,POV,Amateur,LeluLove condom cum'
+    url3 = 'https://www.cremz.com/embed/125793?skin=black'
 
 
     fname1 = 'out/1.html'

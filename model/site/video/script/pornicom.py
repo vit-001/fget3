@@ -103,6 +103,14 @@ class PornicomSite(BaseSiteParser):
                 self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
+        models=soup.find('div',{'class':'models-holder'})
+        if models:
+            # pretty(models)
+            for xref in _iter(models.find_all('a',href=True)):
+                # psp(xref)
+                href=xref.attrs.get('href','')
+                self.add_tag(collect_string(xref), URL(href, base_url=url), style=dict(color='red'))
+
 
         container = soup.find('div', {'class': 'info-holder'})
         if container:
@@ -118,13 +126,7 @@ class PornicomSite(BaseSiteParser):
                 self.add_tag(collect_string(item), URL(href, base_url=url))
 
 
-        models=soup.find('div',{'class':'meta-item'})
-        if models:
-            # pretty(models)
-            for xref in _iter(models.find_all('a',href=lambda x: not 'javascript' in str(x))):
-                # psp(xref)
-                href=xref.attrs.get('href','')
-                self.add_tag(collect_string(xref), URL(href, base_url=url), style=dict(color='blue'))
+
 
         categories=soup.find('div',{'class':'full-category'})
         if categories:

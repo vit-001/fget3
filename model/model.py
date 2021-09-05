@@ -99,6 +99,9 @@ from model.site.video.simple.sickjunk import SickjunkSite
 from model.site.video.simple.spreee import SpreeeSite
 from model.site.video.simple.test import TestSite
 from model.site.video.simple.xdporner import XdpornerSite
+from model.site.video.simple.iporntoo import IporntooSite
+from model.site.video.simple.bdsmone import BdsmoneSite
+from model.site.video.simple.crocotube import CrocotubeSite
 
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
 from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
@@ -110,15 +113,21 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,BravotubeSite,
+                            TestSite,
 
 
 
 
                             Space('Classic:'),
-                            PornhubSite,RedtubeSite,XhamsterSite,AnaldinSite,
-                            ItsSite,FapmeifyoucanSite,PornwatchersSite,KatestubeSite,XhandSite,
-                            DlouhaSite,ShooshtimeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,TprnSite,FrprnSite,
+                            XhamsterSite,
+                            AnaldinSite,
+                            BravotubeSite,
+                            KatestubeSite,
+                            PornhubSite,TprnSite,BdsmoneSite,CrocotubeSite,
+                            RedtubeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,IporntooSite,
+                            XhandSite,ShooshtimeSite,
+                            ItsSite,FapmeifyoucanSite,PornwatchersSite,
+                            DlouhaSite,FrprnSite,
                             PornwildSite,PornmzSite,PornozotSite,PornwhiteSite,CrockotubeSite,
                             YespornpleasexxxSite,PohubSite,SickjunkSite,
                             PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,

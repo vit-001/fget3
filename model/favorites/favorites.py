@@ -50,6 +50,7 @@ class Favorites(FavoritesInterface):
     def write_datafile(self, filename:str):
         print('Writing',len(self.data),'favorites records to',filename)
         data=[]
+        # print(self.data)
         for (label,url) in self.data:
             data.append(tuple([label,url.to_dict_serialize()]))
         try:
@@ -59,7 +60,7 @@ class Favorites(FavoritesInterface):
 
         try:
             with open(filename, 'w') as fav_file:
-                json.dump(data, fav_file)
+                json.dump(data, fav_file, sort_keys=True,indent=2)
         except EnvironmentError as err:
             print('Writing ' + filename + ' error: ', err)
 

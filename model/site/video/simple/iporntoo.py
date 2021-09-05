@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class BravotubeSite(BaseSiteParser):
+class IporntooSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('bravotube.net/')
+        return url.contain('iporntoo.com/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,19 +24,19 @@ class BravotubeSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/bravotube.png',
+        view.add_start_button(picture_filename='model/site/resource/iporntoo.png',
                               # menu_items=menu_items,
-                              url=URL("https://www.bravotube.net/latest-updates/", test_string='Porn'))
+                              url=URL("https://iporntoo.com/videos/", test_string='Porn'))
 
     def get_shrink_name(self):
         return 'TH'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'th-wrap'})
+        contents=soup.find('main', {'class':'main-col'})
         # pretty(contents)
         if contents:
             # pretty(contents)
-            for thumbnail in _iter(contents.find_all('div', {'class': 'video_block'})):
+            for thumbnail in _iter(contents.find_all('div', {'class': '-video'})):
 
                 # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True)
@@ -63,7 +63,7 @@ class BravotubeSite(BaseSiteParser):
                                ])
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pager'})
+        return soup.find('div',{'class':'pagination'})
 
     # def parse_pagination(self, soup: BeautifulSoup, url: URL):
     #     container = self.get_pagination_container(soup)
@@ -87,7 +87,7 @@ class BravotubeSite(BaseSiteParser):
 
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'class': 'player'})
+        video = soup.find('video', {'id': 'thisPlayer'})
         if video:
             # pretty(video)
             for source in _iter(video.find_all('source')):
@@ -95,7 +95,7 @@ class BravotubeSite(BaseSiteParser):
             self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container = soup.find('div', {'class': 'models'})
+        container = soup.find('div', {'class': '-models'})
         # pretty(container)
 
         if container:
@@ -103,6 +103,25 @@ class BravotubeSite(BaseSiteParser):
                 # pretty(item)
                 href = item.attrs.get('href', '')
                 self.add_tag(collect_string(item), URL(href, base_url=url), style=dict(color='red'))
+
+
+        container = soup.find('div', {'class': '-niches'})
+        # pretty(container)
+
+        if container:
+            for item in _iter(container.find_all('a', href=True)):
+                # pretty(item)
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url))
+
+        container = soup.find('div', {'class': '-tags'})
+        # pretty(container)
+
+        if container:
+            for item in _iter(container.find_all('a', href=True)):
+                # pretty(item)
+                href = item.attrs.get('href', '')
+                self.add_tag(collect_string(item), URL(href, base_url=url))
 
 
         container = soup.find('div', {'class': 'upper-tags'})

@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class BravotubeSite(BaseSiteParser):
+class BdsmoneSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('bravotube.net/')
+        return url.contain('bdsm.one/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,19 +24,19 @@ class BravotubeSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/bravotube.png',
+        view.add_start_button(picture_filename='model/site/resource/bdsmone.png',
                               # menu_items=menu_items,
-                              url=URL("https://www.bravotube.net/latest-updates/", test_string='Porn'))
+                              url=URL("https://bdsm.one/date/", test_string='Porn'))
 
     def get_shrink_name(self):
         return 'TH'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'th-wrap'})
+        contents=soup.find('div', {'class':'thumbs'})
         # pretty(contents)
         if contents:
             # pretty(contents)
-            for thumbnail in _iter(contents.find_all('div', {'class': 'video_block'})):
+            for thumbnail in _iter(soup.find_all('div', {'class': 'th'})):
 
                 # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True)
@@ -49,10 +49,10 @@ class BravotubeSite(BaseSiteParser):
                 # title = thumbnail.find('strong', {'class': 'title'})
                 label=img.get('alt','')
 
-                duration = thumbnail.find('span', {'class': 'time'})
+                duration = thumbnail.find('span', {'class': 'btime'})
                 dur_time = '' if duration is None else collect_string(duration)
 
-                hd_tag = thumbnail.find('div', {'class': 'hd'})
+                hd_tag = thumbnail.find('i', {'class': 'icon-hd'})
                 hd = '' if hd_tag is None else 'HD'
 
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
@@ -63,7 +63,7 @@ class BravotubeSite(BaseSiteParser):
                                ])
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pager'})
+        return soup.find('ul',{'class':'pagination'})
 
     # def parse_pagination(self, soup: BeautifulSoup, url: URL):
     #     container = self.get_pagination_container(soup)
@@ -87,22 +87,26 @@ class BravotubeSite(BaseSiteParser):
 
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'class': 'player'})
+        video = soup.find('div', {'class': 'mobileSource'})
         if video:
-            # pretty(video)
-            for source in _iter(video.find_all('source')):
-                self.add_video(source.attrs.get('title','default'), URL(source.attrs['src']))
-            self.set_default_video(-1)
+            pretty(video)
+            mobile=video.attrs.get('data-mobile-videolink','')
+            link=video.attrs.get('data-videolink','')
+
+            if link:
+                self.add_video('videolink', URL(link))
+            if mobile:
+                self.add_video('mobile-videolink', URL(mobile))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container = soup.find('div', {'class': 'models'})
+        container = soup.find('div', {'class': 'desc-cats'})
         # pretty(container)
 
         if container:
             for item in _iter(container.find_all('a', href=True)):
                 # pretty(item)
                 href = item.attrs.get('href', '')
-                self.add_tag(collect_string(item), URL(href, base_url=url), style=dict(color='red'))
+                self.add_tag(collect_string(item), URL(href, base_url=url))
 
 
         container = soup.find('div', {'class': 'upper-tags'})
