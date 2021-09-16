@@ -70,8 +70,9 @@ from model.site.video.script.frprn import FrprnSite
 from model.site.video.script.xhand import XhandSite
 from model.site.video.script.analdin import AnaldinSite
 from model.site.video.script.crockotube import CrockotubeSite
-from model.site.video.simple.bravotube import BravotubeSite
+# from model.site.video.script.cremz import CremzSite
 
+from model.site.video.simple.bravotube import BravotubeSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
 from model.site.video.simple._nonwork.collectionofbestporn import CollectionofbestpornSite
 from model.site.video.simple._nonwork.hd_easyporn import HdEasypornSite
@@ -102,6 +103,7 @@ from model.site.video.simple.xdporner import XdpornerSite
 from model.site.video.simple.iporntoo import IporntooSite
 from model.site.video.simple.bdsmone import BdsmoneSite
 from model.site.video.simple.crocotube import CrocotubeSite
+from model.site.video.simple.fapguru import FapguruSite
 
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
 from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
@@ -113,7 +115,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,
+                            TestSite,FapguruSite,
 
 
 
