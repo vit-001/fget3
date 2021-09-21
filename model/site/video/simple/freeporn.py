@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class FapguruSite(BaseSiteParser):
+class FreepornSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('fapguru.com/')
+        return url.contain('freeporn.info/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,39 +24,41 @@ class FapguruSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/fapguru.png',
+        view.add_start_button(picture_filename='model/site/resource/freeporn.png',
                               # menu_items=menu_items,
-                              url=URL("https://www.fapguru.com/latest-updates/", test_string='Porn'))
+                              url=URL("https://www.freeporn.info/videos/", test_string='tube'))
 
     def get_shrink_name(self):
-        return 'SP'
+        return 'FP'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
-        contents=soup.find('div', {'class':'thumbs-list'})
+        contents=soup  #.find('div', {'class':'inner-box-container'})
         # pretty(contents)
         if contents:
             # psp(contents.prettify())
-            for thumbnail in _iter(contents.find_all('div', {'class': 'item'})):
-                # pretty(thumbnail)
-                xref=thumbnail.find('a',href=True)
-                href = URL(xref.attrs['href'], base_url=url)
-                img=thumbnail.find('img')
-                thumb_url = URL(img.attrs.get('src'), base_url=url)
-                label = img.attrs.get('alt')
+            for thumbnail in _iter(contents.find_all('div', {'class': 'item-col'})):
+                try:
+                    # pretty(thumbnail)
 
-                duration = thumbnail.find('span', {'class': 'thumb__duration'})
-                dur_time = '' if duration is None else collect_string(duration)
+                    xref=thumbnail.find('a',href=True)
+                    href = URL(xref.attrs['href'], base_url=url)
+                    img=thumbnail.find('img')
+                    thumb_url = URL(img.attrs.get('src'), base_url=url)
+                    label = img.attrs.get('alt')
 
-                hd_tag = thumbnail.find('div', {'class': 't-hd'})
-                if hd_tag is None:
-                    hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
-                hd = '' if hd_tag is None else collect_string(hd_tag)
+                    duration = thumbnail.find('span', {'class': 'time'})
+                    dur_time = '' if duration is None else collect_string(duration)
 
-                self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
-                               labels=[{'text':dur_time, 'align':'top right'},
-                                       # {'text': count, 'align': 'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': hd, 'align': 'top left'}])
+                    hd_tag = thumbnail.find('span', {'class': 'quality-icon'})
+                    hd = '' if hd_tag is None else collect_string(hd_tag)
+
+                    self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
+                                   labels=[{'text':dur_time, 'align':'top right'},
+                                           # {'text': count, 'align': 'top right'},
+                                           {'text':label, 'align':'bottom center'},
+                                           {'text': hd, 'align': 'top left'}])
+                except AttributeError as e:
+                    pass
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         container=soup.find('nav',{'class':'menu-inner2'})
@@ -71,7 +73,7 @@ class FapguruSite(BaseSiteParser):
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
-        return soup.find('div',{'class':'pagination'})
+        return soup.find('nav',{'class':'pagination'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('video', {'class': 'video-js'})
@@ -84,10 +86,11 @@ class FapguruSite(BaseSiteParser):
             self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div', {'class':'video-links__list_tags'})
-        if container:
+
+
+        for container in _iter(soup.find_all('div', {'class':'d-container'})):
             # pretty(container)
-            for tag in _iter(container.find_all('a', {'class':'video-links__link'})):
+            for tag in _iter(container.find_all('a',href=True)):
                 # pretty(tag)
                 href = tag.attrs.get('href', '')
                 self.add_tag(collect_string(tag), URL(href, base_url=url))

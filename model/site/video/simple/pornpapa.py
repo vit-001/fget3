@@ -11,10 +11,10 @@ from interface.view_manager_interface import ViewManagerFromModelInterface
 from model.site.parser import BaseSiteParser
 
 
-class FapguruSite(BaseSiteParser):
+class PornpapaSite(BaseSiteParser):
     @staticmethod
     def can_accept_url(url: URL) -> bool:
-        return url.contain('fapguru.com/')
+        return url.contain('pornpapa.com/')
 
     @staticmethod
     def create_start_button(view:ViewManagerFromModelInterface): #
@@ -24,12 +24,12 @@ class FapguruSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/fapguru.png',
+        view.add_start_button(picture_filename='model/site/resource/pornpapa.png',
                               # menu_items=menu_items,
-                              url=URL("https://www.fapguru.com/latest-updates/", test_string='Porn'))
+                              url=URL("https://www.pornpapa.com/latest-updates/", test_string='Porn'))
 
     def get_shrink_name(self):
-        return 'SP'
+        return 'H'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         contents=soup.find('div', {'class':'thumbs-list'})
@@ -47,9 +47,7 @@ class FapguruSite(BaseSiteParser):
                 duration = thumbnail.find('span', {'class': 'thumb__duration'})
                 dur_time = '' if duration is None else collect_string(duration)
 
-                hd_tag = thumbnail.find('div', {'class': 't-hd'})
-                if hd_tag is None:
-                    hd_tag = thumbnail.find('span', {'class': 'hdthumb'})
+                hd_tag = thumbnail.find('span', {'class': 'thumb__bage'})
                 hd = '' if hd_tag is None else collect_string(hd_tag)
 
                 self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
@@ -57,17 +55,6 @@ class FapguruSite(BaseSiteParser):
                                        # {'text': count, 'align': 'top right'},
                                        {'text':label, 'align':'bottom center'},
                                        {'text': hd, 'align': 'top left'}])
-
-    def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('nav',{'class':'menu-inner2'})
-        if container:
-            # psp(container.prettify())
-            for item in _iter(container.find_all('li',{'class':'cat-item'})):
-                # psp(item)
-                tag=item.find('a')
-                if tag:
-                    # psp(tag)
-                    self.add_tag(collect_string(tag), URL(tag.attrs['href'], base_url=url))
 
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
@@ -80,33 +67,24 @@ class FapguruSite(BaseSiteParser):
             for source in _iter(video.find_all('source')):
                 # psp(source)
                 if 'http' in source.attrs.get('src',''):
-                    self.add_video(source.attrs.get('title','default'), URL(source.attrs['src']))
-            self.set_default_video(-1)
+                    self.add_video(source.attrs.get('label','default'), URL(source.attrs['src']))
+            # self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div', {'class':'video-links__list_tags'})
+        container=soup.find('div', {'class':'video-links'})
         if container:
             # pretty(container)
-            for tag in _iter(container.find_all('a', {'class':'video-links__link'})):
+            for tag in _iter(container.find_all('a', href=lambda x:"/models/" in str(x))):
+                # pretty(tag)
+                href = tag.attrs.get('href', '')
+                self.add_tag(collect_string(tag), URL(href, base_url=url), style=dict(color='red'))
+
+            for tag in _iter(container.find_all('a', href=lambda x:"/categories/" in str(x))):
                 # pretty(tag)
                 href = tag.attrs.get('href', '')
                 self.add_tag(collect_string(tag), URL(href, base_url=url))
         #
-        # models=soup.find('div',{'class':'meta-item'})
-        # if models:
-        #     # pretty(models)
-        #     for xref in _iter(models.find_all('a',href=lambda x: not 'javascript' in str(x))):
-        #         # psp(xref)
-        #         href=xref.attrs.get('href','')
-        #         self.add_tag(collect_string(xref), URL(href, base_url=url), style=dict(color='blue'))
-        #
-        # categories=soup.find('div',{'class':'full-category'})
-        # if categories:
-        #     # pretty(categories)
-        #     for xref in _iter(categories.find_all('a',href=lambda x: not 'javascript' in str(x))):
-        #         # psp(xref)
-        #         href=xref.attrs.get('href','')
-        #         self.add_tag(collect_string(xref), URL(href, base_url=url))
+
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
         head= soup.find('head')

@@ -87,7 +87,7 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.fapguru.com/videos/98337108/77c0d130370c138b7fdcbcaf4dee3f37/'
+    url1a = 'https://www.pornpapa.com/videos/45759780/61c6d313d0da36ebe441b769efc82380/'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
     url3 = 'https://www.cremz.com/embed/125793?skin=black'
 

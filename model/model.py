@@ -104,6 +104,10 @@ from model.site.video.simple.iporntoo import IporntooSite
 from model.site.video.simple.bdsmone import BdsmoneSite
 from model.site.video.simple.crocotube import CrocotubeSite
 from model.site.video.simple.fapguru import FapguruSite
+from model.site.video.simple.freeporn import FreepornSite
+from model.site.video.simple.hdporn import HdpornSite
+from model.site.video.simple.pornpapa import PornpapaSite
+
 
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
 from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
@@ -115,7 +119,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,FapguruSite,
+                            TestSite,PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
 
 
 
