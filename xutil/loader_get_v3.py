@@ -87,9 +87,9 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.pornpapa.com/videos/45759780/61c6d313d0da36ebe441b769efc82380/'
+    url1a = 'https://sextubefun.com/video/cadey-mercury-s-stepdad-fucks-her-hard-in-the-campus-bar-96336.html'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
-    url3 = 'https://www.cremz.com/embed/125793?skin=black'
+    url3 = 'https://www.pornrox.com/gvf/eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpc3MiOiJwb3Jucm94LmNvbSIsImF1ZCI6InBvcm5yb3guY29tIiwianRpIjoiZTlMM0RlNEVzYzZINzk0YyIsImlhdCI6MTYzMjI5NzUxMCwiZXhwIjoxNjMyMjk5MzEwLCJ1cmwiOiJodHRwczpcL1wvdnMxLnBvcm5yb3guY29tXC8yNDhcL1ZreU5vcXloMmVcL3ZpZGVvLm1wND9zaD1GVnB1TGxwR3l3cUVCYVdjRE9HQUNnJnR0bD0xNjMyMzAxMTEwIiwidmlkZW9JZCI6MjkzMTY1fQ.'
 
 
     fname1 = 'out/1.html'

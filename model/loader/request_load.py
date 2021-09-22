@@ -46,6 +46,7 @@ class RequestLoad(BaseLoadProcedure):
         except:
             raise LoaderError('Unknown error in loader')
         else:
+            url.response=response
             return response.content
 
     def get_redirect_location(self, url: URL) -> URL:

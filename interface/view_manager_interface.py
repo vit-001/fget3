@@ -47,7 +47,8 @@ class ViewManagerFromModelInterface:
         print('thumb history changed')
 
     def on_full_history_changed(self, history:HistoryFromViewInterface):
-        print('full history changed')
+        pass
+        # print('full history changed')
 
     def add_start_button(self, picture_filename:str, url:URL, menu_items:dict=None, name:str=None):
         print('Add start button:', url.domain())

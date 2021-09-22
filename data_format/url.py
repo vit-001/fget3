@@ -49,6 +49,7 @@ class URL:
         self.forced_proxy = forced_proxy
         self.forced_unproxy = forced_unproxy
         self.test_string = test_string
+        self.response=None
 
         if base_url:
             url = get_href(url, base_url)
