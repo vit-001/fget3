@@ -33,10 +33,10 @@ class ShockingmoviesSite(BaseSiteParser):
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         for thumbnail in _iter(soup.find_all('div', {'class': 'video-box'})):
             # pretty(thumbnail)
-            xref=thumbnail.find('a')
+            xref=thumbnail.find('a', href=True)
             href = URL(xref.attrs['href'], base_url=url)
             description = thumbnail.img.attrs['alt']
-            thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
+            thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
 
             duration = thumbnail.find('span', {'class': "video-length"})
             dur_time = '' if duration is None else str(duration.string)

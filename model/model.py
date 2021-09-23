@@ -109,6 +109,8 @@ from model.site.video.simple.hdporn import HdpornSite
 from model.site.video.simple.pornpapa import PornpapaSite
 from model.site.video.simple.sex3 import Sex3Site
 from model.site.video.simple.sextubefun import SextubefunSite
+from model.site.video.simple.stileproject import StileprojectSite
+
 
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
 from model.site.video.xhr._nonwork.pervertslut import PervertslutSite
@@ -120,7 +122,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,SextubefunSite, Sex3Site, PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
+                            TestSite,StileprojectSite, ShockingmoviesSite,SextubefunSite, Sex3Site, PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
 
 
 
@@ -151,7 +153,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                              RealGfSite,
 
                             Space('Deviant:'),
-                            BoundhubSite, ShockingmoviesSite,
+                            BoundhubSite,
 
                            # Space('Short:'),
 
