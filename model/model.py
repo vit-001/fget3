@@ -70,7 +70,7 @@ from model.site.video.script.frprn import FrprnSite
 from model.site.video.script.xhand import XhandSite
 from model.site.video.script.analdin import AnaldinSite
 from model.site.video.script.crockotube import CrockotubeSite
-# from model.site.video.script.cremz import CremzSite
+from model.site.video.script.tryboobs import TryboobsSite
 
 from model.site.video.simple.bravotube import BravotubeSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
@@ -123,7 +123,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,SpicyflixSite, StileprojectSite, ShockingmoviesSite,SextubefunSite, Sex3Site, PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
+                            TestSite,TryboobsSite, SpicyflixSite, StileprojectSite, ShockingmoviesSite,SextubefunSite, Sex3Site, PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
 
 
 
