@@ -87,7 +87,7 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.tryboobs.com/videos/88687/oozing-hot-busty-chick-fucks-her-pussy/'
+    url1a = 'https://www.winporn.com/fr/video/589844/puffy-nipples-emo-teen-anal-and-vaginal-drilling'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
     url3 = 'https://shockingmovies.com/embed/13138212'
 

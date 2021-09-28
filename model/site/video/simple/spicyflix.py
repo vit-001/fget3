@@ -24,7 +24,7 @@ class SpicyflixSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/spreee.png',
+        view.add_start_button(picture_filename='model/site/resource/spicy-flix.png',
                               # menu_items=menu_items,
                               url=URL("https://www.spicy-flix.com/allvideos/most_recent", test_string='videos'))
 
@@ -36,13 +36,13 @@ class SpicyflixSite(BaseSiteParser):
         # # pretty(contents)
         # if contents:
         #     # psp(contents.prettify())
-            for thumbnail in _iter(soup.find_all('div', {'class': 'resized-column-thumbs-home'})):
-                pretty(thumbnail)
-                xref=thumbnail.find('a',href=True, title=True)
+            for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-box'})):
+                # pretty(thumbnail)
+                xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
                 img=thumbnail.find('img')
                 thumb_url = URL(img.attrs.get('src'), base_url=url)
-                label = xref.attrs.get('title')
+                label = xref.attrs.get('title',img.attrs.get('title'))
 
                 duration = thumbnail.find('span', {'class': 'duration'})
                 dur_time = '' if duration is None else collect_string(duration)
@@ -73,15 +73,13 @@ class SpicyflixSite(BaseSiteParser):
             self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container=soup.find('div', {'class':'tags_cats'})
+        container=soup.find('div', {'class':'second-video-info'})
         if container:
-            pretty(container)
-            for tag in _iter(container.find_all('li', {'class':'tag'})):
-                pretty(tag)
-                xref=tag.find('a',href=True)
-                if xref:
-                    href = xref.attrs.get('href', '')
-                    self.add_tag(collect_string(xref), URL(href, base_url=url))
+            # pretty(container)
+            for tag in _iter(container.find_all('a', href=True)):
+                # pretty(tag)
+                href = tag.attrs.get('href', '')
+                self.add_tag(collect_string(tag), URL(href, base_url=url))
 
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
