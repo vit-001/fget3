@@ -87,9 +87,9 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.winporn.com/fr/video/589844/puffy-nipples-emo-teen-anal-and-vaginal-drilling'
+    url1a = 'https://www.tubous.com/videos/1007329/blonde-tranny-fuck-her-friend-on-cam-show'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
-    url3 = 'https://shockingmovies.com/embed/13138212'
+    url3 = 'https://www.tubous.com/'
 
 
     fname1 = 'out/1.html'
@@ -108,9 +108,9 @@ if __name__ == "__main__":
 
     headers = {'Referer': 'https://bdsmstreak.com/'}
 
-    r = load(url1a, fname1a)#, cookies=coockies)
+    # r = load(url1a, fname1a)#, cookies=coockies)
     # r = load(url2, fname2)#,headers=headers)
-    # r=load(url3,fname1b)#, proxies=proxies)
+    r=load(url3,fname1b)#, proxies=proxies)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)
 

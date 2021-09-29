@@ -37,7 +37,7 @@ class DarknesspornSite(BaseSiteParser):
         # if contents:
         #     psp(contents.prettify())
             for thumbnail in _iter(soup.find_all('div', {'class': 'video-block'})):
-                # pretty(thumbnail)
+                pretty(thumbnail)
                 xref=thumbnail.find('a',href=True,title=True)
                 if xref:
                     href = URL(xref.attrs['href'], base_url=url)

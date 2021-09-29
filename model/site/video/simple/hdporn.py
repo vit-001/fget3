@@ -38,7 +38,7 @@ class HdpornSite(BaseSiteParser):
             # psp(contents.prettify())
             for thumbnail in _iter(contents.find_all('div', {'class': '-video'})):
                 try:
-                    pretty(thumbnail)
+                    # pretty(thumbnail)
 
                     xref = thumbnail.find('a', href=True)
                     href = URL(xref.attrs['href'], base_url=url)

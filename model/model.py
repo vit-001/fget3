@@ -71,6 +71,8 @@ from model.site.video.script.xhand import XhandSite
 from model.site.video.script.analdin import AnaldinSite
 from model.site.video.script.crockotube import CrockotubeSite
 from model.site.video.script.tryboobs import TryboobsSite
+from model.site.video.script.xozilla import XozillaSite
+from model.site.video.script.tubous import TubousSite
 
 from model.site.video.simple.bravotube import BravotubeSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
@@ -82,7 +84,7 @@ from model.site.video.simple._nonwork.pornbozz import PornbozzSite
 from model.site.video.simple._nonwork.porngo import PorngoSite
 from model.site.video.simple._nonwork.pornone import PornoneSite
 from model.site.video.simple._nonwork.tnaflix import TnaflixSite
-from model.site.video.simple.darknessporn import DarknesspornSite
+from model.site.video.simple._nonwork.darknessporn import DarknesspornSite
 from model.site.video.simple.dlouha import DlouhaSite
 from model.site.video.simple.fapmeifyoucan import FapmeifyoucanSite
 from model.site.video.simple.freeuseporn import FreeusepornSite
@@ -111,6 +113,7 @@ from model.site.video.simple.sex3 import Sex3Site
 from model.site.video.simple.sextubefun import SextubefunSite
 from model.site.video.simple.stileproject import StileprojectSite
 from model.site.video.simple.spicyflix import SpicyflixSite
+from model.site.video.simple.xcum import XcumSite
 
 
 from model.site.video.xhr._nonwork.extremetube import ExtremetubeSite
@@ -123,38 +126,46 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,TryboobsSite, SpicyflixSite, StileprojectSite, ShockingmoviesSite,SextubefunSite, Sex3Site, PornpapaSite, HdpornSite, FapguruSite,FreepornSite,
+                            TestSite,  XcumSite, TubousSite, SextubefunSite,
 
 
 
 
                             Space('Classic:'),
-                            XhamsterSite,
+
+
+            XozillaSite,
+                            XhamsterSite,Sex3Site,
                             AnaldinSite,
                             BravotubeSite,
-                            KatestubeSite,
-                            PornhubSite,TprnSite,BdsmoneSite,CrocotubeSite,
+                            KatestubeSite,ShockingmoviesSite,HdpornSite,
+                            PornhubSite,TprnSite,CrocotubeSite,
                             RedtubeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,IporntooSite,
                             XhandSite,ShooshtimeSite,
-                            ItsSite,FapmeifyoucanSite,PornwatchersSite,
+                            ItsSite,FapmeifyoucanSite,
                             DlouhaSite,FrprnSite,
-                            PornwildSite,PornmzSite,PornozotSite,PornwhiteSite,CrockotubeSite,
-                            YespornpleasexxxSite,PohubSite,SickjunkSite,
-                            PornoaktSite,SpreeeSite,XnxxSite,XdpornerSite,
-                            PornvibeSite,RapelustSite,DarknesspornSite,FreeusepornSite,
-                            PornobombaSite,XvideoSite,RulepornSite,
-                            GigpornoSite,JizzbunkerSite,PornxxxvideosSite,
+                            PornwildSite,PornmzSite,PornwhiteSite,CrockotubeSite,
+                            YespornpleasexxxSite,SickjunkSite,
+                            SpreeeSite,XdpornerSite,
+                            PornvibeSite,
+                            XvideoSite,RulepornSite,
+                            GigpornoSite,JizzbunkerSite,
                             HomepornoSite,PetardashdSite,
 
 
                             SextubeNlSite,
 
 
-                            Space('Amateur:'),
-                             RealGfSite,
+                            Space('Static:'),
+            TryboobsSite,SpicyflixSite,StileprojectSite, FapguruSite,FreepornSite,PornpapaSite,PornwatchersSite,XnxxSite,PornxxxvideosSite,
+
+
+
+                            # Space('Amateur:'),
+
 
                             Space('Deviant:'),
-                            BoundhubSite,
+                            BoundhubSite,BdsmoneSite,RapelustSite,FreeusepornSite,
 
                            # Space('Short:'),
 
@@ -163,7 +174,8 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             BabesandbitchesSite,
 
                             Space('Non working:'),
-                            RusvideosSite, HdEasypornSite,
+                            DarknesspornSite,PornobombaSite,RealGfSite,
+                            RusvideosSite, HdEasypornSite,PohubSite,PornozotSite,PornoaktSite,
                              PlusoneSite,
                             CollectionofbestpornSite,
                             PorngoSite,
