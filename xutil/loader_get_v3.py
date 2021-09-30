@@ -108,9 +108,9 @@ if __name__ == "__main__":
 
     headers = {'Referer': 'https://bdsmstreak.com/'}
 
-    # r = load(url1a, fname1a)#, cookies=coockies)
+    r = load(url1a, fname1a)#, cookies=coockies)
     # r = load(url2, fname2)#,headers=headers)
-    r=load(url3,fname1b)#, proxies=proxies)
+    # r=load(url3,fname1b)#, proxies=proxies)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)
 

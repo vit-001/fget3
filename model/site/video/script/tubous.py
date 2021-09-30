@@ -24,7 +24,7 @@ class TubousSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/tryboobs.png',
+        view.add_start_button(picture_filename='model/site/resource/tubous.png',
                               # menu_items=menu_items,
                               url=URL("https://www.tubous.com/", test_string='Porn'))
 
@@ -38,7 +38,7 @@ class TubousSite(BaseSiteParser):
             # pretty(contents)
             for thumbnail in _iter(contents.find_all('div', {'class': 'th'})):
 
-                pretty(thumbnail)
+                # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True)
                 img=thumbnail.find('img')
                 href = URL(xref.attrs['href'], base_url=url)
@@ -48,7 +48,7 @@ class TubousSite(BaseSiteParser):
                 title = thumbnail.find('p', {'class': 'video-title'})
                 label = '' if title is None else collect_string(title)
 
-                duration = thumbnail.find('span', {'class': 'time'})
+                duration = thumbnail.find('span', {'class': 'dur'})
                 dur_time = '' if duration is None else collect_string(duration)
 
                 hd_tag = thumbnail.find('span', {'class': 'quality'})
@@ -71,35 +71,39 @@ class TubousSite(BaseSiteParser):
     def parse_pagination(self, soup: BeautifulSoup, url: URL):
         container = self.get_pagination_container(soup)
         if container:
-            pretty(container)
+            # pretty(container)
             data_current_page=container.attrs.get('data-current-page','1')
             data_duration = container.attrs.get('data-duration', '')
             data_max_page = container.attrs.get('data-max-page', '')
             data_niche_slug = container.attrs.get('data-niche-slug', '')
             data_paging_order = container.attrs.get('data-paging-order', '')
             data_q = container.attrs.get('data-q', '')
+            if data_q:
+                data_q='search/'+data_q
+
+            # if data_q:
+            #     psp(data_q)
 
             curr_page=int(data_current_page)
+
+            if curr_page-5>1:
+                self.add_page('1',URL('/'+data_niche_slug+data_paging_order+data_q+data_duration+'/page'+'1'+'.html',base_url=url))
 
             for page in range(curr_page-5,curr_page+5):
                 if page>0 and page<=int(data_max_page):
                     if page==curr_page: continue
-                    page_url=URL('/'+data_niche_slug+data_paging_order+data_duration+'/page'+str(page)+'.html',base_url=url)
-                    print(page_url)
+                    page_url=URL('/'+data_niche_slug+data_paging_order+data_q+data_duration+'/page'+str(page)+'.html',base_url=url)
+                    # print(page_url)
                     self.add_page(str(page),page_url)
 
-            psp(URL('/'+data_niche_slug+data_paging_order+data_duration+'/page'+data_current_page+'.html',base_url=url))
-
-            for page in _iter(container.find_all('a', {'href': True})):
-                if page.string and str(page.string).strip().isdigit():
-                    self.add_page(page.string, URL(page.attrs['href'], base_url=url))
-                    # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
+            if curr_page+5<=int(data_max_page):
+                self.add_page(data_max_page,URL('/'+data_niche_slug+data_paging_order+data_q+data_duration+'/page'+data_max_page+'.html',base_url=url))
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
         return soup.find('div',{'class':'pagingContainer'})
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        video = soup.find('div', {'class': 'player'})
+        video = soup.find('div', {'class': 'watch'})
         if video:
             # pretty(video)
             script=video.find('script',text=lambda x: 'data-videolink' in str(x))
