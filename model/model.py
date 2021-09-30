@@ -73,6 +73,7 @@ from model.site.video.script.crockotube import CrockotubeSite
 from model.site.video.script.tryboobs import TryboobsSite
 from model.site.video.script.xozilla import XozillaSite
 from model.site.video.script.tubous import TubousSite
+from model.site.video.script.xtits import XtitsSite
 
 from model.site.video.simple.bravotube import BravotubeSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
@@ -126,7 +127,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,  XcumSite, TubousSite, SextubefunSite,
+                            TestSite,  XtitsSite, XcumSite, TubousSite, SextubefunSite,
 
 
 

@@ -87,7 +87,7 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://www.tubous.com/videos/1007329/blonde-tranny-fuck-her-friend-on-cam-show'
+    url1a = 'https://www.xtits.xxx/videos/67227/mia-khalifa-how-is-this-for-simple-math-tony-rubino-compilation-this-video-mia-khalifa/'
     url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
     url3 = 'https://www.tubous.com/'
 
