@@ -174,6 +174,7 @@ class BaseSite(SiteInterface, ParseResult):
 
         loader.load_list(thumb_list)
 
+
         for item in self.model.get_favorite_items(self):
             self.add_fav(item['label'], item['url'], style=dict(on_remove=get_menu_handler(self.model.remove_favorite,item['url'])))
 
@@ -194,16 +195,17 @@ class BaseSite(SiteInterface, ParseResult):
         flags = self.start_options.get('flags')
         view.prepare(url=self.url,title=self.title, tooltip=self.url.get(),flags=flags)
 
-        view.set_video_list(self.video_data, self.video_default_index)
-
-        self.add_controls_to_view(view)
-
         if Setting.debug_site:
             print()
             print('Now playback', self.url) # todo сделать отладочный вывод
             for item in self.video_data:
                 self.log('  ',item['text'], item['url'])
             self.log('  Default:', self.video_data[self.video_default_index]['text'])
+
+        view.set_video_list(self.video_data, self.video_default_index)
+
+        self.add_controls_to_view(view)
+
 
     def generate_pictures_view(self):
         if self.waiting_data:

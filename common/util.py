@@ -22,12 +22,23 @@ def collect_string(soup:BeautifulSoup)->str:
 
     return result
 
+def collect_string_to_array(soup:BeautifulSoup):
+    result=list()
+    for s in soup.stripped_strings:
+        result.append(s)
+
+    return result
+
+
 def sp():
     print('=========================================')
 
 def psp(*arguments, **keywords):
     print(*arguments, **keywords)
     sp()
+
+def pretty(soup:BeautifulSoup):
+    psp(soup.prettify())
 
 if __name__ == "__main__":
     pass

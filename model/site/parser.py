@@ -2,6 +2,8 @@
 __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
+import logging
+
 from common.util import _iter
 from data_format.url import URL
 from model.site.base_site import BaseSite
@@ -9,26 +11,31 @@ from model.site.base_site import BaseSite
 
 class BaseSiteParser(BaseSite):
     def parse_soup(self, soup:BeautifulSoup, url:URL):
-        self.parse_video(soup, url)
-        if self.is_video:
-            self.parse_video_tags(soup, url)
-            self.title=self.parse_video_title(soup,url)
-            self.generate_video_view()
-            return
-        self.parse_pictures(soup, url)
-        if self.is_pictures:
-            self.parse_pictures_tags(soup, url)
-            self.title=self.parse_pictures_title(soup,url)
-            self.generate_pictures_view()
-            return
-        self.parse_thumbs(soup, url)
-        if self.is_no_result:
-            self.parse_others(soup, url)
-        if self.is_thumbs:
-            self.parse_thumbs_tags(soup, url)
-            self.parse_pagination(soup, url)
-            self.title=self.parse_thumb_title(soup,url)
-            self.generate_thumb_view()
+        try:
+            self.parse_video(soup, url)
+            if self.is_video:
+                self.parse_video_tags(soup, url)
+                self.title=self.parse_video_title(soup,url)
+                self.generate_video_view()
+                return
+            self.parse_pictures(soup, url)
+            if self.is_pictures:
+                self.parse_pictures_tags(soup, url)
+                self.title=self.parse_pictures_title(soup,url)
+                self.generate_pictures_view()
+                return
+            self.parse_thumbs(soup, url)
+            if self.is_no_result:
+                self.parse_others(soup, url)
+                self.parse_pagination(soup, url)
+            if self.is_thumbs:
+                self.parse_thumbs_tags(soup, url)
+                self.parse_pagination(soup, url)
+                self.title=self.parse_thumb_title(soup,url)
+                self.generate_thumb_view()
+        except AttributeError as e:
+            logging.exception(e.__repr__())
+            # print(e.__repr__())
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         self.parse_video_thumbs(soup,url)
@@ -56,7 +63,7 @@ class BaseSiteParser(BaseSite):
         if container:
             for page in _iter(container.find_all('a', {'href': True})):
                 if page.string and str(page.string).strip().isdigit():
-                    self.add_page(page.string, URL(page.attrs['href'], base_url=url))
+                    self.add_page(str(page.string).strip(), URL(page.attrs['href'], base_url=url))
                     # print('Add page',page.string, URL(page.attrs['href'], base_url=url), page.attrs['href'])
 
     def get_pagination_container(self, soup: BeautifulSoup) -> BeautifulSoup:
@@ -89,7 +96,7 @@ class BaseSiteParser(BaseSite):
         return url.get().strip('/').rpartition('/')[2].partition('.')[0]
 
     def get_shrink_name(self):
-        return ''
+        return '*'
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ class Controller(ControllerFromModelInterface,ControllerFromViewInterface):
         self.goto_url=self.model.goto_url
 
     def goto_url(self, url: URL, **options):
+        # print('Goto url', url)
         self.model.goto_url(url, **options)
 
     def favorite_add(self, url: URL):

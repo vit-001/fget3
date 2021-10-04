@@ -18,8 +18,8 @@ class InterfaceCompiler():
         #     self.interfaces.extend(self.test_interfaces)
 
         self.base_dir = base_dir  # 'E:/repo/fget3'
-        self.source_dir = self.base_dir + '/view/qt_design/'
-        self.dest_dir = self.base_dir + '/view/qt_ui/'
+        self.source_dir = self.base_dir + '/view_qt5/qt_design/'
+        self.dest_dir = self.base_dir + '/view_qt5/qt_ui/'
 
         self.pyuic5 = 'C:/Python34/Lib/site-packages/PyQt5/pyuic5.bat '
 

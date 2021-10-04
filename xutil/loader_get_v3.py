@@ -14,7 +14,9 @@ def load(url, fname, cookies=None, headers=None, proxies=None):
             headers = dict()
         headers['user-agent'] = USER_AGENT
 
-        response = requests.get(url, cookies=cookies, headers=headers, proxies=proxies)
+        print('START')
+        response = requests.get(url, cookies=cookies, headers=headers, proxies=proxies, allow_redirects=False)
+        print('END')
         response.raise_for_status()
         with open(fname, 'wb') as fd:
             for chunk in response.iter_content(chunk_size=128):
@@ -78,10 +80,19 @@ if __name__ == "__main__":
 
     proxies={'http': 'proxy.antizapret.prostovpn.org:3128'}
 
-    url1 = 'http://www.extremetube.com/videos'
-    url1a = 'https://www.tnaflix.com/hardcore-porn/Assfucked-euro-babe-rubs-her-pussy/video2528566'
-    url2 = 'http://porn96.xyz/?u=zHufneT3hJUlVfhUr/XrRzrZYuGrNnVWZRfO5FY5Jp5lDwiL3dION8mxURUbg/FCTXtXFzA640sVf6jZLopwaA=='
-    url3 = 'http://www4.pornfun.com/remote_control.php?time=1490688627&cv=cb90ade678228733e045b68465b6f1a6&lr=0&cv2=c1451132bb5e338af902bc1c75302b82&file=%2Fcontents%2Fvideos%2F27000%2F27100%2F27100.mp4&cv3=becb9c8a2b412ea8f3fe2e3541341d4b'
+
+    url1 = 'https://sickjunk.com/'
+
+    # https://www.melonstube.com/category/huge-tits
+
+    # https://www.theyarehuge.com/latest-updates/
+    #
+    # https://yourlust.com/latest-updates/
+
+    url1a = 'https://www.xtits.xxx/videos/67227/mia-khalifa-how-is-this-for-simple-math-tony-rubino-compilation-this-video-mia-khalifa/'
+    url2 = 'https://www.xozilla.xxx/get_file/11/19198481703199bbdfe37b5f87a583b8/417000/417546/417546.mp4/'
+    url3 = 'https://www.tubous.com/'
+
 
     fname1 = 'out/1.html'
     fname1a = 'out/1a.html'
@@ -91,22 +102,26 @@ if __name__ == "__main__":
     fname2a = 'out/2.html'
     fname3 = 'out/3.json'
     fname4 = 'out/1.js'
+    fname5 = 'out/1.svg'
+#PHPSESSID=b5452159d9b0465182078eaecf8c7dcf; kt_ips=217.66.158.229; _ga=GA1.2.1348248477.1626100592; _gid=GA1.2.1906675378.1626100592; kt_tcookie=1; fapsterp0=1; _stat=3965542467.2905627009.23479322.3785358264; _gat_gtag_UA_135268328_1=1
 
+    coockies={'PHPSESSID':'b5452159d9b0465182078eaecf8c7dcf',
+    }
 
-    # coockies={'_gat':'1', 'protect':'BPJvGkuwOdy0D4amF44YTA', '_ga':'GA1.2.638382635.1487974825'}
+    headers = {'Referer': 'https://bdsmstreak.com/'}
 
-    # headers = {'Referer': 'https://www.strdef.world/1cvJt-y'}
-
-    # r=load(url1,fname1)#, proxies=proxies)
-    # r = load(url2, fname2a)
+    # r = load(url1a, fname1a)#, cookies=coockies)
+    r = load(url2, fname2)#,headers=headers)
+    # r=load(url3,fname1b)#, proxies=proxies)
     # r = load(url1a, fname1a, proxies=proxies)
-    r = load(url1a, fname1a)
-    # r = load(url2, fname2)#, proxies=proxies)
+    # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)
+
 
     # r=get_response(url3, fname2)
 
     # r=load('https://assets.porndig.com/assets/porndig/js/bundle.js?ver=1481122807','e:/out/bundle.js')
 
+    print(r)
     print(r.status_code)
     print(r.history)
 

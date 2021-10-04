@@ -44,7 +44,7 @@ class DataServer:
 
     def read_proxy_pac(self, pac_url):
         if self.last_load_proxy_pack:
-            if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(hours=2):
+            if datetime.datetime.now() - self.last_load_proxy_pack < datetime.timedelta(seconds=2):
                 return
         try:
             print('Loading', pac_url)
@@ -53,6 +53,7 @@ class DataServer:
             r = re.search('\"PROXY (.*); DIRECT', pac)
             if r:
                 self.data['free_http_proxy'] = r.group(1)
+                # print(self.data)
                 # p = re.findall("\"(.*?)\",", pac)
                 #
                 # proxy_domains = list()
@@ -273,6 +274,7 @@ class MultiprocessAZloader(LoaderInterface):
             load_process.update()
 
     def start_load_file(self, filedata: FLData, on_result=lambda filedata: None):
+        # print("Loading ",filedata.url.get())
         self.single_file_loader = self.get_new_load_process(on_load_handler=on_result,
                                                             on_end_handler=lambda: None)
 

@@ -39,12 +39,15 @@ class BaseLoadProcedure(LoadProcedureInterface):
 
             buf = io.BytesIO(result)
             try:
+                # print(file.filename)
                 with open(file.filename, 'wb') as fd:
                     chunk = buf.read(256)
                     while len(chunk) > 0:
                         fd.write(chunk)
                         chunk = buf.read(256)
             except FileNotFoundError as err:
+                print(err)
+            except OSError as err:
                 print(err)
 
         return file

@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from data_format.url import URL
 from data_format.fl_data import FLData
-from common.util import _iter, quotes, psp, collect_string
+from common.util import _iter, quotes, psp, collect_string, pretty
 
 from interface.view_manager_interface import ViewManagerFromModelInterface
 
@@ -39,50 +39,84 @@ class XvideoSite(BaseSiteParser):
         elif url.contain('/pornstars'):
             suffix='/videos/pornstar/0'
 
-        for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-block'})):
-            # psp(thumbnail.prettify())
-            href=thumbnail.find('a',
-                                title=True,
-                                href=lambda x: str(x).startswith('/video') or str(x).startswith('/prof-video-click/'))
+        if url.contain('/pornstar-channels/'):
+            sub=soup.find('div', {'class':'tabVideos'})
+            pretty(sub)
 
-            profiles=thumbnail.find('p',{'class':'profile-name'})
-            if href:
+
+        container=soup.find('div', {'class': 'mozaique'})
+        if container:
+            # pretty(container)
+            
+            for item in _iter(soup.find_all('div', {'class': 'thumb-block'})):
+                # pretty(item)
+                inside=item.find('div', {'class': 'thumb-inside'})
+                under=item.find('div', {'class': 'thumb-under'})
+                # pretty(inside)
+                # pretty(under)
+
+                href=under.find('a')
                 xref_url = URL(href.attrs['href'], base_url=url)
                 label = href.attrs['title']
 
-                script=thumbnail.script.string
-                thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+                # script=thumbnail.script.string
+                # thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+                thumb_url = URL(inside.img.attrs['data-src'], base_url=url)
 
-                metadata=thumbnail.find('p', {'class','metadata'})
-                duration = metadata.find('strong')
+                duration = under.find('span', {'class': 'duration'})
                 dur_time = '' if duration is None else str(duration.string)
 
-                hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
-                hd = '' if hd_span is None else str(hd_span.string)
+                # hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
+                # hd = '' if hd_span is None else str(hd_span.string)
 
                 self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
                                labels=[{'text':dur_time, 'align':'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': hd, 'align': 'top left'}])
-
-            if profiles:
-                xref_url = URL(profiles.a.attrs['href'] + suffix, base_url=url)
-                label = str(profiles.a.string).strip()
-
-                script=thumbnail.script.string
-                thumb_url = URL(quotes(script,'src="','"'), base_url=url)
-
-                count = thumbnail.find('p',{'class': 'profile-counts'})
-                videos = '' if count is None else str(count.string).strip()
-
-                flag_span = thumbnail.find('span', {'class': 'flag'})
-                flag = '' if flag_span is None else str(flag_span.attrs['title'])
-
-                self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
-                               labels=[{'text':videos, 'align':'top right'},
-                                       {'text':label, 'align':'bottom center'},
-                                       {'text': flag, 'align': 'top left'}
-                                       ])
+                                       {'text':label, 'align':'bottom center'}])
+        #
+        # for thumbnail in _iter(soup.find_all('div', {'class': 'thumb-block'})):
+        #     # psp(thumbnail.prettify())
+        #     href=thumbnail.find('a',
+        #                         title=True,
+        #                         href=lambda x: str(x).startswith('/video') or str(x).startswith('/prof-video-click/'))
+        #
+        #     profiles=thumbnail.find('p',{'class':'profile-name'})
+        #     if href:
+        #         xref_url = URL(href.attrs['href'], base_url=url)
+        #         label = href.attrs['title']
+        #
+        #         # script=thumbnail.script.string
+        #         # thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+        #         thumb_url = URL(thumbnail.img.attrs['data-src'], base_url=url)
+        #
+        #         duration = thumbnail.find('span', {'class': 'duration'})
+        #         dur_time = '' if duration is None else str(duration.string)
+        #
+        #         hd_span = thumbnail.find('span', {'class': 'video-hd-mark'})
+        #         hd = '' if hd_span is None else str(hd_span.string)
+        #
+        #         self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
+        #                        labels=[{'text':dur_time, 'align':'top right'},
+        #                                {'text':label, 'align':'bottom center'},
+        #                                {'text': hd, 'align': 'top left'}])
+        #
+        #     if profiles:
+        #         xref_url = URL(profiles.a.attrs['href'] + suffix, base_url=url)
+        #         label = str(profiles.a.string).strip()
+        #
+        #         script=thumbnail.script.string
+        #         thumb_url = URL(quotes(script,'src="','"'), base_url=url)
+        #
+        #         count = thumbnail.find('p',{'class': 'profile-counts'})
+        #         videos = '' if count is None else str(count.string).strip()
+        #
+        #         flag_span = thumbnail.find('span', {'class': 'flag'})
+        #         flag = '' if flag_span is None else str(flag_span.attrs['title'])
+        #
+        #         self.add_thumb(thumb_url=thumb_url, href=xref_url, popup=label,
+        #                        labels=[{'text':videos, 'align':'top right'},
+        #                                {'text':label, 'align':'bottom center'},
+        #                                {'text': flag, 'align': 'top left'}
+        #                                ])
 
     def parse_thumbs_tags(self, soup: BeautifulSoup, url: URL):
         tags_container = soup.find('div', {'class': 'main-categories'})
@@ -117,7 +151,8 @@ class XvideoSite(BaseSiteParser):
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
         video = soup.find('div', {'id': 'video-player-bg'})
-        if video is not None:
+        if video:
+            # psp(video)
             script=video.find('script', text=lambda x: 'HTML5Player' in str(x))
             if script is not None:
                 lines=str(script.string).split(';')
@@ -130,20 +165,38 @@ class XvideoSite(BaseSiteParser):
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
         # adding "user" and "star" to video
-        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
-            uploader=metadata.find('span', {'class','uploader'})
-            if uploader:
-                hlink=uploader.a
-                self.add_tag(str(hlink.string), URL(hlink.attrs['href']+'/videos/new/0', base_url=url), style=dict(color='blue'))
-            if 'Models ' in str(metadata):
-                for href in _iter(metadata.find_all('a', href=lambda x: '/profiles/' in str(x))):
-                    self.add_tag(str(href.string),
-                                 URL(href.attrs['href'] + '/videos/pornstar/0', base_url=url),
-                                 style=dict(color='red'))
+        container=soup.find('div', {'class': 'video-metadata'})
+        pretty(container)
+        if container:
+            # for metadata in _iter(soup.find_all('div', {'class': 'video-metadata'})):
+            #     # pretty(metadata)
+            #     uploader=metadata.find('span', {'class','uploader'})
+            #     if uploader:
+            #         hlink=uploader.a
+            #         self.add_tag(str(hlink.string), URL(hlink.attrs['href']+'/videos/new/0', base_url=url), style=dict(color='blue'))
+            #     if 'Models ' in str(metadata):
+            #         for href in _iter(metadata.find_all('a', href=lambda x: '/profiles/' in str(x))):
+            #             self.add_tag(str(href.string),
+            #                          URL(href.attrs['href'] + '/videos/pornstar/0', base_url=url),
+            #                          style=dict(color='red'))
 
-        # adding "tags" to video
-        for metadata in _iter(soup.find_all('p', {'class': 'video-metadata'})):
-            for href in _iter(metadata.find_all('a', href=lambda x: '/tags/' in str(x))):
+            # adding "tags" to video
+            # for tag in _iter(soup.find_all('a', {'class': 'video-metadata'})):
+
+            for href in _iter(container.find_all('a', href=lambda x: '/profiles/' in str(x))):
+                xref=href.attrs['href']
+                name=href.find('span', {'class': 'name'})
+                # if xref != '/tags/':
+                self.add_tag(str(name.string), URL(xref, base_url=url), style=dict(color='blue'))
+
+            for href in _iter(container.find_all('a', href=lambda x: '/pornstar-channels/' in str(x))):
+                xref=href.attrs['href']
+                     # +'#_tabVideos*'
+                name=href.find('span', {'class': 'name'})
+                # if xref != '/tags/':
+                self.add_tag(str(name.string), URL(xref, base_url=url),style=dict(color='red'))
+
+            for href in _iter(container.find_all('a', href=lambda x: '/tags/' in str(x))):
                 xref=href.attrs['href']
                 if xref != '/tags/':
                     self.add_tag(str(href.string), URL(xref, base_url=url))
