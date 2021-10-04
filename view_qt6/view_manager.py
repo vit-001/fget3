@@ -99,6 +99,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.create_site_button(b)
 
     def create_button_menu(self, parent, menu_items:dict)->QMenu:
+        # return
         if menu_items:
             menu = QMenu(parent)
             for key in sorted(menu_items.keys()):
@@ -112,6 +113,7 @@ class ViewManager(ViewManagerFromControllerInterface, ViewManagerFromModelInterf
         self.main.on_history_changed(history)
 
     def new_thumb_view(self) -> ThumbViewFromModelInterface:
+        # print('new_thumb_view****************')
         view=self.main.get_new_thumb_view()
 
         QEventLoop().processEvents(QEventLoop.ProcessEventsFlag.AllEvents)

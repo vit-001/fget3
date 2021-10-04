@@ -7,20 +7,20 @@ from PyQt6.QtWidgets import QToolButton,QWidget,QPushButton,QLayout,QSizePolicy,
 
 def get_align(align_string='top'):
     s=align_string.upper().split(' ')
-    align=Qt.AlignAbsolute
+    align=Qt.AlignmentFlag.AlignAbsolute
     for item in s:
-        if item == 'LEFT': align |=Qt.AlignLeft
-        if item == 'RIGHT': align |= Qt.AlignRight
-        if item == 'CENTER': align |= Qt.AlignHCenter
-        if item == 'JUSTIFY': align |= Qt.AlignJustify
-        if item == 'TOP': align |= Qt.AlignTop
-        if item == 'BOTTOM': align |= Qt.AlignBottom
+        if item == 'LEFT': align |=Qt.AlignmentFlag.AlignLeft
+        if item == 'RIGHT': align |= Qt.AlignmentFlag.AlignRight
+        if item == 'CENTER': align |= Qt.AlignmentFlag.AlignHCenter
+        if item == 'JUSTIFY': align |= Qt.AlignmentFlag.AlignJustify
+        if item == 'TOP': align |= Qt.AlignmentFlag.AlignTop
+        if item == 'BOTTOM': align |= Qt.AlignmentFlag.AlignBottom
     return align
 
 class QAnnotatedButton(QToolButton):
 
     def __init__(self, QWidget_parent=None, labels:list=tuple()):
-        print('Create AB')
+        # print('Create AB')
         super().__init__(QWidget_parent)
 
 

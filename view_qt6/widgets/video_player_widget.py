@@ -3,11 +3,14 @@ __author__ = 'Vit'
 import os
 
 from PyQt6.QtCore import QUrl
-from PyQt6.QtMultimedia import  QMediaPlayer #,QMediaContent
+from PyQt6.QtMultimedia import  QMediaPlayer, QAudioOutput #,QMediaContent
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtNetwork import QNetworkRequest
 from PyQt6.QtWidgets import QWidget, QMenu
 from PyQt6.QtGui import QAction
+
+import requests
+import requests.exceptions
 
 from common.util import get_menu_handler
 from data_format.url import URL
@@ -35,27 +38,36 @@ class VideoPlayerWidget(QWidget):
         self.url=URL()
         self.saved_position=None
 
-        self.media_player = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.ui.buffer.setMaximum(100)
+
+        self.media_player = QMediaPlayer()#None, QMediaPlayer.VideoSurface)
+        self.audio_output= QAudioOutput()
+        self.media_player.setAudioOutput(self.audio_output)
 
         self.media_player_widget = VideoWidget(self.ui.top_frame)
         self.ui.top_frame_layout.addWidget(self.media_player_widget)
         self.media_player.setVideoOutput(self.media_player_widget)
         self.media_player_widget.show()
 
-        self.media_player.bufferStatusChanged.connect(lambda x:self.ui.buffer.setValue(x))
+        # self.media_player.bufferProgressChanged.connect(lambda x:self.ui.buffer.setValue(x))
+        self.media_player.bufferProgressChanged.connect(self.buffer_progress_changed)
         self.media_player.positionChanged.connect(self.positionChanged)
         self.media_player.durationChanged.connect(self.durationChanged)
         self.media_player.mediaStatusChanged.connect(self.media_status_changed)
-        self.media_player.error.connect(self.handleError)
+        self.media_player.errorOccurred.connect(self.handleError)
 
         # self.ui.buffer.hide()
 
         self.ui.bn_play.clicked.connect(self.media_player.play)
         self.ui.bn_pause.clicked.connect(self.media_player.pause)
         self.ui.bn_stop.clicked.connect(self.stop)
-        self.ui.bn_mute.clicked.connect(self.media_player.setMuted)
+        self.ui.bn_mute.clicked.connect(self.audio_output.setMuted)
         self.ui.progress.sliderMoved.connect(self.media_player.setPosition)
-        self.ui.volume.valueChanged.connect(self.media_player.setVolume)
+        self.ui.volume.valueChanged.connect(self.audio_output.setVolume)
+
+    def buffer_progress_changed(self,x:float):
+        # print(x)
+        self.ui.buffer.setValue(int(100*x))
 
     def set_url_list(self, list_of_dict:list, default:int):
         self.urls=list_of_dict
@@ -75,10 +87,10 @@ class VideoPlayerWidget(QWidget):
 
     def set_url(self, url:URL):
         self.url=url
-        request = QNetworkRequest(QUrl(url.get()))
-        request.setHeader(QNetworkRequest.UserAgentHeader,url.user_agent)
-        if url.referer:
-            request.setRawHeader('Referer',url.referer.get())
+        # request = QNetworkRequest(QUrl(url.get()))
+        # request.setHeader(QNetworkRequest.UserAgentHeader,url.user_agent)
+        # if url.referer:
+        #     request.setRawHeader('Referer',url.referer.get())
 
         # todo: сделать добавление cookie и подготовку proxу
 
@@ -86,12 +98,22 @@ class VideoPlayerWidget(QWidget):
         # print(request.rawHeader('User-Agent'))
         # print(request.rawHeader('Referer'))
 
-        self.media_player.setMedia(QMediaContent(request))
+        # print(QUrl(url.get()))
+
+        url_get=url.get()
+
+        if url.redirect:
+            r=requests.get(url.get(), allow_redirects=False)
+            url_get= r.headers.get('Location', url.get())
+            print('Player redirect to', url_get)
+
+
+        self.media_player.setSource(QUrl(url_get))
 
         # print(self.media_player.media().canonicalRequest())
 
     def media_status_changed(self, media_status):
-        if media_status == QMediaPlayer.BufferedMedia:
+        if media_status == QMediaPlayer.MediaStatus.BufferedMedia:
             if self.saved_position:
                 self.media_player.setPosition(self.saved_position)
                 self.saved_position = None
@@ -130,13 +152,13 @@ class VideoPlayerWidget(QWidget):
 
     def set_volume(self, volume:int):
         self.ui.volume.setValue(volume)
-        self.media_player.setVolume(volume)
+        self.audio_output.setVolume(volume)
 
     def get_volume(self)->int:
         return self.ui.volume.value()
 
     def mute(self, on:bool):
-        self.media_player.setMuted(on)
+        self.audio_output.setMuted(on)
         self.ui.bn_mute.setChecked(on)
 
     def is_muted(self):

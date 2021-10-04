@@ -17,6 +17,7 @@ class ThumbView(BaseView):
         return self.thumbs
 
     def prepare_content(self):
+        # print('TW prepare content')
         self.thumbs.clear()
         if self.flags:
             self.thumbs.context=self.flags.get('context', None)
@@ -36,7 +37,7 @@ class ThumbView(BaseView):
         self.parent.setTabToolTip(index, tooltip)
 
     def add_thumb(self, picture_filename: str, href: URL, popup: str = '', labels=list):
-        print("Add thumb", href)
+        # print("Add thumb", href)
         self.thumbs.add(picture_filename, lambda :self.view_manager.goto_url(href), popup, labels)
         self.progress.set_value('thumbs',self.thumbs.count)
 

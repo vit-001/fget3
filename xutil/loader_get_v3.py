@@ -14,7 +14,9 @@ def load(url, fname, cookies=None, headers=None, proxies=None):
             headers = dict()
         headers['user-agent'] = USER_AGENT
 
-        response = requests.get(url, cookies=cookies, headers=headers, proxies=proxies)
+        print('START')
+        response = requests.get(url, cookies=cookies, headers=headers, proxies=proxies, allow_redirects=False)
+        print('END')
         response.raise_for_status()
         with open(fname, 'wb') as fd:
             for chunk in response.iter_content(chunk_size=128):
@@ -88,7 +90,7 @@ if __name__ == "__main__":
     # https://yourlust.com/latest-updates/
 
     url1a = 'https://www.xtits.xxx/videos/67227/mia-khalifa-how-is-this-for-simple-math-tony-rubino-compilation-this-video-mia-khalifa/'
-    url2 = 'https://www.xozilla.xxx/get_file/15/66c9e1d68509e9d683f8dcff83e6c704/435000/435373/435373.mp4/'
+    url2 = 'https://www.xozilla.xxx/get_file/11/19198481703199bbdfe37b5f87a583b8/417000/417546/417546.mp4/'
     url3 = 'https://www.tubous.com/'
 
 
@@ -108,8 +110,8 @@ if __name__ == "__main__":
 
     headers = {'Referer': 'https://bdsmstreak.com/'}
 
-    r = load(url1a, fname1a)#, cookies=coockies)
-    # r = load(url2, fname2)#,headers=headers)
+    # r = load(url1a, fname1a)#, cookies=coockies)
+    r = load(url2, fname2)#,headers=headers)
     # r=load(url3,fname1b)#, proxies=proxies)
     # r = load(url1a, fname1a, proxies=proxies)
     # r = load(url3, fname2, cookies=coockies,headers=headers)#, proxies=proxies)

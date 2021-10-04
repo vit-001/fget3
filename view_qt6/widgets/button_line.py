@@ -9,12 +9,12 @@ from common.util import get_menu_handler
 
 class ActionButton(QToolButton):
     def __init__(self,tooltip:str, action:lambda:None):
-        print('Create AcB', tooltip)
+        # print('Create AcB', tooltip)
         super().__init__(None)
         self.clicked.connect(action)
         # self.setToolTip(tooltip)
         self.setAutoRaise(True)
-        print('AcB ok')
+        # print('AcB ok')
 
     def set_button_style(self, attr_value_dict: dict):
         """
@@ -82,7 +82,7 @@ class TextButton(ActionButton):
 
 class ImageButton(ActionButton):
     def __init__(self, picture_filename:str, tooltip:str, action=lambda:None):
-        print('Create IB')
+        # print('Create IB')
         super().__init__(tooltip, action)
         self.setText(tooltip)
         if picture_filename:
@@ -91,12 +91,12 @@ class ImageButton(ActionButton):
             icon.addPixmap(pixmap, QIcon.Mode.Normal, QIcon.State.Off)
             self.setIcon(icon)
             self.setIconSize(QSize(100, 100))
-        print('IB Ok')
+        # print('IB Ok')
 
 
 class ButtonLine(QWidget):
     def __init__(self, parent=None, height=25, space=2, speed=40):
-        print('Create BL')
+        # print('Create BL')
         QWidget.__init__(self, parent)
         self.parent = parent
         self.space = space
@@ -105,10 +105,10 @@ class ButtonLine(QWidget):
         self.buttons_width = self.space * 2
         self.curr_scroll = 0
         self.speed = speed
-        print('BL Ok')
+        # print('BL Ok')
 
     def add_button(self,button:QToolButton):
-        print('Add button')
+        # print('Add button')
         button.setParent(self)
         button.setFixedHeight(self.height)
         self.buttons.append(button)
@@ -119,7 +119,7 @@ class ButtonLine(QWidget):
                    autoraise=False, text_color:str=None):
 
         button = QToolButton(self)
-        print('Add button', text)
+        # print('Add button', text)
 
         if text_color is not None:
             button.setStyleSheet('QToolButton {color: '+text_color+';}')

@@ -36,8 +36,8 @@ class FullView(BaseFullView):
         self.video_player.stop()
         self.video_player.hide()
         self.picture.hide()
-        self.progress.add_progress('loaded pix',Qt.darkBlue)
-        self.progress.add_progress('current pix', Qt.red)
+        self.progress.add_progress('loaded pix',Qt.GlobalColor.darkBlue)
+        self.progress.add_progress('current pix', Qt.GlobalColor.red)
         self.progress.set_autohide_bar_name('loaded pix')
 
     def prepare_content_to_close(self):

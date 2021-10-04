@@ -8,7 +8,7 @@ from PyQt6.QtCore import Qt, QEventLoop
 class PictureBrowser(QLabel):
     def __init__(self, parent:QWidget, on_current_change:lambda index:None):
         super().__init__(parent)
-        self.setAlignment(Qt.AlignCenter)
+        self.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.pictures=list()
         self.current_picture=0
         self.on_current_change=on_current_change
@@ -18,7 +18,7 @@ class PictureBrowser(QLabel):
         self.current_picture = 0
 
     def add_picture(self, filename):
-        print('Add picture',filename)
+        # print('Add picture',filename)
         self.pictures.append(QPixmap(filename))
         self.show_current_picture()
         QEventLoop().processEvents(QEventLoop.ProcessEventsFlag.AllEvents)

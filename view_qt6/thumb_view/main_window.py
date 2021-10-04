@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
         icon = QIcon()
         icon.addPixmap(pixmap, QIcon.Mode.Normal, QIcon.State.Off)
 
-        self.setWindowTitle('P Browser - thumbnail view_qt5')
+        self.setWindowTitle('P-Browser - Qt6')
         self.setWindowIcon(icon)
 
         self.thumb_views = list()

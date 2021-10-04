@@ -13,6 +13,7 @@ from view_qt6.widgets.qt_annotated_button import QAnnotatedButton
 
 class ThumbWidget(QWidget):
     def __init__(self, parent=None, scroller=None, thumb_size=200, space=2):
+        # print('Create TW')
         QWidget.__init__(self, parent)
         self.space = space
         self.thumb_size = thumb_size
@@ -33,6 +34,7 @@ class ThumbWidget(QWidget):
 
         QEventLoop().processEvents(QEventLoop.ProcessEventsFlag.AllEvents)
         self.update()
+        # print('TW ok')
 
     def add(self, pix_fname='', action=lambda: None, popup='',labels:list=tuple()):
 
@@ -49,7 +51,7 @@ class ThumbWidget(QWidget):
 
         pixmap = QPixmap(pix_fname)
         icon = QIcon()
-        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
+        icon.addPixmap(pixmap, QIcon.Mode.Normal, QIcon.State.Off)
         button.setIcon(icon)
         button.setIconSize(QSize(self.thumb_size, thumb_h))
 
@@ -59,7 +61,7 @@ class ThumbWidget(QWidget):
         self._place()
         self._scroller_set_max()
 
-        QEventLoop().processEvents(QEventLoop.AllEvents)
+        QEventLoop().processEvents(QEventLoop.ProcessEventsFlag.AllEvents)
         self.update()
 
 

@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (QWidget)
 
 class ProgressHLine(QWidget):
     def __init__(self, parent=None, height=6):
-        print('Create PHL')
+        # print('Create PHL')
         QWidget.__init__(self, parent)
 
         self.height = height
@@ -18,7 +18,7 @@ class ProgressHLine(QWidget):
         self.colors = dict()
         self.max_value = 1
         self.autohide_bar_name=None
-        print('PHL Ok')
+        # print('PHL Ok')
 
     def add_progress(self, name:str, color=Qt.GlobalColor.red):
         self.names.append(name)
@@ -59,7 +59,7 @@ class ProgressHLine(QWidget):
         painter = QPainter(self)
 
         border = QRect(self.margin, self.margin, geometry.width() - 2 * self.margin, self.height )
-        painter.setPen(Qt.darkGray)
+        painter.setPen(Qt.GlobalColor.darkGray)
         painter.drawRect(border)
 
         if self.max_value == 0:

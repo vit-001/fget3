@@ -17,7 +17,7 @@ from view_qt6.widgets.progress_line import ProgressHLine
 
 class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
     def __init__(self, parent:QWidget,view_manager:ViewManagerFromViewInterface):
-        print('Create bv')
+        # print('Create bv')
         self.view_manager=view_manager
         self.title = ''
         self.parent = parent
@@ -37,7 +37,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         self.create_widgets()
         self.binding()
 
-        print('BV ok')
+        # print('BV ok')
 
         # self.content_prepare()
 
@@ -127,7 +127,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         pass
 
     def add_to_bottom_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        print('add_to_bottom_line',text)
+        # print('add_to_bottom_line',text)
         self.add_button(self.bottom_line, text, href, tooltip, menu, style)
         # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
         # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
@@ -135,7 +135,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         # self.bottom_line.add_button(button)
 
     def add_to_mid_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        print('add_to_mid_line', text)
+        # print('add_to_mid_line', text)
         self.add_button(self.mid_line, text, href, tooltip, menu, style)
         # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
         # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
@@ -143,7 +143,7 @@ class BaseView(ThumbViewFromModelInterface,FullViewFromModelInterface):
         # self.mid_line.add_button(button)
 
     def add_to_top_line(self, text: str, href: URL, tooltip: str = '', menu=None, style: dict = None):
-        print('add_to_top_line', text)
+        # print('add_to_top_line', text)
         self.add_button(self.top_line,text,href,tooltip,menu,style)
         # button = TextButton(text, tooltip, lambda: self.view_manager.goto_url(href))
         # button.set_menu(self.view_manager.create_button_menu(self.tab, menu))
