@@ -71,10 +71,10 @@ class XdpornerSite(BaseSiteParser):
                 self.add_video(source.attrs['title'], URL(source.attrs['src'],base_url=url))
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        info=soup.find('div',{'class':'description-view'})
+        info=soup.find('div',{'class':'description-view_qt5'})
         if info:
             # pretty(info)
-            for xref in _iter(info.find_all('a',{'class':"author-view", 'href':True})):
+            for xref in _iter(info.find_all('a',{'class':"author-view_qt5", 'href':True})):
                 # psp(xref)
                 href=xref.attrs['href']
                 self.add_tag(collect_string(xref),URL(href.strip('.'),base_url=url), style={'color':'red'})

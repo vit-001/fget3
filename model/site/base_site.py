@@ -174,6 +174,7 @@ class BaseSite(SiteInterface, ParseResult):
 
         loader.load_list(thumb_list)
 
+
         for item in self.model.get_favorite_items(self):
             self.add_fav(item['label'], item['url'], style=dict(on_remove=get_menu_handler(self.model.remove_favorite,item['url'])))
 

@@ -49,7 +49,7 @@ class FapmeifyoucanSite(BaseSiteParser):
                     href = URL(xref.attrs['href'], base_url=url)
 
                     info=thumbnail.find('div', {'class':'video-information'})
-                    dur_time =quotes(collect_string(info),'duration:','view:')
+                    dur_time =quotes(collect_string(info),'duration:','view_qt5:')
 
                     self.add_thumb(thumb_url=thumb_url, href=href, popup=label,
                                    labels=[{'text':dur_time, 'align':'top right'},

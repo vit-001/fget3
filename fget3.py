@@ -11,49 +11,6 @@ if __name__ == '__main__':
     # test_module('requests')
     # test_module('lxml')
 
-    import sys, os
-
-    from PyQt5.QtWidgets import QApplication
-    from PyQt5.QtCore import qVersion
-
-    print('PyQt version: ' + qVersion())
-
-    from common.setting import Setting
-    from controller.controller import Controller
-    from model.model import Model
-    from view.view_manager import ViewManager
-
-    for item in sys.argv[1:]:
-        if item.startswith('-compile'):
-            print('Compile Qt interfaces')
-            from xutil.compile_qt_interfaces import InterfaceCompiler
-            ic = InterfaceCompiler(sys.argv[0].rpartition('/')[0])
-            ic.compile_interfaces()
-        if item.startswith('-small_window'):
-            print('Run in small window mode')
-            Setting.main_window_x0_in_percents = 25
-            Setting.main_window_h_in_percents = 45
-            Setting.full_window_h_in_percents = 45
-            Setting.full_window_w_gap_in_percents = 2
-
-
-
-# <<<<<<< Updated upstream
-#     # print('Todo:')
-#     # # print('http://www.xnxx.com/', 'verifyed, script')
-#     # print('http://www.shameless.com/', 'verifyed, script')
-#     # print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
-#     # print('https://www.pornfreeze.com/','verifyed, simple')
-#     # # print('https://www.tnaflix.com/', 'simple but ajax')
-#     # print('http://www.txxx.com/  script')
-#     # print('https://faapy.com/', 'jwplayer script')
-#     # print('')
-#     #
-#     # # print('Исправить TUBE8')
-#     # print('Thats all')
-#     # print("Let's go..")
-#     # print('')
-# =======
 #     print('Todo:')
 #     # print('www.tgpdog.com', '  - VeroniccaComSite ')
 #     print('http://www.shameless.com/', 'verifyed, script')
@@ -70,17 +27,87 @@ if __name__ == '__main__':
 #     print('Thats all')
     print("Let's go..")
     print('')
-# >>>>>>> Stashed changes
 
 
-    app = QApplication(sys.argv)
 
-    view=ViewManager()
-    model=Model(view)
-    controller=Controller(view,model)
-    Setting.log=view.get_log()
+    import sys, os
 
-    sys.exit(app.exec_())
+
+    qt=''
+
+    for item in sys.argv[1:]:
+        if item.startswith('-pyqt6'):
+            qt='pyqt6'
+        else:
+            qt='pyqt5'
+
+    if qt == 'pyqt5':
+
+        from PyQt5.QtWidgets import QApplication
+        from PyQt5.QtCore import qVersion
+
+        print('PyQt version: ' + qVersion())
+
+        from common.setting import Setting
+        from controller.controller import Controller
+        from model.model import Model
+        from view_qt5.view_manager import ViewManager
+
+        for item in sys.argv[1:]:
+            if item.startswith('-compile'):
+                print('Compile Qt interfaces')
+                from xutil.compile_qt_interfaces import InterfaceCompiler
+                ic = InterfaceCompiler(sys.argv[0].rpartition('/')[0])
+                ic.compile_interfaces()
+            if item.startswith('-small_window'):
+                print('Run in small window mode')
+                Setting.main_window_x0_in_percents = 25
+                Setting.main_window_h_in_percents = 45
+                Setting.full_window_h_in_percents = 45
+                Setting.full_window_w_gap_in_percents = 2
+
+        app = QApplication(sys.argv)
+
+        view=ViewManager()
+        model=Model(view)
+        controller=Controller(view,model)
+        Setting.log=view.get_log()
+
+        sys.exit(app.exec_())
+
+    if qt == 'pyqt6':
+        print('Run with PyQt6')
+        from PyQt6.QtWidgets import QApplication
+        from PyQt6.QtCore import qVersion
+
+        print('PyQt version: ' + qVersion())
+
+        from common.setting import Setting
+        from controller.controller import Controller
+        from model.model import Model
+        from view_qt6.view_manager import ViewManager
+
+        for item in sys.argv[1:]:
+            if item.startswith('-compile'):
+                print('Compile Qt interfaces')
+                from xutil.compile_qt_interfaces import InterfaceCompiler
+                ic = InterfaceCompiler(sys.argv[0].rpartition('/')[0])
+                ic.compile_interfaces()
+            if item.startswith('-small_window'):
+                print('Run in small window mode')
+                Setting.main_window_x0_in_percents = 25
+                Setting.main_window_h_in_percents = 45
+                Setting.full_window_h_in_percents = 45
+                Setting.full_window_w_gap_in_percents = 2
+
+        app = QApplication(sys.argv)
+
+        view=ViewManager()
+        model=Model(view)
+        controller=Controller(view,model)
+        Setting.log=view.get_log()
+
+        sys.exit(app.exec())
 
 
 

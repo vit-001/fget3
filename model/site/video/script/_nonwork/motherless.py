@@ -77,7 +77,7 @@ class MotherlessSite(BaseSiteParser):
                 self.add_video('DEFAULT', URL(file, base_url=url))
 
     def parse_video_title(self, soup: BeautifulSoup, url: URL) -> str:
-        title=soup.find('h1',{'id':'view-upload-title'})
+        title=soup.find('h1',{'id':'view_qt5-upload-title'})
         if title:
             return title.string.strip()
         else:

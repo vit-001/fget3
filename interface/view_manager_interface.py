@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Nikitin'
-from PyQt5.QtWidgets import QMenu
+# from PyQt5.QtWidgets import QMenu
 
 from data_format.error import AbstractMethodError
 from data_format.url import URL
@@ -29,7 +29,7 @@ class ViewManagerFromViewInterface:
     def is_full_view_tab_active(self, full_view: FullViewFromModelInterface)->bool:
         return False
 
-    def create_button_menu(self, parent, menu_items:dict)->QMenu:
+    def create_button_menu(self, parent, menu_items:dict):
         pass
 
     def on_exit(self):
@@ -54,7 +54,7 @@ class ViewManagerFromModelInterface:
         print('Add start button:', url.domain())
 
     def refresh_thumb_view(self):
-        print('refresh thumb view')
+        print('refresh thumb view_qt5')
 
     def get_log(self)->LogViewInterface:
         pass
