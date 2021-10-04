@@ -24,7 +24,7 @@ class XtitsSite(BaseSiteParser):
         #             Longest_Video=URL('https://pornone.com/longest/'),
         #             HD_video=URL('https://pornone.com/newest/hd/'))
 
-        view.add_start_button(picture_filename='model/site/resource/shooshtime.png',
+        view.add_start_button(picture_filename='model/site/resource/xtits.png',
                               # menu_items=menu_items,
                               url=URL("https://www.xtits.xxx/latest-updates/", test_string='porn'))
 

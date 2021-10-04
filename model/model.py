@@ -127,7 +127,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,  XtitsSite, XcumSite, TubousSite, SextubefunSite,
+                            TestSite,   XcumSite, TubousSite, SextubefunSite,
 
 
 
@@ -135,7 +135,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             Space('Classic:'),
 
 
-            XozillaSite,
+                            XozillaSite,XtitsSite,
                             XhamsterSite,Sex3Site,
                             AnaldinSite,
                             BravotubeSite,

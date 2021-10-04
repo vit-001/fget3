@@ -14,6 +14,9 @@ if __name__ == '__main__':
     import sys, os
 
     from PyQt5.QtWidgets import QApplication
+    from PyQt5.QtCore import qVersion
+
+    print('PyQt version: ' + qVersion())
 
     from common.setting import Setting
     from controller.controller import Controller

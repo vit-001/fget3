@@ -88,7 +88,7 @@ if __name__ == "__main__":
     # https://yourlust.com/latest-updates/
 
     url1a = 'https://www.xtits.xxx/videos/67227/mia-khalifa-how-is-this-for-simple-math-tony-rubino-compilation-this-video-mia-khalifa/'
-    url2 = 'https://www.theyarehuge.com/get_file/23/8f0abd890342973d9db6d8c454a15dc4b76ebc1970/55000/55790/55790.mp4/'
+    url2 = 'https://www.xozilla.xxx/get_file/15/66c9e1d68509e9d683f8dcff83e6c704/435000/435373/435373.mp4/'
     url3 = 'https://www.tubous.com/'
 
 
