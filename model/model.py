@@ -31,6 +31,7 @@ from model.site.video.plus_file.pornvibe import PornvibeSite
 from model.site.video.plus_file.pornwild import PornwildSite
 from model.site.video.plus_file.redtube import RedtubeSite
 from model.site.video.plus_file.yespornpleasexxx import YespornpleasexxxSite
+from model.site.video.plus_file.hitbdsm import HitbdsmSite
 
 from model.site.video.script._nonwork.beemtube import BeemtubeSite
 from model.site.video.script._nonwork.deviantclip import DeviantclipSite
@@ -74,6 +75,9 @@ from model.site.video.script.tryboobs import TryboobsSite
 from model.site.video.script.xozilla import XozillaSite
 from model.site.video.script.tubous import TubousSite
 from model.site.video.script.xtits import XtitsSite
+from model.site.video.script.porngem import PorngemSite
+from model.site.video.script.tubebunny import TubebunnySite
+from model.site.video.script.pornbimbo import PornbimboSite
 
 from model.site.video.simple.bravotube import BravotubeSite
 from model.site.video.simple._nonwork.plusone8 import PlusoneSite
@@ -127,7 +131,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,
+                            TestSite,PornbimboSite,
 
 
 
@@ -138,13 +142,13 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             XozillaSite,XtitsSite,
                             XhamsterSite,Sex3Site,
                             AnaldinSite,SextubefunSite,
-                            BravotubeSite,
+                            BravotubeSite,TubebunnySite,
                             KatestubeSite,ShockingmoviesSite,HdpornSite,
                             PornhubSite,TprnSite,CrocotubeSite,XcumSite,
                             RedtubeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,IporntooSite,
                             XhandSite,ShooshtimeSite,
                             ItsSite,FapmeifyoucanSite,
-                            DlouhaSite,FrprnSite,
+                            DlouhaSite,FrprnSite,PorngemSite,
                             PornwildSite,PornmzSite,PornwhiteSite,CrockotubeSite,
                             YespornpleasexxxSite,SickjunkSite,
                             SpreeeSite,XdpornerSite,
@@ -166,7 +170,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Deviant:'),
-                            BoundhubSite,BdsmoneSite,RapelustSite,FreeusepornSite,
+                            HitbdsmSite,BoundhubSite,BdsmoneSite,RapelustSite,FreeusepornSite,
 
                            # Space('Short:'),
 

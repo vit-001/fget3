@@ -24,6 +24,7 @@ if __name__ == '__main__':
     print('')
 
     import sys, os
+    import logging
 
     print("Python version {}.{}.".format(sys.version_info.major, sys.version_info.minor))
 
@@ -101,3 +102,4 @@ if __name__ == '__main__':
         Setting.log = view.get_log()
 
         sys.exit(app.exec())
+

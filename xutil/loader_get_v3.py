@@ -89,9 +89,9 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'https://pornopotok.com/videos/20877-chuvak-jestko-trahaet-stroynuyu-i-miluyu-negrityanku-bolshim-herom.html'
+    url1a = 'http://pornbimbo.com/video/31507/tiny-gal-nicely-drilled-at-casting'
     url2 = 'https://www.xozilla.xxx/get_file/11/19198481703199bbdfe37b5f87a583b8/417000/417546/417546.mp4/'
-    url3 = 'https://tv.fakings.com/tools/player/?file=11-11-especial-voyeur-hd&src=tv&af=noalias&1633416370'
+    url3 = 'https://hitbdsm.com/wp-content/plugins/clean-tube-player/public/player-x.php?q=cG9zdF9pZD0xNjMzMCZ0eXBlPXZpZGVvJnRhZz0lM0N2aWRlbyUyMGlkJTNEJTIyd3BzdC12aWRlbyUyMiUyMGNsYXNzJTNEJTIydmlkZW8tanMlMjB2anMtYmlnLXBsYXktY2VudGVyZWQlMjIlMjBjb250cm9scyUyMHByZWxvYWQlM0QlMjJhdXRvJTIyJTIwd2lkdGglM0QlMjI2NDAlMjIlMjBoZWlnaHQlM0QlMjIyNjQlMjIlMjBwb3N0ZXIlM0QlMjJodHRwcyUzQSUyRiUyRmhpdGJkc20uY29tJTJGbXRoYyUyRmRoNzNvdGIzJTJGNDkxODBqNnBPRk5NNmQ3QlI5U1dsSDlvTlNtQUouanBnJTIyJTNFJTNDc291cmNlJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZtdmZlY3IuaGl0YmRzbS5jb20lMkZkaDczb3RiMyUyRjQ5NDgwQzI3QTY0Rlh2QmFWU092ZTQxV1NidTZsTEIubXA0JTIyJTIwbGFiZWwlM0QlMjI0ODBwJTIyJTIwdGl0bGUlM0QlMjI0ODBwJTIyJTIwdHlwZSUzRCUyMnZpZGVvJTJGbXA0JTIyJTIwJTJGJTNFJTNDc291cmNlJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZtdnRmLmhpdGJkc20uY29tJTJGZGg3M290YjMlMkY0OTI0MEMyNUE2NFNoTFBpN0tLYmtZRENBOVpMTW5xLm1wNCUyMiUyMGxhYmVsJTNEJTIyMjQwcCUyMiUyMHRpdGxlJTNEJTIyMjQwcCUyMiUyMHR5cGUlM0QlMjJ2aWRlbyUyRm1wNCUyMiUyMCUyRiUzRSUzQyUyRnZpZGVvJTNF'
 
 
     fname1 = 'out/1.html'
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     coockies={'PHPSESSID':'b5452159d9b0465182078eaecf8c7dcf',
     }
 
-    headers = {'Referer': 'https://bdsmstreak.com/'}
+    headers = {'Referer': 'http://siska.video/'}
 
     r = load(url1a, fname1a)#, cookies=coockies)
     # r = load(url2, fname2)#,headers=headers)

@@ -12,8 +12,9 @@ class ActionButton(QToolButton):
         # print('Create AcB', tooltip)
         super().__init__(None)
         self.clicked.connect(action)
-        # self.setToolTip(tooltip)
+        self.setToolTip(tooltip)
         self.setAutoRaise(True)
+        self.remove=None
         # print('AcB ok')
 
     def set_button_style(self, attr_value_dict: dict):
@@ -55,24 +56,20 @@ class ActionButton(QToolButton):
 
         self.setAutoRaise(attr_value_dict.get('autoraise',True))
         self.remove=attr_value_dict.get('on_remove',None)
+
+    def contextMenuEvent(self, event):
         if self.remove:
-            # set button context menu policy
-            self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-            self.customContextMenuRequested.connect(self.on_context_menu)
+            cmenu = QMenu(self)
+            removeAct = cmenu.addAction("Remove")
+            action = cmenu.exec(self.mapToGlobal(event.pos()))
 
-            # create context menu
-            self.popMenu = QMenu(self)
-            menu_action = QAction('Remove', self, triggered=self.remove)
-            self.popMenu.addAction(menu_action)
-
-    def on_context_menu(self, point):
-        # show context menu
-        self.popMenu.exec_(self.mapToGlobal(point))
+            if action == removeAct:
+                self.remove()
 
     def set_menu(self, menu):
         if menu:
             self.setMenu(menu)
-            self.setPopupMode(QToolButton.MenuButtonPopup)
+            self.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
 
 class TextButton(ActionButton):
     def __init__(self, text:str, tooltip:str='', action=lambda:None):
