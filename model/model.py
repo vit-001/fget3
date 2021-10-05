@@ -57,7 +57,7 @@ from model.site.video.script.pornicom import PornicomSite
 from model.site.video.script.pornobomba import PornobombaSite
 from model.site.video.script.pornwatchers import PornwatchersSite
 from model.site.video.script.pornwhite import PornwhiteSite
-from model.site.video.script.realgf import RealGfSite
+from model.site.video.script._nonwork.realgf import RealGfSite
 from model.site.video.script.shockingmovies import ShockingmoviesSite
 from model.site.video.script.shooshtime import ShooshtimeSite
 from model.site.video.script.sleazyneasy import SleazyneasySite
@@ -175,19 +175,19 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             BabesandbitchesSite,
 
                             Space('Non working:'),
-                            DarknesspornSite,PornobombaSite,RealGfSite,
-                            RusvideosSite, HdEasypornSite,PohubSite,PornozotSite,PornoaktSite,
-                             PlusoneSite,
-                            CollectionofbestpornSite,
-                            PorngoSite,
-                            HotscopeSite,
-                            HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,
-                            PornhdSite,ThumbzillaSite,SpankwireSite,
-                            PornComSite,PornoxoSite,YoungPornVideosSite,
-                            DeviantclipSite,ExtremetubeSite,PervertslutSite,MotherlessSite,PornfunSite,PornbozzSite,
-                            Tube8Site,BeemtubeSite,PornoneSite,Porn0sexSite,
-                            Space('Blocked'),
-                            PorntrexSite,
+                            # DarknesspornSite,PornobombaSite,RealGfSite,
+                            # RusvideosSite, HdEasypornSite,PohubSite,PornozotSite,PornoaktSite,
+                            #  PlusoneSite,
+                            # CollectionofbestpornSite,
+                            # PorngoSite,
+                            # HotscopeSite,
+                            # HeavyRSite,PornslandSite,V24videoSite,YourpornSite,TnaflixSite,SexixSite,
+                            # PornhdSite,ThumbzillaSite,SpankwireSite,
+                            # PornComSite,PornoxoSite,YoungPornVideosSite,
+                            # DeviantclipSite,ExtremetubeSite,PervertslutSite,MotherlessSite,PornfunSite,PornbozzSite,
+                            # Tube8Site,BeemtubeSite,PornoneSite,Porn0sexSite,
+                            # Space('Blocked'),
+                            # PorntrexSite,
 
                            ]
 

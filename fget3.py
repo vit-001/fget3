@@ -11,7 +11,6 @@ if __name__ == '__main__':
     #     print('http://www.shameless.com/', 'verifyed, script')
     #     # print('http://www.phicatube.net/videos', 'verifyed, plus file; "var cnf ="')
     #     # print('https://www.pornfreeze.com/','verifyed, simple')
-    #     print('https://www.ebalovo.com/', 'simple')
     #     print('http://www.txxx.com/  script')
     #     # print('https://faapy.com/', 'jwplayer script')
     #     print('https://kinovau.tv/','verifyed, simple')

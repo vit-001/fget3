@@ -26,9 +26,9 @@ class TestSite(BaseSiteParser):
         return 'TT'
 
     def parse_video(self, soup: BeautifulSoup, url: URL):
-        t = 'https://www.xtits.xxx/get_file/5/ced7edab130bdf117018e02dc83a26fa/62000/62986/62986_720p.mp4/'
+        t = 'https://pornopotok.com/get_file/8/9b777d68a6e3459f4e64b2969709350783cb6d6f13/20000/20877/20877_360.mp4/?br=521'
         referrer=URL('https://fr.xhamster.com')
-        self.add_video('DEFAULT', URL(t, redirect=True))
+        self.add_video('DEFAULT', URL(t, redirect=False))
 
 if __name__ == "__main__":
     pass
