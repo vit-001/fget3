@@ -31,7 +31,7 @@ class FullViewWindow(QWidget):
         # define variables
         self.full_views=list()
         self.global_muted=True
-        self.global_volume=10
+        self.global_volume=4
 
         #all  binding
         self.ui.tabWidget.tabCloseRequested.connect(self.close_tab)
