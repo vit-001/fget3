@@ -115,7 +115,7 @@ class FrprnSite(BaseSiteParser):
             #     self.set_default_video(-1)
 
     def parse_video_tags(self, soup: BeautifulSoup, url: URL):
-        container = soup.find('div', {'class': 'view-information'})
+        container = soup.find('div', {'class': 'view_qt5-information'})
         # pretty(container)
 
         if container:

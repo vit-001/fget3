@@ -29,7 +29,7 @@ class XcumSite(BaseSiteParser):
                               url=URL("https://xcum.com/", test_string='porn'))
 
     def get_shrink_name(self):
-        return 'SP'
+        return 'XC'
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         contents=soup.find('div', {'class':'thumbs'})
@@ -37,7 +37,7 @@ class XcumSite(BaseSiteParser):
         if contents:
             # psp(contents.prettify())
             for thumbnail in _iter(contents.find_all('div', {'class': 'thumb'})):
-                pretty(thumbnail)
+                # pretty(thumbnail)
                 xref=thumbnail.find('a',href=True)
                 href = URL(xref.attrs['href'], base_url=url)
 

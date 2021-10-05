@@ -37,7 +37,7 @@ class TgpSite(BaseSiteParser):
             href_txt = quotes(href_txt, 'url=', '&')
         href = URL(href_txt.strip('/')+'/')
         description = thumbnail.img.attrs.get('alt', '')
-        if description is '':
+        if description == '':
             description = href_txt.strip('/').rpartition('/')[2].replace('-', ' ')
         thumb_url = URL(thumbnail.img.attrs['src'], base_url=url)
         # print(thumb_url,href,description)

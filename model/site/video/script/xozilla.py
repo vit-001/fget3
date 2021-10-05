@@ -101,9 +101,9 @@ class XozillaSite(BaseSiteParser):
                 video_alt_url2 = quotes(flashvars, "video_alt_url2:'", "'")
                 video_alt_url2_text = quotes(flashvars, "video_alt_url2_text:'", "'")
 
-                if video_url: self.add_video(video_url_text, URL(video_url, base_url=url))
-                if video_alt_url: self.add_video(video_alt_url_text, URL(video_alt_url, base_url=url))
-                if video_alt_url2: self.add_video(video_alt_url2_text, URL(video_alt_url2, base_url=url))
+                if video_url: self.add_video(video_url_text, URL(video_url, base_url=url, redirect=True))
+                if video_alt_url: self.add_video(video_alt_url_text, URL(video_alt_url, base_url=url, redirect=True))
+                if video_alt_url2: self.add_video(video_alt_url2_text, URL(video_alt_url2, base_url=url, redirect=True))
 
             # for source in _iter(video.find_all('source')):
             #     # psp(source)

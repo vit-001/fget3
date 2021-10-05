@@ -28,7 +28,7 @@ class BaseLoadProcedure(LoadProcedureInterface):
         if file.overwrite or (not os.path.exists(file.filename)):
             result = self.open(file.url)
 
-            if file.filename is None or file.filename is '':
+            if file.filename == None or file.filename == '':
                 file.text = result.decode(errors='ignore')
                 return file
 

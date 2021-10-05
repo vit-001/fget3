@@ -127,7 +127,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
         self._view_manager=view_manager
         self._loader=MultiprocessLoader()
         self._site_models=[
-                            TestSite,   XcumSite, TubousSite, SextubefunSite,
+                            TestSite,
 
 
 
@@ -137,10 +137,10 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
                             XozillaSite,XtitsSite,
                             XhamsterSite,Sex3Site,
-                            AnaldinSite,
+                            AnaldinSite,SextubefunSite,
                             BravotubeSite,
                             KatestubeSite,ShockingmoviesSite,HdpornSite,
-                            PornhubSite,TprnSite,CrocotubeSite,
+                            PornhubSite,TprnSite,CrocotubeSite,XcumSite,
                             RedtubeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,IporntooSite,
                             XhandSite,ShooshtimeSite,
                             ItsSite,FapmeifyoucanSite,
@@ -158,7 +158,7 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
 
 
                             Space('Static:'),
-            TryboobsSite,SpicyflixSite,StileprojectSite, FapguruSite,FreepornSite,PornpapaSite,PornwatchersSite,XnxxSite,PornxxxvideosSite,
+            TubousSite,TryboobsSite,SpicyflixSite,StileprojectSite, FapguruSite,FreepornSite,PornpapaSite,PornwatchersSite,XnxxSite,PornxxxvideosSite,
 
 
 

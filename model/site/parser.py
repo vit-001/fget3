@@ -2,6 +2,8 @@
 __author__ = 'Vit'
 from bs4 import BeautifulSoup
 
+import logging
+
 from common.util import _iter
 from data_format.url import URL
 from model.site.base_site import BaseSite
@@ -32,7 +34,8 @@ class BaseSiteParser(BaseSite):
                 self.title=self.parse_thumb_title(soup,url)
                 self.generate_thumb_view()
         except AttributeError as e:
-            print(e.__repr__())
+            logging.exception(e.__repr__())
+            # print(e.__repr__())
 
     def parse_thumbs(self, soup: BeautifulSoup, url: URL):
         self.parse_video_thumbs(soup,url)
