@@ -40,9 +40,9 @@ class PictureBrowser(QLabel):
 
             try:
                 if container_rect.height() / container_rect.width() < picture_rect.height() / picture_rect.width():
-                    pix1 = picture.scaledToHeight(container_rect.height(), Qt.SmoothTransformation)
+                    pix1 = picture.scaledToHeight(container_rect.height(), Qt.TransformationMode.SmoothTransformation)
                 else:
-                    pix1 = picture.scaledToWidth(container_rect.width(), Qt.SmoothTransformation)
+                    pix1 = picture.scaledToWidth(container_rect.width(), Qt.TransformationMode.SmoothTransformation)
                 self.setPixmap(pix1)
             except ZeroDivisionError:
                 pass
