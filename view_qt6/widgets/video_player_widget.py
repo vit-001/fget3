@@ -63,11 +63,16 @@ class VideoPlayerWidget(QWidget):
         self.ui.bn_stop.clicked.connect(self.stop)
         self.ui.bn_mute.clicked.connect(self.audio_output.setMuted)
         self.ui.progress.sliderMoved.connect(self.media_player.setPosition)
-        self.ui.volume.valueChanged.connect(self.audio_output.setVolume)
+        self.ui.volume.valueChanged.connect(self.volume_changed)
+
 
     def buffer_progress_changed(self,x:float):
         # print(x)
         self.ui.buffer.setValue(int(100*x))
+
+    def volume_changed(self,x:int):
+        # print(x)
+        self.audio_output.setVolume(float(x)/100.0)
 
     def set_url_list(self, list_of_dict:list, default:int):
         self.urls=list_of_dict
@@ -152,7 +157,7 @@ class VideoPlayerWidget(QWidget):
 
     def set_volume(self, volume:int):
         self.ui.volume.setValue(volume)
-        self.audio_output.setVolume(volume)
+        self.volume_changed(volume)
 
     def get_volume(self)->int:
         return self.ui.volume.value()
