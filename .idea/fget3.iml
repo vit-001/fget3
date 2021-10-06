@@ -11,5 +11,6 @@
     <orderEntry type="module" module-name="fget" />
     <orderEntry type="module" module-name="fget4" />
     <orderEntry type="module" module-name="fget4pyside" />
+    <orderEntry type="module" module-name="p_search" />
   </component>
 </module>

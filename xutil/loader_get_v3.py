@@ -89,7 +89,7 @@ if __name__ == "__main__":
     #
     # https://yourlust.com/latest-updates/
 
-    url1a = 'http://pornbimbo.com/video/31507/tiny-gal-nicely-drilled-at-casting'
+    url1a = 'https://xcum.com/v/118869/?promoid=1263'
     url2 = 'https://www.xozilla.xxx/get_file/11/19198481703199bbdfe37b5f87a583b8/417000/417546/417546.mp4/'
     url3 = 'https://hitbdsm.com/wp-content/plugins/clean-tube-player/public/player-x.php?q=cG9zdF9pZD0xNjMzMCZ0eXBlPXZpZGVvJnRhZz0lM0N2aWRlbyUyMGlkJTNEJTIyd3BzdC12aWRlbyUyMiUyMGNsYXNzJTNEJTIydmlkZW8tanMlMjB2anMtYmlnLXBsYXktY2VudGVyZWQlMjIlMjBjb250cm9scyUyMHByZWxvYWQlM0QlMjJhdXRvJTIyJTIwd2lkdGglM0QlMjI2NDAlMjIlMjBoZWlnaHQlM0QlMjIyNjQlMjIlMjBwb3N0ZXIlM0QlMjJodHRwcyUzQSUyRiUyRmhpdGJkc20uY29tJTJGbXRoYyUyRmRoNzNvdGIzJTJGNDkxODBqNnBPRk5NNmQ3QlI5U1dsSDlvTlNtQUouanBnJTIyJTNFJTNDc291cmNlJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZtdmZlY3IuaGl0YmRzbS5jb20lMkZkaDczb3RiMyUyRjQ5NDgwQzI3QTY0Rlh2QmFWU092ZTQxV1NidTZsTEIubXA0JTIyJTIwbGFiZWwlM0QlMjI0ODBwJTIyJTIwdGl0bGUlM0QlMjI0ODBwJTIyJTIwdHlwZSUzRCUyMnZpZGVvJTJGbXA0JTIyJTIwJTJGJTNFJTNDc291cmNlJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZtdnRmLmhpdGJkc20uY29tJTJGZGg3M290YjMlMkY0OTI0MEMyNUE2NFNoTFBpN0tLYmtZRENBOVpMTW5xLm1wNCUyMiUyMGxhYmVsJTNEJTIyMjQwcCUyMiUyMHRpdGxlJTNEJTIyMjQwcCUyMiUyMHR5cGUlM0QlMjJ2aWRlbyUyRm1wNCUyMiUyMCUyRiUzRSUzQyUyRnZpZGVvJTNF'
 
