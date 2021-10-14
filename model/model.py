@@ -139,15 +139,15 @@ class Model(ModelFromControllerInterface, ModelFromSiteInterface):
                             Space('Classic:'),
 
 
-                            XozillaSite,XtitsSite,
+                            XozillaSite,FapmeifyoucanSite,AnaldinSite,XtitsSite,
                             XhamsterSite,Sex3Site,
-                            AnaldinSite,SextubefunSite,
+                            SextubefunSite,
                             BravotubeSite,TubebunnySite,
                             KatestubeSite,ShockingmoviesSite,HdpornSite,
                             PornhubSite,TprnSite,CrocotubeSite,XcumSite,PornbimboSite,
                             RedtubeSite,PornicomSite,SleazyneasySite,PervclipsSite,VikipornSite,IporntooSite,
                             XhandSite,ShooshtimeSite,
-                            ItsSite,FapmeifyoucanSite,
+                            ItsSite,
                             DlouhaSite,FrprnSite,PorngemSite,
                             PornwildSite,PornmzSite,PornwhiteSite,CrockotubeSite,
                             YespornpleasexxxSite,SickjunkSite,
